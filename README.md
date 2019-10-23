@@ -18,11 +18,11 @@ Pathogen bundles:
 - Vim surround: https://github.com/tpope/vim-surround
 
 Just clone this repo to your vim $HOME dir:
-'''git clone '''
+```git clone https://github.com/ValdamireGido/vvim.git .```
 
 Init submodules 
-'''git submodules --init --recursive'''
+```git submodules --init --recursive```
 
 There is also a custom .vimrc that you can link in local vimrc with:
-'''source $HOME/.vim/.vimrc.custom'''
+```source $HOME/.vim/.vimrc.custom```
 
