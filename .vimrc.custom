@@ -26,6 +26,7 @@ set hlsearch
 execute pathogen#infect()
 
 " NERDTree settings
+set modified
 map <C-L> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 
