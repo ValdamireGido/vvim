@@ -1,10 +1,3 @@
-
-function! SourceLocal(relPath)
-	let root = expand('%:p:h')
-	let fullPath = root . '/' . a:relPath
-	exec 'source ' . fullPath
-endfunction
-
 " syntax higlighing 
 syntax on
 set tabstop=4
@@ -12,12 +5,6 @@ set tabstop=4
 " Some small configs
 " Number and relative number setting
 set number relativenumber
-
-" Extended rc file search
-" set exrc
-" set secure
-" !!! Currently turning this off, but actually... think this could be really
-" usefule
 
 set incsearch
 set hlsearch
@@ -29,10 +16,6 @@ execute pathogen#infect()
 set modified
 map <C-L> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-
-let path = expand('%:p:h')
-" Use the internal diff if available.
-" call SourceLocal("CurtineIncSw.vim")
 
 " Otherwise use the special 'diffexpr' for Windows.
 if &diffopt !~# 'internal'

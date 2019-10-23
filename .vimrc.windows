@@ -1,0 +1,4 @@
+" MSBuild settings 
+set makeprg=build.bat
+set errorformat=\ %#%f(%l\\\,%c):\ %m
+
