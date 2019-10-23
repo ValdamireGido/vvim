@@ -1,0 +1,138 @@
+
+function! SourceLocal(relPath)
+	let root = expand('%:p:h')
+	let fullPath = root . '/' . a:relPath
+	exec 'source ' . fullPath
+endfunction
+
+" syntax higlighing 
+syntax on
+
+" Some small configs
+" Number and relative number setting
+set number relativenumber
+
+" Extended rc file search
+" set exrc
+" set secure
+" !!! Currently turning this off, but actually... think this could be really
+" usefule
+
+set incsearch
+set hlsearch
+
+" Pathogen
+execute pathogen#infect()
+
+" NERDTree settings
+map <C-L> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+let path = expand('%:p:h')
+" Use the internal diff if available.
+" call SourceLocal("CurtineIncSw.vim")
+
+" Otherwise use the special 'diffexpr' for Windows.
+if &diffopt !~# 'internal'
+  set diffexpr=MyDiff()
+endif
+function MyDiff()
+  let opt = '-a --binary '
+  if &diffopt =~ 'icase' | let opt = opt . '-i ' | endif
+  if &diffopt =~ 'iwhite' | let opt = opt . '-b ' | endif
+  let arg1 = v:fname_in
+  if arg1 =~ ' ' | let arg1 = '"' . arg1 . '"' | endif
+  let arg1 = substitute(arg1, '!', '\!', 'g')
+  let arg2 = v:fname_new
+  if arg2 =~ ' ' | let arg2 = '"' . arg2 . '"' | endif
+  let arg2 = substitute(arg2, '!', '\!', 'g')
+  let arg3 = v:fname_out
+  if arg3 =~ ' ' | let arg3 = '"' . arg3 . '"' | endif
+  let arg3 = substitute(arg3, '!', '\!', 'g')
+  if $VIMRUNTIME =~ ' '
+    if &sh =~ '\<cmd'
+      if empty(&shellxquote)
+        let l:shxq_sav = ''
+        set shellxquote&
+      endif
+      let cmd = '"' . $VIMRUNTIME . '\diff"'
+    else
+      let cmd = substitute($VIMRUNTIME, ' ', '" ', '') . '\diff"'
+    endif
+  else
+    let cmd = $VIMRUNTIME . '\diff'
+  endif
+  let cmd = substitute(cmd, '!', '\!', 'g')
+  silent execute '!' . cmd . ' ' . opt . arg1 . ' ' . arg2 . ' > ' . arg3
+  if exists('l:shxq_sav')
+    let &shellxquote=l:shxq_sav
+  endif
+endfunction
+
+
+" ex command for toggling hex mode - define mapping if desired
+command -bar Hexmode call ToggleHex()
+
+" helper function to toggle hex mode
+function ToggleHex()
+  " hex mode should be considered a read-only operation
+  " save values for modified and read-only for restoration later,
+  " and clear the read-only flag for now
+  let l:modified=&mod
+  let l:oldreadonly=&readonly
+  let &readonly=0
+  let l:oldmodifiable=&modifiable
+  let &modifiable=1
+  if !exists("b:editHex") || !b:editHex
+    " save old options
+    let b:oldft=&ft
+    let b:oldbin=&bin
+    " set new options
+    setlocal binary " make sure it overrides any textwidth, etc.
+    silent :e " this will reload the file without trickeries 
+              "(DOS line endings will be shown entirely )
+    let &ft="xxd"
+    " set status
+    let b:editHex=1
+    " switch to hex editor
+    %!xxd
+  else
+    " restore old options
+    let &ft=b:oldft
+    if !b:oldbin
+      setlocal nobinary
+    endif
+    " set status
+    let b:editHex=0
+    " return to normal editing
+    %!xxd -r
+  endif
+  " restore values for modified and read only state
+  let &mod=l:modified
+  let &readonly=l:oldreadonly
+  let &modifiable=l:oldmodifiable
+endfunction
+
+" maps for Hexmode 
+nnoremap <C-H> :Hexmode<CR>
+inoremap <C-H> <Esc>:Hexmode<CR>
+vnoremap <C-H> :<C-U>Hexmode<CR>
+
+
+" nohl hotkey
+nnoremap <ESC><ESC> :nohl<CR>
+ 
+" FSwitch mappings
+map <C-k><C-j> :FSHere<CR>
+map <C-k><C-l> :FSSplitRight<CR>
+map <C-k><C-h> :FSSplitLeft<CR>
+
+" Clang format mappings and settings
+nnoremap <C-k><C-f> :ClangFormat<CR>
+vnoremap <C-k><C-f> :ClangFormat<CR>
+let g:clang_format#detect_style_file = 1
+
+" Some cpp specific stuff
+nnoremap <M-J> /\v^(\w+\s+)?\w+::\w+\(.*\)<CR>
+nnoremap <M-K> ?\v^(\w+\s+)?\w+::\w+\(.*\)<CR>
+
