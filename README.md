@@ -3,7 +3,7 @@ Custom build of vim with all the plugins I'm using.
 
 Plugins:
 - Pathogen (copied to autoload): https://github.com/tpope/vim-pathogen
-- FSwitch vim (copied to autoload): https://github.com/derekwyatt/vim-fswitch
+- FSwitch vim (copied to plugin): https://github.com/derekwyatt/vim-fswitch
 
 Pathogen bundles: 
 - Vim git gutter: https://github.com/airblade/vim-gitgutter
@@ -18,11 +18,14 @@ Pathogen bundles:
 - Vim surround: https://github.com/tpope/vim-surround
 
 Just clone this repo to your vim $HOME dir:
+
 ```git clone https://github.com/ValdamireGido/vvim.git .```
 
-Init submodules 
+Init submodules:
+
 ```git submodules --init --recursive```
 
 There is also a custom .vimrc that you can link in local vimrc with:
+
 ```source $HOME/.vim/.vimrc.custom```
 
