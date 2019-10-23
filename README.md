@@ -29,3 +29,12 @@ There is also a custom .vimrc that you can link in local vimrc with:
 
 ```source $HOME/.vim/.vimrc.custom```
 
+Local vimrc example
+```
+nnoremap ,c :tabedit c:/vim/_vimrc<CR>
+"source D:/OneDrive/Documents/Settings/vim/.vimrc
+source $HOME/vimfiles/.vimrc.custom
+
+" Vim with all enhancements
+source $VIMRUNTIME/vimrc_example.vim
+```
