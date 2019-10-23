@@ -31,7 +31,9 @@ There is also a custom .vimrc that you can link in local vimrc with:
 
 Local vimrc example
 ```
+" For Win vim version
 nnoremap ,c :tabedit c:/vim/_vimrc<CR>
+
 source $HOME/vimfiles/.vimrc.custom
 
 " Vim with all enhancements
