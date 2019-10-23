@@ -23,7 +23,7 @@ Just clone this repo to your vim $HOME dir:
 
 Init submodules:
 
-```git submodules --init --recursive```
+```git submodule --init --recursive```
 
 There is also a custom .vimrc that you can link in local vimrc with:
 
