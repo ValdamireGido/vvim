@@ -1,0 +1,4 @@
+nnoremap ,c :tabedit $HOME/.vimrc<CR>
+" MSBuild settings 
+set makeprg=./build.sh
+set errorformat=\ %#%f(%l\\\,%c):\ %m
