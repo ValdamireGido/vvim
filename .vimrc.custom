@@ -103,7 +103,6 @@ nnoremap <C-H> :Hexmode<CR>
 inoremap <C-H> <Esc>:Hexmode<CR>
 vnoremap <C-H> :<C-U>Hexmode<CR>
 
-
 " nohl hotkey
 nnoremap <ESC><ESC> :nohl<CR>
  
@@ -121,3 +120,11 @@ let g:clang_format#detect_style_file = 1
 nnoremap <M-J> /\v^(\w+\s+)?\w+::\w+\(.*\)<CR>
 nnoremap <M-K> ?\v^(\w+\s+)?\w+::\w+\(.*\)<CR>
 
+" Custom mappings for editing
+map K i<CR><ESC>
+let mapleader = "\<space>"
+map <leader>n = :cn<CR>
+map <leader>p = :cp<CR>
+map <leader>o = :copen<CR>
+map <leader>c = :cclose<CR>
+map <leader>r = :cr<CR>
