@@ -1,4 +1,5 @@
 " MSBuild settings 
 set makeprg=build.bat
 set errorformat=\ %#%f(%l\\\,%c):\ %m
-
+set shell=cmd
+set shellcmdflag =/c

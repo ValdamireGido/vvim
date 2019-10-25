@@ -1,6 +1,7 @@
 " syntax higlighing 
 syntax on
 set tabstop=4
+set shiftwidth=4
 
 " Some small configs
 " Number and relative number setting
