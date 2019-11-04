@@ -133,3 +133,7 @@ map <leader>p = :cp<CR>
 map <leader>o = :copen<CR>
 map <leader>c = :cclose<CR>
 map <leader>r = :cr<CR>
+
+
+" Autocommands
+autocmd BufWinEnter * setlocal modifiable
