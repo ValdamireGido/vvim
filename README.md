@@ -17,7 +17,7 @@ Pathogen bundles:
 - Vim repeat: https://github.com/tpope/vim-repeat
 - Vim surround: https://github.com/tpope/vim-surround
 
-Just clone this repo to your vim $HOME dir:
+Just clone this repo to your vim $HOME/.vim (win $HOME/vimfiles) dir:
 
 ```git clone https://github.com/ValdamireGido/vvim.git .```
 
