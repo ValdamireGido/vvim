@@ -155,5 +155,10 @@ map <leader>l :ls<cr>
 map <leader>j :bn<cr>
 map <leader>k :bp<cr>
 
+map <C-b>n :bn<cr>
+map <C-b>p :bp<cr>
+map <C-b>l :ls<cr>
+map <C-b>d :bdelete<cr>
+
 " Autocommands
 autocmd BufWinEnter * setlocal modifiable
