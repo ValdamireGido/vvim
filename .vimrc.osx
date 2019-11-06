@@ -14,3 +14,4 @@ set makeprg=./build.sh
 			" \%f:%l:\ warning:\ %m
 
 set errorformat=%f:%l:%c:%.%#\ error:\ %m,%f:%l:%c:%.%#\ warning:\ %m,%-G%.%#
+"set errorformat=%f:%l:%c:%.%#\ error:\ %m,%f:%l:%c:%.%#
