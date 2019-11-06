@@ -3,6 +3,22 @@ syntax on
 set tabstop=4
 set shiftwidth=4
 
+" swap backup and undo dirs settings 
+silent !mkdir $HOME/.backup > /dev/null 2>&1
+silent !mkdir $HOME/.swp > /dev/null 2>&1
+silent !mkdir $HOME/.undo > /dev/null 2>&1
+silent !mkdir ./.backup > /dev/null 2>&1
+silent !mkdir ./.swp > /dev/null 2>&1
+silent !mkdir ./.undo > /dev/null 2>&1
+
+set backupdir=./.backup/,$HOME/.backup// 
+set directory=./.swp/,$HOME/.swp//
+set undodir=./.undo/,$HOME/.undo//
+
+silent !mkdir $HOME/backup > /dev/null 2>&1
+silent !mkdir $HOME/.swp > /dev/null 2>&1
+silent !mkdir $HOME/.undo > /dev/null2>&1
+
 " Some small configs
 " Number and relative number setting
 set number relativenumber
