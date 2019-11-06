@@ -128,12 +128,16 @@ nnoremap <M-K> ?\v^(\w+\s+)?\w+::\w+\(.*\)<CR>
 " Custom mappings for editing
 map K i<CR><ESC>
 let mapleader = "\<space>"
-map <leader>n = :cn<CR>
-map <leader>p = :cp<CR>
-map <leader>o = :copen<CR>
-map <leader>c = :cclose<CR>
-map <leader>r = :cr<CR>
+map <leader>n :cn<CR>
+map <leader>p :cp<CR>
+map <leader>o :copen<CR>
+map <leader>c :cclose<CR>
+map <leader>r :cr<CR>
 
+" Buffers controls
+map <leader>l :ls<cr>
+map <leader>j :bn<cr>
+map <leader>k :bp<cr>
 
 " Autocommands
 autocmd BufWinEnter * setlocal modifiable
