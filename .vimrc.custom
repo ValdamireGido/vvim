@@ -15,9 +15,7 @@ set backupdir=./.backup/,$HOME/.backup//
 set directory=./.swp/,$HOME/.swp//
 set undodir=./.undo/,$HOME/.undo//
 
-silent !mkdir $HOME/backup > /dev/null 2>&1
-silent !mkdir $HOME/.swp > /dev/null 2>&1
-silent !mkdir $HOME/.undo > /dev/null2>&1
+set errorfile=$HOME/.tmp/error.err
 
 " Some small configs
 " Number and relative number setting
@@ -35,6 +33,25 @@ execute pathogen#infect()
 set modified
 map <C-L> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+
+" Run shell cmd in new window
+function! s:ExecuteInShell(command)
+   	let command = join(map(split(a:command), 'expand(v:val)'))
+   	let winnr = bufwinnr('^' . command . '$')
+   	silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
+   	setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
+   	echo 'Execute ' . command . '...'
+   	silent! execute 'silent %!'. command
+   	silent! execute 'resize ' . line('$')
+   	silent! redraw
+   	silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
+   	silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
+   	echo 'Shell command ' . command . ' executed.'
+endfunction
+command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
+
+command! -complete=file -nargs=* Git call s:RunShellCommand('git '.<q-args>) 
+command! -complete=file -nargs=* Svn call s:RunShellCommand('svn '.<q-args>)
 
 " Otherwise use the special 'diffexpr' for Windows.
 if &diffopt !~# 'internal'
