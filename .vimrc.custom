@@ -50,8 +50,8 @@ function! s:ExecuteInShell(command)
 endfunction
 command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 
-command! -complete=file -nargs=* Git call s:RunShellCommand('git '.<q-args>) 
-command! -complete=file -nargs=* Svn call s:RunShellCommand('svn '.<q-args>)
+command! -complete=file -nargs=* Git call s:ExecuteInShell('git '.<q-args>) 
+command! -complete=file -nargs=* Svn call s:ExecuteInShell('svn '.<q-args>)
 
 " Otherwise use the special 'diffexpr' for Windows.
 if &diffopt !~# 'internal'
