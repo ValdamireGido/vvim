@@ -33,6 +33,10 @@ execute pathogen#infect()
 set modified
 map <C-L> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+" enable line numbers
+let NERDTreeShowLineNumbers=1
+" make sure relative line numbers are used
+autocmd FileType nerdtree setlocal relativenumber
 
 
 " Run shell cmd in new window
@@ -204,10 +208,10 @@ map <leader>c :cclose<CR>
 map <leader>r :cr<CR>
 
 " Buffers controls
-map <C-b>n :bn<cr>
-map <C-b>p :bp<cr>
-map <C-b>l :ls<cr>
-map <C-b>d :bdelete<cr>
+map <leader>bn :bn<cr>
+map <leader>bp :bp<cr>
+map <leader>bl :ls<cr>
+map <leader>bd :bdelete<cr>
 
 " Autocommands
 autocmd BufWinEnter * setlocal modifiable
