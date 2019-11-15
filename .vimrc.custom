@@ -33,10 +33,9 @@ execute pathogen#infect()
 set modified
 map <C-L> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-" enable line numbers
-let NERDTreeShowLineNumbers=1
-" make sure relative line numbers are used
-autocmd FileType nerdtree setlocal relativenumber
+autocmd FileType nerdtree setlocal relativenumber " enable line numbers
+
+let NERDTreeShowLineNumbers=1      " make sure relative line numbers are used
 
 
 " Run shell cmd in new window
