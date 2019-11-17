@@ -33,6 +33,9 @@ execute pathogen#infect()
 set modified
 map <C-L> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd FileType nerdtree setlocal relativenumber " enable line numbers
+
+let NERDTreeShowLineNumbers=1      " make sure relative line numbers are used
 
 
 " Run shell cmd in new window
@@ -79,6 +82,7 @@ command! -complete=file -nargs=* GenerateCtags :!ctags -R --sort=yes --c++-kinds
 
 " Tags file settings
 set tags=tags;
+set noautochdir
 "set autochdir
 
 
@@ -204,10 +208,22 @@ map <leader>c :cclose<CR>
 map <leader>r :cr<CR>
 
 " Buffers controls
-map <C-b>n :bn<cr>
-map <C-b>p :bp<cr>
-map <C-b>l :ls<cr>
-map <C-b>d :bdelete<cr>
+map <leader>bn :bn<cr>
+map <leader>bp :bp<cr>
+map <leader>bl :ls<cr>
+map <leader>bd :bdelete<cr>
 
 " Autocommands
-autocmd BufWinEnter * setlocal modifiable
+
+
+" Lightline settings
+let g:lightline = {
+      \ 'colorscheme': 'solarized dark',
+      \ 'active': {
+      \   'left': [ [ 'mode', 'paste' ],
+      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head'
+      \ },
+      \ }
