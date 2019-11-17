@@ -37,3 +37,6 @@
 [submodule "bundle/swift-apple"]
 	path = bundle/swift-apple
 	url = https://github.com/jph00/swift-apple.git
+[submodule "bundle/hlsl.vim"]
+	path = bundle/hlsl.vim
+	url = https://github.com/beyondmarc/hlsl.vim.git
