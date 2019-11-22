@@ -30,13 +30,11 @@ execute pathogen#infect()
 
 
 " NERDTree settings
-set modified
 map <C-L> :NERDTreeToggle<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType nerdtree setlocal relativenumber " enable line numbers
 
 let NERDTreeShowLineNumbers=1      " make sure relative line numbers are used
-
 
 " Run shell cmd in new window
 function! s:ExecuteInShell(command)
@@ -194,8 +192,6 @@ let g:clang_format#auto_format_on_insert_leave = 0
 
 
 " Some cpp specific stuff
-nnoremap <M-J> /\v^(\w+\s+)?\w+::\w+\(.*\)<CR>
-nnoremap <M-K> ?\v^(\w+\s+)?\w+::\w+\(.*\)<CR>
 
 
 " Custom mappings for editing
@@ -217,13 +213,10 @@ map <leader>bd :bdelete<cr>
 
 
 " Lightline settings
-let g:lightline = {
-      \ 'colorscheme': 'solarized dark',
-      \ 'active': {
-      \   'left': [ [ 'mode', 'paste' ],
-      \             [ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head'
-      \ },
-      \ }
+
+
+" Some special optional settings 
+if has("gui_running")
+	colorscheme darkblue
+	set guioptions -=T
+endif
