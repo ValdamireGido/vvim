@@ -8,6 +8,7 @@ set shiftwidth=4
 set number relativenumber
 set incsearch
 set hlsearch
+set nowrap
 
 
 " swap backup and undo dirs settings 
@@ -166,6 +167,8 @@ function ToggleHex()
   let &modifiable=l:oldmodifiable
 endfunction
 
+command CDC cd %:p:h
+command CDP cd -
 
 " maps for Hexmode 
 nnoremap <C-H> :Hexmode<CR>
