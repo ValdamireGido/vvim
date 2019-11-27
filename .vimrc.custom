@@ -14,12 +14,12 @@ set nowrap
 let mapleader = "\<space>"
 
 " swap backup and undo dirs settings 
-silent !mkdir $HOME/.backup > /dev/null 2>&1
-silent !mkdir $HOME/.swp > /dev/null 2>&1
-silent !mkdir $HOME/.undo > /dev/null 2>&1
-silent !mkdir ./.backup > /dev/null 2>&1
-silent !mkdir ./.swp > /dev/null 2>&1
-silent !mkdir ./.undo > /dev/null 2>&1
+" silent !mkdir $HOME/.backup > /dev/null 2>&1
+" silent !mkdir $HOME/.swp > /dev/null 2>&1
+" silent !mkdir $HOME/.undo > /dev/null 2>&1
+" silent !mkdir ./.backup > /dev/null 2>&1
+" silent !mkdir ./.swp > /dev/null 2>&1
+" silent !mkdir ./.undo > /dev/null 2>&1
 
 set backupdir=./.backup/,$HOME/.backup// 
 set directory=./.swp/,$HOME/.swp//
@@ -33,7 +33,7 @@ execute pathogen#infect()
 
 
 " NERDTree settings
-map <leader>f :NERDTreeToggle<CR>
+map <leader>f :NERDTreeToggle<CR> :NERDTreeRefreshRoot<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType nerdtree setlocal relativenumber " enable line numbers
 let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
