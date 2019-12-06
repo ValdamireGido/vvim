@@ -9,6 +9,7 @@ set number relativenumber
 set incsearch
 set hlsearch
 set nowrap
+set cursorline
 
 " Leader settings
 let mapleader = "\<space>"
