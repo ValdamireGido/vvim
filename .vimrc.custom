@@ -11,6 +11,8 @@ set hlsearch
 set nowrap
 set cursorline
 
+hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
+
 " Leader settings
 let mapleader = "\<space>"
 
