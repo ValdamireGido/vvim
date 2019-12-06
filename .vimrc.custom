@@ -35,6 +35,7 @@ execute pathogen#infect()
 
 " NERDTree settings
 map <leader>f :NERDTreeToggle<CR> :NERDTreeRefreshRoot<CR>
+map <leader>F :NERDTreeFocus<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType nerdtree setlocal relativenumber " enable line numbers
 let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
