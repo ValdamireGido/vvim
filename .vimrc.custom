@@ -16,6 +16,11 @@ hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
 " Leader settings
 let mapleader = "\<space>"
 
+call plug#begin('~vim plugin/vimfiles/plugged')
+Plug '/c/ProgramData/chocolatey/bin/fzf'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+call plug#end()
+
 " swap backup and undo dirs settings 
 " silent !mkdir $HOME/.backup > /dev/null 2>&1
 " silent !mkdir $HOME/.swp > /dev/null 2>&1
