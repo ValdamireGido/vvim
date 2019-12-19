@@ -42,8 +42,6 @@ execute pathogen#infect()
 
 "set verbose=9
 " Session saving and restoring
-set rtp += $HOME/vimfiles/bundle/nerdtree
-
 function! MakeSession(overwrite)
   let b:sessiondir = '.vim'
   if (filewritable(b:sessiondir) != 2)
@@ -63,16 +61,19 @@ function! LoadSession()
   if (filereadable(b:sessionfile))
     exe 'source ' b:sessionfile
   else
-    echo "No session loaded."
+    echo "No session loaded
   endif
 endfunction
 
+let g:session_directory='.vim'
+let g:session_lock_directory='.vim/lock'
+let g:session_lock_enabled = 0
+let g:session_default_name = 'session.vim'
+let g:session_autoload = 'yes'
+
 if !exists("autocmds_loaded")
 	let autocmds_loadeed = 1
-	autocmd VimEnter * nested :call LoadSession()
-	autocmd VimLeave * :call MakeSession(1)
-else
-	autocmd VimLeave * :call MakeSession(0)
+	autocmd VimEnter * OpenSession
 endif
 
 
