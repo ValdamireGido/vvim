@@ -74,6 +74,7 @@ let g:session_lock_directory='.vim/lock'
 let g:session_lock_enabled = 0
 let g:session_default_name = 'session.vim'
 let g:session_autoload = 'yes'
+let g:session_autosave = 'yes'
 
 if !exists("autocmds_loaded")
 	let autocmds_loadeed = 1
@@ -85,6 +86,7 @@ endif
 " NERDTree settings
 map <leader>f :NERDTreeToggle<CR> :NERDTreeRefreshRoot<CR>
 map <leader>F :NERDTreeFocus<CR>
+map <leader>tf :NERDTreeFind<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType nerdtree setlocal relativenumber " enable line numbers
 let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
