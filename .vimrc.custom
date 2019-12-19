@@ -1,5 +1,6 @@
 " syntax higlighing 
 syntax on
+filetype on
 
 " Some small configs
 " Number and relative number setting
@@ -12,6 +13,9 @@ set nowrap
 set cursorline
 
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
+
+" Quit Vim shorcut
+command Q :qa!
 
 " Leader settings
 let mapleader = "\<space>"
@@ -237,6 +241,10 @@ map <C-k><C-l> :FSSplitRight<CR>
 map <C-k><C-h> :FSSplitLeft<CR>
 
 
+" FZF binding 
+nnoremap <C-t> :FZF<CR>
+
+
 " Clang format mappings and settings
 nnoremap <C-k><C-f> :ClangFormat<CR>
 vnoremap <C-k><C-f> :ClangFormat<CR>
@@ -277,3 +285,4 @@ else
 	set mouse=a
 	set nocompatible
 endif
+
