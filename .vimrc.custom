@@ -72,9 +72,15 @@ endfunction
 let g:session_directory='.vim'
 let g:session_lock_directory='.vim/lock'
 let g:session_lock_enabled = 0
-let g:session_default_name = 'session.vim'
+let g:session_default_name = 'session'
 let g:session_autoload = 'yes'
-let g:session_autosave = 'yes'
+let g:session_autosave = 'no'
+
+function QuitWithSaving()
+	:SaveSession
+	:qa!
+endfunction
+command QS call QuitWithSaving()
 
 if !exists("autocmds_loaded")
 	let autocmds_loadeed = 1
@@ -276,6 +282,7 @@ map <leader>bd :bdelete<cr>
 
 
 " Lightline settings
+"
 
 
 " Some special optional settings 
