@@ -40,9 +40,6 @@
 [submodule "bundle/hlsl.vim"]
 	path = bundle/hlsl.vim
 	url = https://github.com/beyondmarc/hlsl.vim.git
-[submodule "bundle/nvim-misc"]
-	path = bundle/nvim-misc
-	url = https://github.com/xolox/vim-misc.git
 [submodule "bundle/vim-misc"]
 	path = bundle/vim-misc
 	url = https://github.com/xolox/vim-misc.git
