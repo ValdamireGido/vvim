@@ -119,6 +119,7 @@ command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
 " Cutsom Shell shortcuts
 command! -complete=file -nargs=* Git call s:ExecuteInShell('git '.<q-args>) 
 command! -complete=file -nargs=* Svn call s:ExecuteInShell('svn '.<q-args>)
+command! -complete=file -nargs=* SvnInfo Svn info %
 
 
 " OmniCppComplete
