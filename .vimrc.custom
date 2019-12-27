@@ -76,26 +76,10 @@ let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
 let g:NERDTreeMapOpenRecursively = 'L' " open node recursively 
 
 
-" Run shell cmd in new window
-function! s:ExecuteInShell(command)
-   	let command = join(map(split(a:command), 'expand(v:val)'))
-   	let winnr = bufwinnr('^' . command . '$')
-   	silent! execute  winnr < 0 ? 'botright new ' . fnameescape(command) : winnr . 'wincmd w'
-   	setlocal buftype=nowrite bufhidden=wipe nobuflisted noswapfile nowrap number
-   	echo 'Execute ' . command . '...'
-   	silent! execute 'silent %!'. command
-   	silent! execute 'resize ' . line('$')
-   	silent! redraw
-   	silent! execute 'au BufUnload <buffer> execute bufwinnr(' . bufnr('#') . ') . ''wincmd w'''
-   	silent! execute 'nnoremap <silent> <buffer> <LocalLeader>r :call <SID>ExecuteInShell(''' . command . ''')<CR>'
-   	echo 'Shell command ' . command . ' executed.'
-endfunction
-command! -complete=shellcmd -nargs=+ Shell call s:ExecuteInShell(<q-args>)
-
-" Cutsom Shell shortcuts
-command! -complete=file -nargs=* Git call s:ExecuteInShell('git '.<q-args>) 
-command! -complete=file -nargs=* Svn call s:ExecuteInShell('svn '.<q-args>)
-command! -complete=file -nargs=* SvnInfo Svn info %
+command! -complete=shellcmd -nargs=+ Sh      AsyncRun -raw <args>
+command! -complete=file     -nargs=+ Git     Sh git <args>
+command! -complete=file     -nargs=+ Svn     Sh svn <args>
+command! -complete=file              SvnInfo Svn info %
 
 
 " OmniCppComplete
