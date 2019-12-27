@@ -44,31 +44,7 @@ set errorfile=$HOME/.tmp/error.err
 execute pathogen#infect()
 
 
-"set verbose=9
-" Session saving and restoring
-function! MakeSession(overwrite)
-  let b:sessiondir = '.vim'
-  if (filewritable(b:sessiondir) != 2)
-    exe 'silent !mkdir -p ' b:sessiondir
-    redraw!
-  endif
-  let b:sessionfile = b:sessiondir . '/session.vim'
-  if a:overwrite == 0 && !empty(glob(b:sessionfile))
-    return
-  endif
-  exe "mksession! " . b:sessionfile
-endfunction
-
-function! LoadSession()
-  let b:sessiondir = '.vim'
-  let b:sessionfile = b:sessiondir . "/session.vim"
-  if (filereadable(b:sessionfile))
-    exe 'source ' b:sessionfile
-  else
-    echo "No session loaded
-  endif
-endfunction
-
+" Session saving settings
 let g:session_directory='.vim'
 let g:session_lock_directory='.vim/lock'
 let g:session_lock_enabled = 0
