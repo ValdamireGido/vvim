@@ -122,7 +122,6 @@ command! -complete=file -nargs=* GenerateCtags :!ctags -R --sort=yes --c++-kinds
 " Tags file settings
 set tags=tags;
 set noautochdir
-"set autochdir
 
 
 " Otherwise use the special 'diffexpr' for Windows.
