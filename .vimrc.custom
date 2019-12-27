@@ -12,7 +12,7 @@ set hlsearch
 set nowrap
 set cursorline
 
-hi CursorLine cterm=NONE ctermbg=darkred ctermfg=white
+hi CursorLine cterm=NONE ctermbg=darkred ctermfg=NONE
 
 " Quit Vim shorcut
 command Q :qa!
