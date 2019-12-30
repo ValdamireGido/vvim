@@ -214,8 +214,8 @@ map <C-k><C-h> :FSSplitLeft<CR>
 
 
 " FZF binding 
-nnoremap <C-t> :FZF<CR>
-nnoremap <C-T> :FZF 
+nnoremap <C-t>t :FZF<CR>
+nnoremap <C-t>T :FZF 
 
 
 " Clang format mappings and settings
