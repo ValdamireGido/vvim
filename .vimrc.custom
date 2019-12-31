@@ -20,7 +20,7 @@ command Q :qa!
 " Leader settings
 let mapleader = "\<space>"
 
-call plug#begin('~vim plugin/vimfiles/plugged')
+call plug#begin('~/.vim/plugged')
 Plug '/c/ProgramData/chocolatey/bin/fzf'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 call plug#end()
@@ -214,9 +214,9 @@ map <C-k><C-h> :FSSplitLeft<CR>
 
 
 " FZF binding 
-nnoremap <C-t>t :FZF<CR>
-nnoremap <C-t>T :FZF 
-
+let g:fzf_command_prefix = 'Fzf'
+nnoremap <C-t> :FzfFiles<CR>
+nnoremap <C-t>t :FzfFiles
 
 " Clang format mappings and settings
 nnoremap <C-k><C-f> :ClangFormat<CR>
