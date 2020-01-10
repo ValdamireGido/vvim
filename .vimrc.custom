@@ -216,7 +216,15 @@ map <C-k><C-h> :FSSplitLeft<CR>
 " FZF binding 
 let g:fzf_command_prefix = 'Fzf'
 nnoremap <C-t> :FzfFiles<CR>
-nnoremap <C-t>t :FzfFiles
+nnoremap <C-t>f :FzfFiles 
+nnoremap <C-t>m :FzfMarks<CR>
+nnoremap <C-t>l :FzfBLines<CR>
+nnoremap <C-t>L :FzfLines<CR>
+nnoremap <C-t>b :FzfBuffers<CR>
+nnoremap <C-t>w :FzfWindows<CR>
+nnoremap <C-t>t :FzfBTags<CR>
+nnoremap <C-t>T :FzfTags<CR>
+nnoremap <C-t>h :FzfHistory<CR>
 
 " Clang format mappings and settings
 nnoremap <C-k><C-f> :ClangFormat<CR>
