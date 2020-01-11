@@ -4,6 +4,7 @@ nnoremap ,c :tabe $HOME/AppData/Local/nvim/init.vim<CR>
 source $HOME/AppData/Local/nvim/.vimrc.custom
 
 set title
+set errorfile=C:/.tmp/errorfile
 
 if has('windows')
 	command TEST :echo Test
@@ -13,10 +14,14 @@ call plug#begin('~/AppData/Local/nvim/plugged')
 Plug 'neomake/neomake'
 Plug '/c/ProgramData/chocolatey/bin/fzf'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+
+Plug 'mhinz/vim-grepper'
+Plug 'Lenovsky/nuake'
+nnoremap <F4> :Nuake<CR>
+inoremap <F4> <C-\><C-n>:Nuake<CR>
+tnoremap <F4> <C-\><C-n>:Nuake<CR>
 call plug#end()
 
-
-set errorfile=C:/.tmp/errorfile
 
 
 "
