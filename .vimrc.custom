@@ -78,11 +78,12 @@ let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
 let g:NERDTreeMapOpenRecursively = 'L' " open node recursively 
 
 
-command! -complete=shellcmd -nargs=+ Sh      AsyncRun -raw <args>
-command! -complete=shellcmd -nargs=+ Shell   AsyncRun -raw <args>
-command! -complete=file     -nargs=+ Git     Sh git <args>
-command! -complete=file     -nargs=+ Svn     Sh svn <args>
-command! -complete=file              SvnInfo Svn info %
+command! -complete=shellcmd -nargs=+ Sh        AsyncRun -raw <args>
+command! -complete=shellcmd -nargs=+ Shell     AsyncRun -raw <args>
+command! -complete=file     -nargs=+ Git       Sh git <args>
+command! -complete=file     -nargs=+ GitStatus Sh git status <args>
+command! -complete=file     -nargs=+ Svn       Sh svn <args>
+command! -complete=file              SvnInfo   Svn info %
 
 
 " OmniCppComplete
