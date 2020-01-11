@@ -100,12 +100,9 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
 
 
-" GREP shortcut 
-command GREP :execute 'vimgrep /'.expand('<cword>').'/gj '.expand('%') | copen
-
-
 " Ctags file generation 
 command! -complete=file -nargs=* GenerateCtags :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
+
 
 " Tags file settings
 set tags=tags;
