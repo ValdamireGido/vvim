@@ -38,9 +38,9 @@ set errorfile=$HOME/.tmp/error.err
 call plug#begin('~/.vim/plugged')
 
 if has('windows') 
-	Plug '/c/ProgramData/chocolatey/bin/fzf'
+	Plug '/c/ProgramData/chocolatey/bin/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 elseif has("unix")
-	Plug '/usr/local/opt/fzf'
+	Plug '/usr/local/opt/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 endif
 Plug 'junegunn/fzf.vim'
 " FZF binding 
