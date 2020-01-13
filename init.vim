@@ -6,13 +6,14 @@ source $HOME/AppData/Local/nvim/.vimrc.custom
 set title
 set errorfile=C:/.tmp/errorfile
 
-if has('windows')
-	command TEST :echo Test
-endif
 
 call plug#begin('~/AppData/Local/nvim/plugged')
 Plug 'neomake/neomake'
-Plug '/c/ProgramData/chocolatey/bin/fzf'
+if has('windows') 
+	Plug '/c/ProgramData/chocolatey/bin/fzf'
+elseif has("unix")
+	Plug '/usr/local/opt/fzf'
+endif
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 
 Plug 'mhinz/vim-grepper'
