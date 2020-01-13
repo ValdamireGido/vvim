@@ -7,21 +7,6 @@ set title
 set errorfile=C:/.tmp/errorfile
 
 
-call plug#begin('~/AppData/Local/nvim/plugged')
-Plug 'neomake/neomake'
-if has('windows') 
-	Plug '/c/ProgramData/chocolatey/bin/fzf'
-elseif has("unix")
-	Plug '/usr/local/opt/fzf'
-endif
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-
-Plug 'mhinz/vim-grepper'
-Plug 'Lenovsky/nuake'
-nnoremap <F4> :Nuake<CR>
-inoremap <F4> <C-\><C-n>:Nuake<CR>
-tnoremap <F4> <C-\><C-n>:Nuake<CR>
-call plug#end()
 
 
 
