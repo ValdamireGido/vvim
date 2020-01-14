@@ -15,7 +15,7 @@ set cursorline
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=NONE
 
 
-" Quit Vim shorcut
+" Basic movement and often used commands
 command Q :qa!
 
 function QuitWithSaving()
@@ -24,6 +24,16 @@ function QuitWithSaving()
 endfunction
 command QS call QuitWithSaving()
 
+nnoremap <C-.> :<UP><CR>
+
+nnoremap <C-J> <C-W>j
+tnoremap <C-J> <C-\><C-n><C-W>j
+nnoremap <C-K> <C-W>k
+tnoremap <C-K> <C-\><C-n><C-W>k
+nnoremap <C-H> <C-W>h
+tnoremap <C-H> <C-\><C-n><C-W>h
+nnoremap <C-L> <C-W>l
+tnoremap <C-L> <C-\><C-n><C-W>l
 
 " Leader settings
 let mapleader = "\<space>"
@@ -31,19 +41,22 @@ let mapleader = "\<space>"
 set backupdir=./.backup/,$HOME/.backup// 
 set directory=./.swp/,$HOME/.swp//
 set undodir=./.undo/,$HOME/.undo//
-
 set errorfile=$HOME/.tmp/error.err
 
 
+"
+" Vim Plug entries
+"
 call plug#begin('~/.vim/plugged')
 
+" 
+" FZF 
 if has('windows') 
 	Plug '/c/ProgramData/chocolatey/bin/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 elseif has("unix")
 	Plug '/usr/local/opt/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 endif
 Plug 'junegunn/fzf.vim'
-" FZF binding 
 let g:fzf_command_prefix = 'Fzf'
 nnoremap <C-t> :FzfFiles<CR>
 nnoremap <C-t>f :FzfFiles 
@@ -56,6 +69,8 @@ nnoremap <C-t>t :FzfBTags<CR>
 nnoremap <C-t>T :FzfTags<CR>
 nnoremap <C-t>h :FzfHistory<CR>
 
+"
+" Vim grepper
 Plug 'mhinz/vim-grepper'
 nnoremap <leader>s :Grepper -tool grep -highlight<CR>
 nnoremap <leader>S :Grepper -tool grep -buffers -highlight<CR>
@@ -63,10 +78,13 @@ nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
 let g:grepper.next_tool = '<leader>g'
 
+" 
+" Nuake
 Plug 'Lenovsky/nuake'
 nnoremap <F4> :Nuake<CR>
 inoremap <F4> <C-\><C-n>:Nuake<CR>
 tnoremap <F4> <C-\><C-n>:Nuake<CR>
+
 
 call plug#end()
 
@@ -76,12 +94,14 @@ execute pathogen#infect()
 
 
 " Session saving settings
-let g:session_directory='.vim'
-let g:session_lock_directory='.vim/lock'
-let g:session_lock_enabled = 0
-let g:session_default_name = 'session'
-let g:session_autoload = 'no'
-let g:session_autosave = 'no'
+let g:session_directory      ='.vim'
+let g:session_lock_directory ='.vim/lock'
+let g:session_lock_enabled   = 0
+let g:session_default_name   = 'session'
+let g:session_autoload       = 'no'
+let g:session_autosave       = 'no'
+let g:session_persist_font   = 0
+let g:session_persist_colors = 0
 
 fu! Custom_OpenSession()
 	if argc() == 0
@@ -104,9 +124,9 @@ endif
 
 
 " NERDTree settings
-map <leader>f :NERDTreeToggle<CR> :NERDTreeRefreshRoot<CR>
-map <leader>F :NERDTreeFocus<CR>
-map <leader>tf :NERDTreeFind<CR>
+map <F3> :NERDTreeToggle<CR>
+map <F3><F3> :NERDTreeFocus<CR>
+map <F3>f :NERDTreeFind<CR>
 autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 autocmd FileType nerdtree setlocal relativenumber " enable line numbers
 let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
@@ -184,7 +204,7 @@ endfunction
 
 
 " ex command for toggling hex mode - define mapping if desired
-command -bar Hexmode call ToggleHex()
+command -bar Hex call ToggleHex()
 
 
 " helper function to toggle hex mode
@@ -227,11 +247,6 @@ function ToggleHex()
   let &modifiable=l:oldmodifiable
 endfunction
 
-" maps for Hexmode 
-nnoremap <C-H> :Hexmode<CR>
-inoremap <C-H> <Esc>:Hexmode<CR>
-vnoremap <C-H> :<C-U>Hexmode<CR>
-
 
 " change current working dir to file's working dir
 command CDC cd %:p:h
@@ -243,14 +258,16 @@ nnoremap <ESC><ESC> :nohl<CR>
  
 
 " FSwitch mappings
-map <C-k><C-j> :FSHere<CR>
-map <C-k><C-l> :FSSplitRight<CR>
-map <C-k><C-h> :FSSplitLeft<CR>
+map <C-o><C-.> :FSHere<CR>
+map <C-o><C-j> :FSSplitBellow<CR>
+map <C-o><C-k> :FSSplitAbove<CR>
+map <C-o><C-l> :FSSplitRight<CR>
+map <C-o><C-h> :FSSplitLeft<CR>
 
 
 " Clang format mappings and settings
-nnoremap <C-k><C-f> :ClangFormat<CR>
-vnoremap <C-k><C-f> :ClangFormat<CR>
+nnoremap <leader>f :ClangFormat<CR>
+vnoremap <leader>f :ClangFormat<CR>
 let g:clang_format#detect_style_file = 1
 let g:clang_format#auto_format = 0
 let g:clang_format#auto_format_on_insert_leave = 0
