@@ -99,7 +99,6 @@ command QS call QuitWithSaving()
 nnoremap <C-.> :<UP><CR>
 
 nnoremap <C-J> <C-W>j
-
 tnoremap <C-J> <C-\><C-n><C-W>j
 nnoremap <C-K> <C-W>k
 tnoremap <C-K> <C-\><C-n><C-W>k
@@ -111,9 +110,9 @@ tnoremap <C-L> <C-\><C-n><C-W>l
 
 "
 " Colemak specific stuff
-map <A-n> j
-map <A-e> k
-map <A-i> l
+nnoremap <A-n> j
+nnoremap <A-e> k
+nnoremap <A-i> l
 
 
 "
