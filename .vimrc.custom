@@ -11,30 +11,11 @@ set incsearch
 set hlsearch
 set nowrap
 set cursorline
-
+" Some small conursorline
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=NONE
 
 
-" Basic movement and often used commands
-command Q :qa!
-
-function QuitWithSaving()
-	:SaveSession
-	:qa!
-endfunction
-command QS call QuitWithSaving()
-
-nnoremap <C-.> :<UP><CR>
-
-nnoremap <C-J> <C-W>j
-tnoremap <C-J> <C-\><C-n><C-W>j
-nnoremap <C-K> <C-W>k
-tnoremap <C-K> <C-\><C-n><C-W>k
-nnoremap <C-H> <C-W>h
-tnoremap <C-H> <C-\><C-n><C-W>h
-nnoremap <C-L> <C-W>l
-tnoremap <C-L> <C-\><C-n><C-W>l
-
+"
 " Leader settings
 let mapleader = "\<space>"
 
@@ -58,7 +39,7 @@ elseif has("unix")
 endif
 Plug 'junegunn/fzf.vim'
 let g:fzf_command_prefix = 'Fzf'
-nnoremap <C-t> :FzfFiles<CR>
+nnoremap <C-t>  :FzfFiles<CR>
 nnoremap <C-t>f :FzfFiles 
 nnoremap <C-t>m :FzfMarks<CR>
 nnoremap <C-t>l :FzfBLines<CR>
@@ -89,13 +70,53 @@ inoremap <F4> <C-\><C-n>:Nuake<CR>
 tnoremap <F4> <C-\><C-n>:Nuake<CR>
 
 
+"
+" Multiple cursor 
+let g:multi_cursor_use_default_mapping = 0
+Plug 'terryma/vim-multiple-cursors'
+let g:multi_cursor_select_all_word_key = '<C-a>'
+let g:multi_cursos_select_all_key      = 'g<C-a>'
+
+
 call plug#end()
 
 
+"
 " Pathogen
 execute pathogen#infect()
 
 
+"
+" Basic movement and often used commands
+command Q :qa!
+
+function QuitWithSaving()
+	:SaveSession
+	:qa!
+endfunction
+command QS call QuitWithSaving()
+
+nnoremap <C-.> :<UP><CR>
+
+nnoremap <C-J> <C-W>j
+
+tnoremap <C-J> <C-\><C-n><C-W>j
+nnoremap <C-K> <C-W>k
+tnoremap <C-K> <C-\><C-n><C-W>k
+nnoremap <C-H> <C-W>h
+tnoremap <C-H> <C-\><C-n><C-W>h
+nnoremap <C-L> <C-W>l
+tnoremap <C-L> <C-\><C-n><C-W>l
+
+
+"
+" Colemak specific stuff
+map <A-n> j
+map <A-e> k
+map <A-i> l
+
+
+"
 " Session saving settings
 let g:session_directory      ='.vim'
 let g:session_lock_directory ='.vim/lock'
@@ -126,6 +147,7 @@ if !exists("autocmds_loaded")
 endif
 
 
+"
 " NERDTree settings
 map <F3> :NERDTreeToggle<CR>
 map <F3><F3> :NERDTreeFocus<CR>
@@ -261,11 +283,11 @@ nnoremap <ESC><ESC> :nohl<CR>
  
 
 " FSwitch mappings
-map <C-o><C-.> :FSHere<CR>
-map <C-o><C-j> :FSSplitBellow<CR>
-map <C-o><C-k> :FSSplitAbove<CR>
-map <C-o><C-l> :FSSplitRight<CR>
-map <C-o><C-h> :FSSplitLeft<CR>
+map <C-;><C-.> :FSHere<CR>
+map <C-;><C-j> :FSSplitBellow<CR>
+map <C-;><C-k> :FSSplitAbove<CR>
+map <C-;><C-l> :FSSplitRight<CR>
+map <C-;><C-h> :FSSplitLeft<CR>
 
 
 " Clang format mappings and settings
