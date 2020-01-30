@@ -109,6 +109,16 @@ tnoremap <C-L> <C-\><C-n><C-W>l
 
 
 "
+" Copy/Paste
+nnoremap <S-Insert> "+p
+inoremap <S-Insert> "+p
+vnoremap <S-Insert> "+p
+nnoremap <C-Insert> "+y
+inoremap <C-Insert> "+y
+vnoremap <C-Insert> "+y
+
+
+"
 " Colemak specific stuff
 nnoremap <A-n> j
 nnoremap <A-e> k
@@ -279,6 +289,7 @@ command CDP cd -
 
 " nohl hotkey
 nnoremap <ESC><ESC> :nohl<CR>
+tnoremap <ESC><ESC> <C-\><C-n>
  
 
 " FSwitch mappings
