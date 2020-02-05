@@ -6,6 +6,7 @@ filetype on
 " Number and relative number setting
 set tabstop=4
 set shiftwidth=4
+set scrolloff=5
 set number relativenumber
 set incsearch
 set hlsearch
