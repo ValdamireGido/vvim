@@ -59,8 +59,6 @@ nnoremap <leader>g :Grepper -tool grep -highlight<CR>
 nnoremap <leader>G :Grepper -tool grep -buffers -highlight<CR>
 nmap gs <plug>(GrepperOperator)
 xmap gs <plug>(GrepperOperator)
-let g:grepper.next_tool = '<leader>g'
-let g:grepper.quickfix = 1
 
 " 
 " Nuake
