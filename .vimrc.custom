@@ -41,6 +41,7 @@ endif
 Plug 'junegunn/fzf.vim'
 let g:fzf_command_prefix = 'Fzf'
 nnoremap <C-t>  :FzfFiles<CR>
+nnoremap <C-t><C-t> :FzfFiles <UP><CR>
 nnoremap <C-t>f :FzfFiles 
 nnoremap <C-t>m :FzfMarks<CR>
 nnoremap <C-t>l :FzfBLines<CR>
@@ -73,8 +74,8 @@ tnoremap <F4> <C-\><C-n>:Nuake<CR>
 " Multiple cursor 
 let g:multi_cursor_use_default_mapping = 0
 Plug 'terryma/vim-multiple-cursors'
-let g:multi_cursor_select_all_word_key = '<C-a>'
-let g:multi_cursos_select_all_key      = 'g<C-a>'
+let g:multi_cursor_select_all_word_key = '<A-a>'
+let g:multi_cursos_select_all_key      = 'g<A-a>'
 
 
 call plug#end()
@@ -173,6 +174,7 @@ command! -complete=file     -nargs=+ Git       Sh git <args>
 command! -complete=file     -nargs=+ GitStatus Sh git status <args>
 command! -complete=file     -nargs=+ Svn       Sh svn <args>
 command! -complete=file              SvnInfo   Svn info %
+command! -complete=file              SvnRevert Svn revert %
 
 
 " OmniCppComplete
