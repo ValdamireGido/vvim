@@ -290,7 +290,7 @@ command CDP cd -
 
 " nohl hotkey
 nnoremap <ESC><ESC> :nohl<CR>
-tnoremap <ESC><ESC> <C-\><C-n>
+tnoremap <C-x><C-x> <C-\><C-n>
  
 
 " FSwitch mappings
