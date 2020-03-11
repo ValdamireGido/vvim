@@ -4,6 +4,7 @@ set makeprg=./build.sh
 
 "set errorformat=%f:%l:%c:%.%#\ error:\ %m,%f:%l:%c:%.%#\ warning:\ %m,%-G%.%#
 set efm=%+G[x]\ %f:%l:%c:\ %m
+set efm+=%+G[x]\ error:\ %f:\ %m
 "set efm+%+G[!]\ %f:%l:%ct\ %m
 set efm+=%-G%.%#
 
