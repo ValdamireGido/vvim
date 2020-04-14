@@ -71,6 +71,11 @@ let g:multi_cursor_select_all_word_key = '<A-a>'
 let g:multi_cursos_select_all_key      = 'g<A-a>'
 
 
+" 
+" EasyMotion plugin settings
+Plug 'easymotion/vim-easymotion'
+
+
 call plug#end()
 
 
