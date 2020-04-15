@@ -172,6 +172,7 @@ command! -complete=file     -nargs=+ Git       Sh git <args>
 command! -complete=file     -nargs=+ GitStatus Sh git status <args>
 command! -complete=file     -nargs=+ Svn       Sh svn <args>
 command! -complete=file              SvnInfo   Svn info %
+command! -complete=file              SvnBlame  Svn blame %
 command! -complete=file              SvnRevert Svn revert %
 
 
