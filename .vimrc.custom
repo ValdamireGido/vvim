@@ -2,7 +2,7 @@
 syntax on
 filetype on
 
-" Some small configs
+" Generic stuff
 " Number and relative number setting
 set tabstop=4
 set shiftwidth=4
@@ -12,7 +12,8 @@ set incsearch
 set hlsearch
 set nowrap
 set cursorline
-" Some small conursorline
+
+" Cursor line settings
 hi CursorLine cterm=NONE ctermbg=darkred ctermfg=NONE
 
 
@@ -20,6 +21,8 @@ hi CursorLine cterm=NONE ctermbg=darkred ctermfg=NONE
 " Leader settings
 let mapleader = "\<space>"
 
+"
+" Vim working dirs settings
 set backupdir=./.backup/,$HOME/.backup// 
 set directory=./.swp/,$HOME/.swp//
 set undodir=./.undo/,$HOME/.undo//
@@ -51,6 +54,7 @@ nnoremap <C-t>w :FzfWindows<CR>
 nnoremap <C-t>t :FzfBTags<CR>
 nnoremap <C-t>T :FzfTags<CR>
 nnoremap <C-t>h :FzfHistory<CR>
+
 
 "
 " Vim grepper
@@ -107,20 +111,14 @@ tnoremap <C-L> <C-\><C-n><C-W>l
 
 
 "
-" Copy/Paste
+" Copy/Paste (For windows copy buffer currently. 
+" Have plans to adjust it for use with unix like aslo)
 nnoremap <S-Insert> "+p
 inoremap <S-Insert> "+p
 vnoremap <S-Insert> "+p
 nnoremap <C-Insert> "+y
 inoremap <C-Insert> "+y
 vnoremap <C-Insert> "+y
-
-
-"
-" Colemak specific stuff
-nnoremap <A-n> j
-nnoremap <A-e> k
-nnoremap <A-i> l
 
 
 "
@@ -166,6 +164,8 @@ let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
 let g:NERDTreeMapOpenRecursively = 'L' " open node recursively 
 
 
+"
+" Async Run usefull commands 
 command! -complete=shellcmd -nargs=+ Sh        AsyncRun -raw <args>
 command! -complete=shellcmd -nargs=+ Shell     AsyncRun -raw <args>
 command! -complete=file     -nargs=+ Git       Sh git <args>
@@ -175,6 +175,7 @@ command! -complete=file              SvnInfo   Svn info %
 command! -complete=file              SvnRevert Svn revert %
 
 
+"
 " OmniCppComplete
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_GlobalScopeSearch = 1
@@ -189,15 +190,18 @@ au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
 set completeopt=menuone,menu,longest,preview
 
 
+"
 " Ctags file generation 
 command! -complete=file -nargs=* GenerateCtags :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 
 
+"
 " Tags file settings
 set tags=tags;
 set noautochdir
 
 
+"
 " Otherwise use the special 'diffexpr' for Windows.
 if &diffopt !~# 'internal'
   set diffexpr=MyDiff()
@@ -236,6 +240,7 @@ function MyDiff()
 endfunction
 
 
+"
 " ex command for toggling hex mode - define mapping if desired
 command -bar Hex call ToggleHex()
 
@@ -281,16 +286,19 @@ function ToggleHex()
 endfunction
 
 
+"
 " change current working dir to file's working dir
 command CDC cd %:p:h
 command CDP cd -
 
 
+"
 " nohl hotkey
 nnoremap <ESC><ESC> :nohl<CR>
 tnoremap <C-x><C-x> <C-\><C-n>
  
 
+"
 " FSwitch mappings
 map <C-;><C-.> :FSHere<CR>
 map <C-;><C-j> :FSSplitBellow<CR>
@@ -299,6 +307,7 @@ map <C-;><C-l> :FSSplitRight<CR>
 map <C-;><C-h> :FSSplitLeft<CR>
 
 
+"
 " Clang format mappings and settings
 nnoremap <leader>f :ClangFormat<CR>
 vnoremap <leader>f :ClangFormat<CR>
@@ -307,6 +316,7 @@ let g:clang_format#auto_format = 0
 let g:clang_format#auto_format_on_insert_leave = 0
 
 
+"
 " Custom mappings for editing
 map K i<CR><ESC>
 map <leader>n :cn<CR>
@@ -316,6 +326,7 @@ map <leader>c :cclose<CR>
 map <leader>r :cr<CR>
 
 
+"
 " Buffers controls
 map <leader>bn :bn<cr>
 map <leader>bp :bp<cr>
@@ -323,6 +334,7 @@ map <leader>bl :ls<cr>
 map <leader>bd :bdelete<cr>
 
 
+"
 " Some special optional settings 
 if has("gui_running")
 	colorscheme darkblue
