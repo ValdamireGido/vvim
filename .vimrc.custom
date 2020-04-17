@@ -34,6 +34,25 @@ set errorfile=$HOME/.tmp/error.err
 "
 call plug#begin('~/.vim/plugged')
 
+
+"
+" Workspace pluging and settings
+Plug 'thaerkh/vim-workspace'
+
+
+"
+" NERD Tree 
+Plug 'scrooloose/nerdtree'
+map <F3> :NERDTreeToggle<CR>
+map <F3><F3> :NERDTreeFocus<CR>
+map <F3>f :NERDTreeFind<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+autocmd FileType nerdtree setlocal relativenumber " enable line numbers
+let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
+let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
+let g:NERDTreeMapOpenRecursively = 'L' " open node recursively 
+
+
 " 
 " FZF 
 if has('windows') 
@@ -75,10 +94,40 @@ let g:multi_cursor_select_all_word_key = '<A-a>'
 let g:multi_cursos_select_all_key      = 'g<A-a>'
 
 
+" Async run 
+Plug 'skywind3000/asyncrun.vim'
+command! -complete=shellcmd -nargs=+ Sh        AsyncRun -raw <args>
+command! -complete=shellcmd -nargs=+ Shell     AsyncRun -raw <args>
+command! -complete=file     -nargs=+ Git       Sh git <args>
+command! -complete=file     -nargs=+ GitStatus Sh git status <args>
+command! -complete=file     -nargs=+ Svn       Sh svn <args>
+command! -complete=file              SvnInfo   Svn info %
+command! -complete=file              SvnBlame  Svn blame %
+command! -complete=file              SvnRevert Svn revert %
+
+"
+" Clang Format
+Plug 'rhysd/vim-clang-format'
+nnoremap <leader>f :ClangFormat<CR>
+vnoremap <leader>f :ClangFormat<CR>
+let g:clang_format#detect_style_file = 1
+let g:clang_format#auto_format = 0
+let g:clang_format#auto_format_on_insert_leave = 0
+
+
 " 
-" EasyMotion plugin settings
+" Other whitout special settings
 Plug 'easymotion/vim-easymotion'
 
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-surround'
+Plug 'xolox/vim-misc'
+Plug 'kana/vim-operator-user'
+
+Plug 'vim-airline/vim-airline'
+
+Plug 'vim-scripts/vcscommand.vim'
 
 call plug#end()
 
@@ -91,12 +140,6 @@ execute pathogen#infect()
 "
 " Basic movement and often used commands
 command Q :qa!
-
-function QuitWithSaving()
-	:SaveSession
-	:qa!
-endfunction
-command QS call QuitWithSaving()
 
 nnoremap <C-.> :<UP><CR>
 
@@ -119,61 +162,6 @@ vnoremap <S-Insert> "+p
 nnoremap <C-Insert> "+y
 inoremap <C-Insert> "+y
 vnoremap <C-Insert> "+y
-
-
-"
-" Session saving settings
-let g:session_directory      ='.vim'
-let g:session_lock_directory ='.vim/lock'
-let g:session_lock_enabled   = 0
-let g:session_default_name   = 'session'
-let g:session_autoload       = 'no'
-let g:session_autosave       = 'no'
-let g:session_persist_font   = 0
-let g:session_persist_colors = 0
-
-fu! Custom_OpenSession()
-	if argc() == 0
-		:OpenSession
-		if bufexists(1)
-		  for l in range(1, bufnr('$'))
-			if bufwinnr(l) == -1
-			  exec 'sbuffer ' . l
-			endif
-		  endfor
-		endif
-	endif
-endfunction
-
-
-if !exists("autocmds_loaded")
-	let autocmds_loadeed = 1
-	autocmd VimEnter * nested call Custom_OpenSession()
-endif
-
-
-"
-" NERDTree settings
-map <F3> :NERDTreeToggle<CR>
-map <F3><F3> :NERDTreeFocus<CR>
-map <F3>f :NERDTreeFind<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd FileType nerdtree setlocal relativenumber " enable line numbers
-let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
-let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
-let g:NERDTreeMapOpenRecursively = 'L' " open node recursively 
-
-
-"
-" Async Run usefull commands 
-command! -complete=shellcmd -nargs=+ Sh        AsyncRun -raw <args>
-command! -complete=shellcmd -nargs=+ Shell     AsyncRun -raw <args>
-command! -complete=file     -nargs=+ Git       Sh git <args>
-command! -complete=file     -nargs=+ GitStatus Sh git status <args>
-command! -complete=file     -nargs=+ Svn       Sh svn <args>
-command! -complete=file              SvnInfo   Svn info %
-command! -complete=file              SvnBlame  Svn blame %
-command! -complete=file              SvnRevert Svn revert %
 
 
 "
@@ -306,15 +294,6 @@ map <C-;><C-j> :FSSplitBellow<CR>
 map <C-;><C-k> :FSSplitAbove<CR>
 map <C-;><C-l> :FSSplitRight<CR>
 map <C-;><C-h> :FSSplitLeft<CR>
-
-
-"
-" Clang format mappings and settings
-nnoremap <leader>f :ClangFormat<CR>
-vnoremap <leader>f :ClangFormat<CR>
-let g:clang_format#detect_style_file = 1
-let g:clang_format#auto_format = 0
-let g:clang_format#auto_format_on_insert_leave = 0
 
 
 "
