@@ -49,6 +49,11 @@ let g:NERDTreeMapOpenRecursively = 'L' " open node recursively
 
 
 "
+" Tagbar
+Plug 'majutsushi/tagbar'
+nnoremap <leader>t :TagbarToggle<CR>
+
+"
 " Workspace pluging and settings
 set sessionoptions-=blank
 Plug 'thaerkh/vim-workspace'
