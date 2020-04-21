@@ -36,11 +36,6 @@ call plug#begin('~/.vim/plugged')
 
 
 "
-" Workspace pluging and settings
-Plug 'thaerkh/vim-workspace'
-
-
-"
 " NERD Tree 
 Plug 'scrooloose/nerdtree'
 map <F3> :NERDTreeToggle<CR>
@@ -51,6 +46,15 @@ autocmd FileType nerdtree setlocal relativenumber " enable line numbers
 let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
 let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
 let g:NERDTreeMapOpenRecursively = 'L' " open node recursively 
+
+
+"
+" Workspace pluging and settings
+set sessionoptions-=blank
+Plug 'thaerkh/vim-workspace'
+let g:workspace_autosave = 1
+let g:workspace_session_disable_on_args = 1
+let g:workspace_autosave_ignore = ['gitcommit', 'qf', 'nerdtree', 'tagbar']
 
 
 " 
