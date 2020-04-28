@@ -62,15 +62,15 @@ let g:workspace_autosave = 1
 let g:workspace_session_disable_on_args = 1
 let g:workspace_autosave_ignore = ['gitcommit', 'qf', 'nerdtree', 'tagbar']
 if has('windows')
-	let g:workspace_session_name = 'session.vim'
-	let g:workspace_session_directory = getcwd() . '/.vim/sessions/'
+	"let g:workspace_session_name = 'session.vim'
+	"let g:workspace_session_directory = getcwd() . '/.vim/sessions/'
 endif
 nnoremap <leader><leader>w :ToggleWorkspace<CR>
 
 
 " 
 " FZF 
-if has('windows') 
+if has('windows')
 	Plug '/c/ProgramData/chocolatey/bin/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 elseif has("unix")
 	Plug '/usr/local/opt/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
