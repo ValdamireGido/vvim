@@ -79,7 +79,7 @@ Plug 'junegunn/fzf.vim'
 let g:fzf_command_prefix = 'Fzf'
 nnoremap <C-t>  :FzfFiles<CR>
 nnoremap <C-t><C-t> :FzfFiles <UP><CR>
-nnoremap <C-t>f :FzfFiles 
+nnoremap <C-t>f :FzfFiles
 nnoremap <C-t>m :FzfMarks<CR>
 nnoremap <C-t>l :FzfBLines<CR>
 nnoremap <C-t>L :FzfLines<CR>
@@ -352,6 +352,35 @@ map <leader>bn :bn<cr>
 map <leader>bp :bp<cr>
 map <leader>bl :ls<cr>
 map <leader>bd :bdelete<cr>
+
+
+"
+" Highlight current word
+highlight MyCurrentHighlightGroup ctermbg=green guibg=green
+let g:highlight_active = 0
+let g:myCurrentHighlightGroup = matchadd("MyCurrentHighlightGroup", "")
+function HighlightCurrentWord(_word)
+	let g:highlight_active = 1
+	let g:myCurrentHighlightGroup = matchadd("MyCurrentHighlightGroup", a:_word)
+endfunction
+
+function UnHighlightCurrentWord()
+	call matchdelete(g:myCurrentHighlightGroup)
+	let g:highlight_active = 0
+endfunction
+
+function! ToggleWordHighlight(_word)
+	if g:highlight_active == 0
+		call HighlightCurrentWord(a:_word)
+	else
+		call UnHighlightCurrentWord()
+	endif
+endfunction
+
+nmap <leader>* <Plug>(operator-ToggleWordHighlight)
+xmap <leader>* <Plug>(operator-ToggleWordHighlight)
+
+nnoremap <leader><leader>h :call ToggleWordHighlight(expand("<cword>"))<CR>
 
 
 "
