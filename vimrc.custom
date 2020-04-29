@@ -105,8 +105,10 @@ xmap gs <plug>(GrepperOperator)
 " Multiple cursor 
 let g:multi_cursor_use_default_mapping = 0
 Plug 'terryma/vim-multiple-cursors'
-let g:multi_cursor_select_all_word_key = '<A-a>'
-let g:multi_cursos_select_all_key      = 'g<A-a>'
+let g:multi_cursor_select_all_word_key	= '<A-a>'
+let g:multi_cursos_select_all_key		= 'g<A-a>'
+let g:multi_cursor_netx_key				= '<A-n>'
+let g:multi_cursor_prev_key				= '<A-p>'
 
 
 " Async run 
