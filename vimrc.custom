@@ -389,7 +389,7 @@ function! ChangeAutoHighlight()
 	for m in filter(getmatches(), { i, v -> l:v.group is? 'AutoHighlightGroup' })
 		call matchdelete(m.id)
 	endfor
-	let AutoHighlight = matchadd("AutoHighlightGroup", expand('<cword>'))
+	let AutoHighlight = matchadd("AutoHighlightGroup", '\<'.expand('<cword>').'\>')
 endfunction
 
 function! ClearAutoHighlight()
