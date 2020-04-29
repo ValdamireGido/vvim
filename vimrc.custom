@@ -36,122 +36,117 @@ set errorfile=$HOME/.tmp/error.err
 call plug#begin('~/.vim/plugged')
 
 
-"
-" NERD Tree
-Plug 'scrooloose/nerdtree'
-map <F3> :NERDTreeToggle<CR>
-map <F3><F3> :NERDTreeFocus<CR>
-map <F3>f :NERDTreeFind<CR>
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
-autocmd FileType nerdtree setlocal relativenumber " enable line numbers
-let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
-let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
-let g:NERDTreeMapOpenRecursively = 'L' " open node recursively
+	"
+	" NERD Tree
+	Plug 'scrooloose/nerdtree'
+	map <F3> :NERDTreeToggle<CR>
+	map <F3><F3> :NERDTreeFocus<CR>
+	map <F3>f :NERDTreeFind<CR>
+	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
+	autocmd FileType nerdtree setlocal relativenumber " enable line numbers
+	let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
+	let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
+	let g:NERDTreeMapOpenRecursively = 'L' " open node recursively
 
 
-"
-" Tagbar
-Plug 'majutsushi/tagbar'
-nnoremap <leader><leader>t :TagbarToggle<CR>
+	"
+	" Tagbar
+	Plug 'majutsushi/tagbar'
+	nnoremap <leader><leader>t :TagbarToggle<CR>
 
-"
-" Workspace pluging and settings
-set sessionoptions-=blank
-Plug 'thaerkh/vim-workspace'
-let g:workspace_autosave = 1
-let g:workspace_session_disable_on_args = 1
-let g:workspace_autosave_ignore = ['gitcommit', 'qf', 'nerdtree', 'tagbar']
-if has('windows')
-	"let g:workspace_session_name = 'session.vim'
-	"let g:workspace_session_directory = getcwd() . '/.vim/sessions/'
-endif
-nnoremap <leader><leader>w :ToggleWorkspace<CR>
-
-
-" 
-" FZF 
-if has('windows')
-	Plug '/c/ProgramData/chocolatey/bin/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-elseif has("unix")
-	Plug '/usr/local/opt/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-endif
-Plug 'junegunn/fzf.vim'
-let g:fzf_command_prefix = 'Fzf'
-nnoremap <C-t>  :FzfFiles<CR>
-nnoremap <C-t><C-t> :FzfFiles <UP><CR>
-nnoremap <C-t>f :FzfFiles<Space>
-nnoremap <C-t>m :FzfMarks<CR>
-nnoremap <C-t>l :FzfBLines<CR>
-nnoremap <C-t>L :FzfLines<CR>
-nnoremap <C-t>b :FzfBuffers<CR>
-nnoremap <C-t>w :FzfWindows<CR>
-nnoremap <C-t>t :FzfBTags<CR>
-nnoremap <C-t>T :FzfTags<CR>
-nnoremap <C-t>h :FzfHistory<CR>
+	"
+	" Workspace pluging and settings
+	set sessionoptions-=blank
+	Plug 'thaerkh/vim-workspace'
+	let g:workspace_autosave = 1
+	let g:workspace_session_disable_on_args = 1
+	let g:workspace_autosave_ignore = ['gitcommit', 'qf', 'nerdtree', 'tagbar']
+	if has('windows')
+		"let g:workspace_session_name = 'session.vim'
+		"let g:workspace_session_directory = getcwd() . '/.vim/sessions/'
+	endif
+	nnoremap <leader><leader>w :ToggleWorkspace<CR>
 
 
-"
-" Vim grepper
-Plug 'mhinz/vim-grepper'
-nnoremap <leader>s :Grepper -tool ag -highlight<CR>
-nnoremap <leader>S :Grepper -tool ag -buffers -highlight<CR>
-nnoremap <leader>g :Grepper -tool grep -highlight<CR>
-nnoremap <leader>G :Grepper -tool grep -buffers -highlight<CR>
-nmap gs <plug>(GrepperOperator)
-xmap gs <plug>(GrepperOperator)
+	" 
+	" FZF 
+	if has('windows')
+		Plug '/c/ProgramData/chocolatey/bin/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+	elseif has("unix")
+		Plug '/usr/local/opt/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+	endif
+	Plug 'junegunn/fzf.vim'
+	let g:fzf_command_prefix = 'Fzf'
+	nnoremap <C-t>  :FzfFiles<CR>
+	nnoremap <C-t><C-t> :FzfFiles <UP><CR>
+	nnoremap <C-t>f :FzfFiles<Space>
+	nnoremap <C-t>m :FzfMarks<CR>
+	nnoremap <C-t>l :FzfBLines<CR>
+	nnoremap <C-t>L :FzfLines<CR>
+	nnoremap <C-t>b :FzfBuffers<CR>
+	nnoremap <C-t>w :FzfWindows<CR>
+	nnoremap <C-t>t :FzfBTags<CR>
+	nnoremap <C-t>T :FzfTags<CR>
+	nnoremap <C-t>h :FzfHistory<CR>
 
 
-"
-" Multiple cursor 
-let g:multi_cursor_use_default_mapping = 0
-Plug 'terryma/vim-multiple-cursors'
-let g:multi_cursor_select_all_word_key	= '<A-a>'
-let g:multi_cursos_select_all_key		= 'g<A-a>'
-let g:multi_cursor_netx_key				= '<A-n>'
-let g:multi_cursor_prev_key				= '<A-p>'
+	"
+	" Vim grepper
+	Plug 'mhinz/vim-grepper'
+	nnoremap <leader>s :Grepper -tool ag -highlight<CR>
+	nnoremap <leader>S :Grepper -tool ag -buffers -highlight<CR>
+	nnoremap <leader>g :Grepper -tool grep -highlight<CR>
+	nnoremap <leader>G :Grepper -tool grep -buffers -highlight<CR>
+	nmap gs <plug>(GrepperOperator)
+	xmap gs <plug>(GrepperOperator)
 
 
-" Async run 
-Plug 'skywind3000/asyncrun.vim'
-command! -complete=shellcmd -nargs=+ Sh        AsyncRun -raw <args>
-command! -complete=shellcmd -nargs=+ Shell     AsyncRun -raw <args>
-command! -complete=file     -nargs=+ Git       Sh git <args>
-command! -complete=file     -nargs=+ GitStatus Sh git status <args>
-command! -complete=file     -nargs=+ Svn       Sh svn <args>
-command! -complete=file              SvnInfo   Svn info %
-command! -complete=file              SvnBlame  Svn blame %
-command! -complete=file              SvnRevert Svn revert %
-
-"
-" Clang Format
-Plug 'rhysd/vim-clang-format'
-nnoremap <leader>f :ClangFormat<CR>
-vnoremap <leader>f :ClangFormat<CR>
-let g:clang_format#detect_style_file = 1
-let g:clang_format#auto_format = 0
-let g:clang_format#auto_format_on_insert_leave = 0
+	"
+	" Multiple cursor 
+	let g:multi_cursor_use_default_mapping = 0
+	Plug 'terryma/vim-multiple-cursors'
+	let g:multi_cursor_select_all_word_key	= '<A-a>'
+	let g:multi_cursos_select_all_key		= 'g<A-a>'
+	let g:multi_cursor_netx_key				= '<A-n>'
+	let g:multi_cursor_prev_key				= '<A-p>'
 
 
-" 
-" Other whitout special settings
-Plug 'easymotion/vim-easymotion'
+	" Async run 
+	Plug 'skywind3000/asyncrun.vim'
+	command! -complete=shellcmd -nargs=+ Sh        AsyncRun -raw <args>
+	command! -complete=shellcmd -nargs=+ Shell     AsyncRun -raw <args>
+	command! -complete=file     -nargs=+ Git       Sh git <args>
+	command! -complete=file     -nargs=+ GitStatus Sh git status <args>
+	command! -complete=file     -nargs=+ Svn       Sh svn <args>
+	command! -complete=file              SvnInfo   Svn info %
+	command! -complete=file              SvnBlame  Svn blame %
+	command! -complete=file              SvnRevert Svn revert %
 
-Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-dispatch'
-Plug 'tpope/vim-surround'
-Plug 'xolox/vim-misc'
-Plug 'kana/vim-operator-user'
+	"
+	" Clang Format
+	Plug 'rhysd/vim-clang-format'
+	nnoremap <leader>f :ClangFormat<CR>
+	vnoremap <leader>f :ClangFormat<CR>
+	let g:clang_format#detect_style_file = 1
+	let g:clang_format#auto_format = 0
+	let g:clang_format#auto_format_on_insert_leave = 0
 
-Plug 'vim-airline/vim-airline'
 
-Plug 'vim-scripts/vcscommand.vim'
+	" 
+	" Other whitout special settings
+	Plug 'easymotion/vim-easymotion'
+
+	Plug 'tpope/vim-repeat'
+	Plug 'tpope/vim-dispatch'
+	Plug 'tpope/vim-surround'
+	Plug 'xolox/vim-misc'
+	Plug 'kana/vim-operator-user'
+
+	Plug 'vim-airline/vim-airline'
+
+	Plug 'vim-scripts/vcscommand.vim'
 
 call plug#end()
-
-
-"
-" Pathogen
-execute pathogen#infect()
 
 
 "
