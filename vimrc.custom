@@ -37,7 +37,7 @@ call plug#begin('~/.vim/plugged')
 
 
 "
-" NERD Tree 
+" NERD Tree
 Plug 'scrooloose/nerdtree'
 map <F3> :NERDTreeToggle<CR>
 map <F3><F3> :NERDTreeFocus<CR>
@@ -79,7 +79,7 @@ Plug 'junegunn/fzf.vim'
 let g:fzf_command_prefix = 'Fzf'
 nnoremap <C-t>  :FzfFiles<CR>
 nnoremap <C-t><C-t> :FzfFiles <UP><CR>
-nnoremap <C-t>f :FzfFiles
+nnoremap <C-t>f :FzfFiles<Space>
 nnoremap <C-t>m :FzfMarks<CR>
 nnoremap <C-t>l :FzfBLines<CR>
 nnoremap <C-t>L :FzfLines<CR>
