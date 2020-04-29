@@ -361,12 +361,14 @@ map <leader>bd :bdelete<cr>
 highlight MyCurrentHighlightGroup ctermbg=green guibg=green
 let g:highlight_active = 0
 let g:myCurrentHighlightGroup = matchadd("MyCurrentHighlightGroup", "")
-function HighlightCurrentWord(_word)
+nnoremap <A-h> :call ToggleWordHighlight(expand("<cword>"))<CR>
+
+function! HighlightCurrentWord(_word)
 	let g:highlight_active = 1
 	let g:myCurrentHighlightGroup = matchadd("MyCurrentHighlightGroup", a:_word)
 endfunction
 
-function UnHighlightCurrentWord()
+function! UnHighlightCurrentWord()
 	call matchdelete(g:myCurrentHighlightGroup)
 	let g:highlight_active = 0
 endfunction
@@ -379,10 +381,46 @@ function! ToggleWordHighlight(_word)
 	endif
 endfunction
 
-nmap <leader>* <Plug>(operator-ToggleWordHighlight)
-xmap <leader>* <Plug>(operator-ToggleWordHighlight)
 
-nnoremap <leader><leader>h :call ToggleWordHighlight(expand("<cword>"))<CR>
+
+" Highlight all instances of word under cursor, when idle.
+" Useful when studying strange source code.
+" Type z/ to toggle highlighting on/off.
+hi AutoHighlightGroup guibg=green
+let AutoHighlight = matchadd("AutoHighlightGroup", "")
+nnoremap z/ :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
+
+function! ChangeAutoHighlight()
+	for m in filter(getmatches(), { i, v -> l:v.group is? 'AutoHighlightGroup' })
+		call matchdelete(m.id)
+	endfor
+	let AutoHighlight = matchadd("AutoHighlightGroup", expand('<cword>'))
+endfunction
+
+function! ClearAutoHighlight()
+	for m in filter(getmatches(), { i, v -> l:v.group is? 'AutoHighlightGroup' })
+		call matchdelete(m.id)
+	endfor
+endfunction
+
+function! AutoHighlightToggle()
+	if exists('#auto_highlight')
+		au! auto_highlight
+		augroup! auto_highlight
+		setl updatetime=4000
+		call ClearAutoHighlight()
+		echo 'Highlight current word: off'
+		return 0
+	else
+		augroup auto_highlight
+			au!
+			au CursorHold * call  ChangeAutoHighlight()
+		augroup end
+		setl updatetime=100
+		echo 'Highlight current word: ON'
+		return 1
+	endif
+endfunction
 
 
 "
