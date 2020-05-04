@@ -213,8 +213,6 @@ if has("windows")
 	set makeprg=build.bat;
 	set errorformat=\ %#%f(%l\\\,%c):\ %m
 	"set errorformat+=%-G%.%#
-	set shell=cmd
-	set shellcmdflag =/c
 elseif has("unix")
 	let s:uname = system("uname -s")
 	if s:uname == "Darwin"
