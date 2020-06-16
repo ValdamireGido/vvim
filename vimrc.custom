@@ -40,8 +40,8 @@ call plug#begin('~/.vim/plugged')
 	" NERD Tree
 	Plug 'scrooloose/nerdtree'
 	map <F3> :NERDTreeToggle<CR>
-	map <F3><F3> :NERDTreeFocus<CR>
-	map <F3>f :NERDTreeFind<CR>
+	map <leader><F3> :NERDTreeFocus<CR>
+	map <F4> :NERDTreeFind<CR>
 	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 	autocmd FileType nerdtree setlocal relativenumber " enable line numbers
 	let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
@@ -54,7 +54,7 @@ call plug#begin('~/.vim/plugged')
 	Plug 'majutsushi/tagbar'
 	let g:tagbar_sort = 0
 	let g:tagbar_show_linenumbers = -1
-	let g:tagbar_autopreview = 1
+	let g:tagbar_autopreview = 0
 	nnoremap <leader><leader>t :TagbarToggle<CR>
 
 	"
@@ -73,24 +73,20 @@ call plug#begin('~/.vim/plugged')
 
 	" 
 	" FZF 
-	if has('windows')
-		Plug '/c/ProgramData/chocolatey/bin/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	elseif has("unix")
-		Plug '/usr/local/opt/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-	endif
+	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
 	let g:fzf_command_prefix = 'Fzf'
 	nnoremap <C-t>  :FzfFiles<CR>
-	nnoremap <C-t><C-t> :FzfFiles <UP><CR>
-	nnoremap <C-t>f :FzfFiles<Space>
-	nnoremap <C-t>m :FzfMarks<CR>
-	nnoremap <C-t>l :FzfBLines<CR>
-	nnoremap <C-t>L :FzfLines<CR>
-	nnoremap <C-t>b :FzfBuffers<CR>
-	nnoremap <C-t>w :FzfWindows<CR>
-	nnoremap <C-t>t :FzfBTags<CR>
-	nnoremap <C-t>T :FzfTags<CR>
-	nnoremap <C-t>h :FzfHistory<CR>
+	nnoremap <leader>tt :FzfFiles <UP><CR>
+	nnoremap <leader>tf :FzfFiles<Space>
+	nnoremap <leader>tm :FzfMarks<CR>
+	nnoremap <leader>tl :FzfBLines<CR>
+	nnoremap <leader>tL :FzfLines<CR>
+	nnoremap <leader>tb :FzfBuffers<CR>
+	nnoremap <leader>tw :FzfWindows<CR>
+	nnoremap <leader>tt :FzfBTags<CR>
+	nnoremap <leader>tT :FzfTags<CR>
+	nnoremap <leader>th :FzfHistory<CR>
 
 
 	"
@@ -105,7 +101,7 @@ call plug#begin('~/.vim/plugged')
 
 
 	"
-	" Multiple cursor 
+	" Multiple cursor
 	let g:multi_cursor_use_default_mapping = 0
 	Plug 'terryma/vim-multiple-cursors'
 	let g:multi_cursor_select_all_word_key	= '<A-a>'
@@ -114,8 +110,11 @@ call plug#begin('~/.vim/plugged')
 	let g:multi_cursor_prev_key				= '<A-p>'
 
 
-	" Async run 
+	" Async run
 	Plug 'skywind3000/asyncrun.vim'
+	let g:asyncrun_open = 5
+	let g:asyncrun_bell = 1
+	nnoremap <F10> :call asyncrun#quickfix_toggle(5)<CR>
 	command! -complete=shellcmd -nargs=+ Sh        AsyncRun -raw <args>
 	command! -complete=shellcmd -nargs=+ Shell     AsyncRun -raw <args>
 	command! -complete=file     -nargs=+ Git       Sh git <args>
@@ -124,6 +123,9 @@ call plug#begin('~/.vim/plugged')
 	command! -complete=file              SvnInfo   Svn info %
 	command! -complete=file              SvnBlame  Svn blame %
 	command! -complete=file              SvnRevert Svn revert %
+
+	command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+	command! -bang -nargs=* -complete=file Genprj AsyncRun -raw genprj.bat
 
 	"
 	" Clang Format
@@ -135,12 +137,12 @@ call plug#begin('~/.vim/plugged')
 	let g:clang_format#auto_format_on_insert_leave = 0
 
 
-	" 
+	"
 	" Other whitout special settings
 	Plug 'easymotion/vim-easymotion'
 
 	Plug 'tpope/vim-repeat'
-	Plug 'tpope/vim-dispatch'
+	"Plug 'tpope/vim-dispatch'
 	Plug 'tpope/vim-surround'
 	Plug 'xolox/vim-misc'
 	Plug 'kana/vim-operator-user'
@@ -169,7 +171,7 @@ tnoremap <C-L> <C-\><C-n><C-W>l
 
 
 "
-" Copy/Paste (For windows copy buffer currently. 
+" Copy/Paste (For windows copy buffer currently.
 " Have plans to adjust it for use with unix like aslo)
 nnoremap <S-Insert> "+p
 inoremap <S-Insert> "+p
@@ -207,10 +209,10 @@ set noautochdir
 
 "
 " Make settings
-set errorfile=C:/.tmp/errorfile
 if has("windows")
 	" MSBuild error format and settings
 	set makeprg=build.bat;
+	set errorfile=C:/.tmp/errorfile
 	set errorformat=\ %#%f(%l\\\,%c):\ %m
 	"set errorformat+=%-G%.%#
 elseif has("unix")
@@ -322,7 +324,7 @@ command CDP cd -
 "
 " nohl hotkey and exit terminal mode
 nnoremap <ESC><ESC> :nohl<CR>
-tnoremap <ESC><ESC> <C-\><C-n>
+tnoremap <C-\> <C-\><C-n>
  
 
 "
@@ -339,8 +341,8 @@ map <C-;><C-h> :FSSplitLeft<CR>
 map K i<CR><ESC>
 map <leader>n :cn<CR>
 map <leader>p :cp<CR>
-map <leader>o :copen<CR>
-map <leader>c :cclose<CR>
+map <leader>qfo :copen<CR>
+map <leader>qfc :cclose<CR>
 map <leader>r :cr<CR>
 
 
@@ -420,7 +422,7 @@ endfunction
 
 
 "
-" Some special optional settings 
+" Some special optional settings
 if has("gui_running")
 	colorscheme darkblue
 	set guioptions -=T
