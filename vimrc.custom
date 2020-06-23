@@ -84,8 +84,8 @@ call plug#begin('~/.vim/plugged')
 	nnoremap <leader>tL :FzfLines<CR>
 	nnoremap <leader>tb :FzfBuffers<CR>
 	nnoremap <leader>tw :FzfWindows<CR>
-	nnoremap <leader>tt :FzfBTags<CR>
 	nnoremap <leader>tT :FzfTags<CR>
+	nnoremap <leader>tBT :FzfBTags<CR>
 	nnoremap <leader>th :FzfHistory<CR>
 
 
