@@ -94,12 +94,10 @@ call plug#begin('~/.vim/plugged')
 	" Vim grepper
 	Plug 'mhinz/vim-grepper'
 	nnoremap <leader>s :Grepper -tool ag -highlight<CR>
-	nnoremap <leader>S :Grepper -tool ag -buffers -highlight<CR>
-	nnoremap <leader>g :Grepper -tool grep -highlight<CR>
-	nnoremap <leader>G :Grepper -tool grep -buffers -highlight<CR>
+	nnoremap <leader>S :Grepper -tool ag -buffer -highlight<CR>
 	nmap gs <plug>(GrepperOperator)
 	xmap gs <plug>(GrepperOperator)
-
+	let g:grepper.quickfix = 0
 
 	"
 	" Multiple cursor
