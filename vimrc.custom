@@ -181,6 +181,69 @@ vnoremap <C-Insert> "+y
 
 
 "
+" change current working dir to file's working dir
+command CDC cd %:p:h
+command CDP cd -
+
+
+"
+" nohl hotkey and exit terminal mode
+nnoremap <ESC><ESC> :nohl<CR>
+tnoremap <C-\> <C-\><C-n>
+vnoremap <M-/> <Esc>/\%V
+
+"
+" FSwitch mappings
+map <C-;><C-.> :FSHere<CR>
+map <C-;><C-j> :FSSplitBellow<CR>
+map <C-;><C-k> :FSSplitAbove<CR>
+map <C-;><C-l> :FSSplitRight<CR>
+map <C-;><C-h> :FSSplitLeft<CR>
+
+
+"
+" Custom mappings for editing
+map K i<CR><ESC>
+map <A-i> i<CR><ESC>O
+map <leader>n :cn<CR>
+map <leader>p :cp<CR>
+map <leader>r :cr<CR>
+
+
+let g:quickfixlist_openned = 0
+function! ToggleQuickfixList()
+	if g:quickfixlist_openned == 1
+		cclose
+		let g:quickfixlist_openned = 0
+	else
+		copen
+		let g:quickfixlist_openned = 1
+	endif
+endfunction
+
+let g:locationlist_openned = 0
+function! ToggleLocationList()
+	if g:locationlist_openned == 1
+		lclose
+		let g:locationlist_openned = 0
+	else
+		lopen
+		let g:locationlist_openned = 1
+	endif
+endfunction
+
+nnoremap <F6>   :call ToggleQuickfixList()<CR>
+nnoremap <F7>   :call ToggleLocationList()<CR>
+
+"
+" Buffers controls
+map <leader>bn :bn<cr>
+map <leader>bp :bp<cr>
+map <leader>bl :ls<cr>
+map <leader>bd :bdelete<cr>
+
+
+"
 " OmniCppComplete
 let OmniCpp_NamespaceSearch = 1
 let OmniCpp_GlobalScopeSearch = 1
@@ -312,45 +375,6 @@ function ToggleHex()
   let &readonly=l:oldreadonly
   let &modifiable=l:oldmodifiable
 endfunction
-
-
-"
-" change current working dir to file's working dir
-command CDC cd %:p:h
-command CDP cd -
-
-
-"
-" nohl hotkey and exit terminal mode
-nnoremap <ESC><ESC> :nohl<CR>
-tnoremap <C-\> <C-\><C-n>
- 
-
-"
-" FSwitch mappings
-map <C-;><C-.> :FSHere<CR>
-map <C-;><C-j> :FSSplitBellow<CR>
-map <C-;><C-k> :FSSplitAbove<CR>
-map <C-;><C-l> :FSSplitRight<CR>
-map <C-;><C-h> :FSSplitLeft<CR>
-
-
-"
-" Custom mappings for editing
-map K i<CR><ESC>
-map <leader>n :cn<CR>
-map <leader>p :cp<CR>
-map <leader>qfo :copen<CR>
-map <leader>qfc :cclose<CR>
-map <leader>r :cr<CR>
-
-
-"
-" Buffers controls
-map <leader>bn :bn<cr>
-map <leader>bp :bp<cr>
-map <leader>bl :ls<cr>
-map <leader>bd :bdelete<cr>
 
 
 "
