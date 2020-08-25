@@ -116,6 +116,7 @@ call plug#begin('~/.vim/plugged')
 	nnoremap <leader>S :Grepper -tool ag -buffer -highlight<CR>
 	nmap gs <plug>(GrepperOperator)
 	xmap gs <plug>(GrepperOperator)
+	let g:grepper = {}
 	let g:grepper.quickfix = 0
 
 	"
@@ -158,16 +159,13 @@ call plug#begin('~/.vim/plugged')
 	"
 	" Other whitout special settings
 	Plug 'easymotion/vim-easymotion'
-
 	Plug 'tpope/vim-repeat'
-	"Plug 'tpope/vim-dispatch'
 	Plug 'tpope/vim-surround'
 	Plug 'xolox/vim-misc'
 	Plug 'kana/vim-operator-user'
-
 	Plug 'vim-airline/vim-airline'
-
 	Plug 'vim-scripts/vcscommand.vim'
+	Plug 'godlygeek/tabular'
 
 call plug#end()
 
@@ -224,35 +222,7 @@ map <C-;><C-h> :FSSplitLeft<CR>
 " Custom mappings for editing
 map K i<CR><ESC>
 map <A-i> i<CR><ESC>O
-map <leader>n :cn<CR>
-map <leader>p :cp<CR>
-map <leader>r :cr<CR>
 
-
-let g:quickfixlist_openned = 0
-function! ToggleQuickfixList()
-	if g:quickfixlist_openned == 1
-		cclose
-		let g:quickfixlist_openned = 0
-	else
-		copen
-		let g:quickfixlist_openned = 1
-	endif
-endfunction
-
-let g:locationlist_openned = 0
-function! ToggleLocationList()
-	if g:locationlist_openned == 1
-		lclose
-		let g:locationlist_openned = 0
-	else
-		lopen
-		let g:locationlist_openned = 1
-	endif
-endfunction
-
-nnoremap <F6>   :call ToggleQuickfixList()<CR>
-nnoremap <F7>   :call ToggleLocationList()<CR>
 
 "
 " Buffers controls
@@ -294,8 +264,9 @@ if has("windows")
 	" MSBuild error format and settings
 	set makeprg=build.bat;
 	set errorfile=C:/.tmp/errorfile
-	set errorformat=\ %#%f(%l\\\,%c):\ %m
+	"set errorformat=\ %#%f(%l\\\,%c):\ %m
 	"set errorformat+=%-G%.%#
+	"set errorformat=%f:%l:%c:\ %t%s:\ %m
 elseif has("unix")
 	let s:uname = system("uname -s")
 	if s:uname == "Darwin"
