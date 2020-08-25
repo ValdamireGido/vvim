@@ -44,9 +44,10 @@ call plug#begin('~/.vim/plugged')
 	map <F4> :NERDTreeFind<CR>
 	autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTree") && b:NERDTree.isTabTree()) | q | endif
 	autocmd FileType nerdtree setlocal relativenumber " enable line numbers
-	let g:NERDTreeShowLineNumbers = 1      " make sure relative line numbers are used
-	let g:NERDTreeMapActivateNode = 'l'    " vifm like open node on 'l'
+	let g:NERDTreeShowLineNumbers    = 1      " make sure relative line numbers are used
+	let g:NERDTreeMapActivateNode    = 'l'    " vifm like open node on 'l'
 	let g:NERDTreeMapOpenRecursively = 'L' " open node recursively
+	let g:NERDTreeWinSize            = 50
 
 
 	"
