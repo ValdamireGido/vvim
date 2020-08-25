@@ -59,6 +59,28 @@ call plug#begin('~/.vim/plugged')
 	let g:tagbar_left = 0
 	nnoremap <leader><leader>t :TagbarToggle<CR>
 
+
+	"
+	" Quickfix and location lists pluging 
+	Plug 'romainl/vim-qf'
+	let g:qf_shorten_path       = 0
+	let g:qf_auto_quit          = 0
+	let g:qf_auto_open_quickfix = 0
+	let g:qf_auto_open_loclist  = 0
+	nmap <leader>n <plug>(qf_qf_next)
+	xmap <leader>n <plug>(qf_qf_next)
+	nmap <leader>N <plug>(qf_qf_previous)
+	xmap <leader>N <plug>(qf_qf_previous)
+	nmap <leader>g <plug>(qf_loc_next)
+	xmap <leader>g <plug>(qf_loc_next)
+	nmap <leader>G <plug>(qf_loc_previous)
+	xmap <leader>G <plug>(qf_loc_previous)
+	nmap <F6> <plug>(qf_qf_toggle_stay)
+	xmap <F6> <plug>(qf_qf_toggle_stay)
+	nmap <F7> <plug>(qf_loc_toggle_stay)
+	xmap <F7> <plug>(qf_loc_toggle_stay)
+
+
 	"
 	" Workspace pluging and settings
 	set sessionoptions-=blank
