@@ -120,6 +120,22 @@ call plug#begin('~/.vim/plugged')
 	let g:grepper.quickfix = 0
 
 	"
+	" COC NVIM
+	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+	nmap <silent> <leader>cd <plug>(coc-definition)
+	nmap <silent> <leader>cD <plug>(coc-declaration)
+	nmap <silent> <leader>ci <plug>(coc-implementation)
+	nmap <silent> <leader>cr <plug>(coc-references)
+	xmap if <Plug>(coc-funcobj-i)
+	omap if <Plug>(coc-funcobj-i)
+	xmap af <Plug>(coc-funcobj-a)
+	omap af <Plug>(coc-funcobj-a)
+	xmap ic <Plug>(coc-classobj-i)
+	omap ic <Plug>(coc-classobj-i)
+	xmap ac <Plug>(coc-classobj-a)
+	omap ac <Plug>(coc-classobj-a)
+
+	"
 	" Multiple cursor
 	let g:multi_cursor_use_default_mapping = 0
 	Plug 'terryma/vim-multiple-cursors'
