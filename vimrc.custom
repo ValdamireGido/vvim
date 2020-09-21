@@ -88,7 +88,6 @@ call plug#begin('~/.vim/plugged')
 	let g:workspace_autosave = 0
 	let g:workspace_session_disable_on_args = 1
 	let g:workspace_autosave_ignore = ['gitcommit', 'qf', 'nerdtree', 'tagbar']
-	nnoremap <leader><leader>w :ToggleWorkspace<CR>
 
 
 	" 
@@ -121,19 +120,27 @@ call plug#begin('~/.vim/plugged')
 
 	"
 	" COC NVIM
-	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-	nmap <silent> <leader>cd <plug>(coc-definition)
-	nmap <silent> <leader>cD <plug>(coc-declaration)
-	nmap <silent> <leader>ci <plug>(coc-implementation)
-	nmap <silent> <leader>cr <plug>(coc-references)
-	xmap if <Plug>(coc-funcobj-i)
-	omap if <Plug>(coc-funcobj-i)
-	xmap af <Plug>(coc-funcobj-a)
-	omap af <Plug>(coc-funcobj-a)
-	xmap ic <Plug>(coc-classobj-i)
-	omap ic <Plug>(coc-classobj-i)
-	xmap ac <Plug>(coc-classobj-a)
-	omap ac <Plug>(coc-classobj-a)
+"	Plug 'neoclide/coc.nvim', {'branch': 'release'}
+"	nmap <silent> <leader>cd <plug>(coc-definition)
+"	nmap <silent> <leader>cD <plug>(coc-declaration)
+"	nmap <silent> <leader>ci <plug>(coc-implementation)
+"	nmap <silent> <leader>cr <plug>(coc-references)
+"	xmap if <Plug>(coc-funcobj-i)
+"	omap if <Plug>(coc-funcobj-i)
+"	xmap af <Plug>(coc-funcobj-a)
+"	omap af <Plug>(coc-funcobj-a)
+"	xmap ic <Plug>(coc-classobj-i)
+"	omap ic <Plug>(coc-classobj-i)
+"	xmap ac <Plug>(coc-classobj-a)
+"	omap ac <Plug>(coc-classobj-a)
+
+
+	if has('nvim')
+		"
+		" LSP Plugin 
+		Plug 'neovim/nvim-lsp'
+		Plug 'neovim/nvim-lspconfig'
+	endif
 
 	"
 	" Multiple cursor
@@ -188,6 +195,33 @@ call plug#begin('~/.vim/plugged')
 	Plug 'godlygeek/tabular'
 
 call plug#end()
+
+
+if has('nvim')
+
+lua << EOF
+local lsp = require 'nvim_lsp'
+lsp.clangd.setup {
+	cmd = { "clangd", "--background-index" },
+	filetypes = { "c", "cpp", "objc", "objcpp" },
+	root_dir = dirname,
+}
+EOF
+	
+	setlocal omnifunc=v:lua.vim.lsp.omnifunc
+	nnoremap <silent> <leader>i <cmd>lua vim.lsp.buf.hover()<CR>
+	nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
+	nnoremap <silent> gd        <cmd>lua vim.lsp.buf.declaration()<CR>
+	nnoremap <silent> gD        <cmd>lua vim.lsp.buf.implementation()<CR>
+	nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
+	nnoremap <silent> gn        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
+	nnoremap <silent> g0        <cmd>lua vim.lsp.buf.document_symbol()<CR>
+	"nnoremap <silent> <leader>gs <cmd>lua vim.lsp.buf.signature_help()<CR>
+
+	command! LSPRename :lua vim.lsp.buf.rename()
+
+	let g:lsp_diagnostics_echo_cursor = 1
+endif
 
 
 "
@@ -457,7 +491,6 @@ endfunction
 "
 " Some special optional settings
 if has("gui_running")
-	colorscheme darkblue
 	set guioptions -=T
 else
 	"set term=xterm
