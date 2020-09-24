@@ -118,28 +118,15 @@ call plug#begin('~/.vim/plugged')
 	let g:grepper = {}
 	let g:grepper.quickfix = 0
 
-	"
-	" COC NVIM
-"	Plug 'neoclide/coc.nvim', {'branch': 'release'}
-"	nmap <silent> <leader>cd <plug>(coc-definition)
-"	nmap <silent> <leader>cD <plug>(coc-declaration)
-"	nmap <silent> <leader>ci <plug>(coc-implementation)
-"	nmap <silent> <leader>cr <plug>(coc-references)
-"	xmap if <Plug>(coc-funcobj-i)
-"	omap if <Plug>(coc-funcobj-i)
-"	xmap af <Plug>(coc-funcobj-a)
-"	omap af <Plug>(coc-funcobj-a)
-"	xmap ic <Plug>(coc-classobj-i)
-"	omap ic <Plug>(coc-classobj-i)
-"	xmap ac <Plug>(coc-classobj-a)
-"	omap ac <Plug>(coc-classobj-a)
-
 
 	if has('nvim')
 		"
 		" LSP Plugin 
 		Plug 'neovim/nvim-lsp'
 		Plug 'neovim/nvim-lspconfig'
+		Plug 'nvim-lua/diagnostic-nvim'
+		let g:diagnostic_enable_virtual_text = 0
+		let g:diagnostic_enable_underline = 1
 	endif
 
 	"
@@ -205,7 +192,32 @@ lsp.clangd.setup {
 	cmd = { "clangd", "--background-index" },
 	filetypes = { "c", "cpp", "objc", "objcpp" },
 	root_dir = dirname,
+	on_attach = require'diagnostic'.on_attach,
 }
+
+-- populate quickfix list with diagnostics 
+local method = "textDocument/publishDiagnostics" 
+local default_callback = vim.lsp.callbacks[method] 
+vim.lsp.callbacks[method] = function(err, method, result, client_id) 
+default_callback(err, method, result, client_id) 
+if result and result.diagnostics then 
+	local item_list = {} 
+	for _, v in ipairs(result.diagnostics) do 
+		local fname = result.uri table.insert(item_list, { 
+			filename = fname, lnum = v.range.start.line + 1, col = v.range.start.character + 1; 
+			text = v.message; 
+			}) 
+		end 
+		local old_items = vim.fn.getqflist() 
+		for _, old_item in ipairs(old_items) do 
+			local bufnr = vim.uri_to_bufnr(result.uri) 
+			if vim.uri_from_bufnr(old_item.bufnr) ~= result.uri then 
+				table.insert(item_list, old_item) 
+			end 
+		end 
+		vim.fn.setqflist({}, ' ', { title = 'LSP'; items = item_list; }) 
+	end 
+end
 EOF
 	
 	setlocal omnifunc=v:lua.vim.lsp.omnifunc
@@ -497,5 +509,4 @@ else
 	set mouse=a
 	set nocompatible
 endif
-
 
