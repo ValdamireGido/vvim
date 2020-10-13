@@ -127,6 +127,7 @@ call plug#begin('~/.vim/plugged')
 		Plug 'nvim-lua/diagnostic-nvim'
 		let g:diagnostic_enable_virtual_text = 0
 		let g:diagnostic_enable_underline = 1
+		Plug 'nvim-lua/lsp-status.nvim'
 	endif
 
 	"
@@ -187,15 +188,25 @@ call plug#end()
 if has('nvim')
 
 lua << EOF
-local lsp = require 'nvim_lsp'
-lsp.clangd.setup {
-	cmd = { "clangd", "--background-index" },
-	filetypes = { "c", "cpp", "objc", "objcpp" },
-	root_dir = dirname,
-	on_attach = require'diagnostic'.on_attach,
-}
 
--- populate quickfix list with diagnostics 
+local lsp = require 'nvim_lsp'
+local lsp_status = require 'lsp-status'
+lsp_status.register_progress()
+
+lsp.clangd.setup({
+	capabilities = lsp_status.capabilities,
+	on_attach = lsp_status.on_attach,
+	init_options = {
+		clangdFileStatus = true
+	},
+})
+lsp.pyls.setup({
+	capabilities = lsp_status.capabilities,
+	on_attach = lsp_status.on_attach,
+})
+
+
+---[[ populate quickfix list with diagnostics 
 local method = "textDocument/publishDiagnostics" 
 local default_callback = vim.lsp.callbacks[method] 
 vim.lsp.callbacks[method] = function(err, method, result, client_id) 
@@ -212,13 +223,16 @@ if result and result.diagnostics then
 		for _, old_item in ipairs(old_items) do 
 			local bufnr = vim.uri_to_bufnr(result.uri) 
 			if vim.uri_from_bufnr(old_item.bufnr) ~= result.uri then 
-				table.insert(item_list, old_item) 
+				table.insert(item_list, old_item)
 			end 
 		end 
 		vim.fn.setqflist({}, ' ', { title = 'LSP'; items = item_list; }) 
 	end 
 end
+
 EOF
+
+
 	
 	setlocal omnifunc=v:lua.vim.lsp.omnifunc
 	nnoremap <silent> <leader>i <cmd>lua vim.lsp.buf.hover()<CR>
@@ -233,6 +247,17 @@ EOF
 	command! LSPRename :lua vim.lsp.buf.rename()
 
 	let g:lsp_diagnostics_echo_cursor = 1
+
+	"
+	" Statusline
+	function! LspStatus() abort
+	  if luaeval('#vim.lsp.buf_get_clients() > 0')
+		return luaeval("require('lsp-status').status()")
+	  endif
+	  return ''
+	endfunction
+
+	let g:airline_section_y = '%{LspStatus()}'
 endif
 
 
