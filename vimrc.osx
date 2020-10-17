@@ -1,3 +1,0 @@
-nnoremap ,c :tabedit $HOME/.vimrc<CR>
-
-
