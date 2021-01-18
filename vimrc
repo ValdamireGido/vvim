@@ -155,6 +155,7 @@ call plug#begin('~/.vim/plugged')
 	command! -complete=file              SvnRevert Svn revert %
 
 	command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
+	command! -bang -nargs=* -complete=file Clean AsyncRun -raw clean.bat <args>
 	command! -bang -nargs=* -complete=file Genprj AsyncRun -raw genprj.bat <args>
 
 	"
@@ -275,6 +276,9 @@ nnoremap <C-H> <C-W>h
 tnoremap <C-H> <C-\><C-n><C-W>h
 nnoremap <C-L> <C-W>l
 tnoremap <C-L> <C-\><C-n><C-W>l
+
+nnoremap <C-W>m <C-W>25-<C-W>25<
+nnoremap <C-W>M <C-W>25+<C-W>25>
 
 
 "
