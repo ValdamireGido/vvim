@@ -1,48 +1,66 @@
---vim.cmd [[ packadd nlua.nvim ]]
-local lsp        = require('lspconfig')
-local completion = require('completion')
-local configs    = require('lspconfig/configs')
-local lsp_status = require('lsp-status')
-lsp_status.register_progress()
 
-local mapper = function(mode, key, result)
-  vim.api.nvim_buf_set_keymap(0, mode, key, "<cmd>lua "..result.."<cr>", {noremap = true, silent = true})
+local lsp = require('lspconfig')
+local completion = require('completion')
+local status = require('ex.lsp_status')
+--local configs = require('lspconfig/configs')
+status.activate()
+
+local custom_attach = function(client)
+    completion.on_attach({
+        chain_completion_list=require('ex.completion').chain_completion_list,
+    })
+    status.on_attach(client)
 end
 
-configs.lualsp = {
-	default_config = {
-		cmd = { 'lua-language-server' };
-		filetypes = { 'lua' };
-		root_dir = function(fname)
-			return lsp.util.find_git_ancestor(fname) or vim.loop.os_homedir()
-		end;
-		settings = {};
-	}
-}
-
-
---------------------------------------------------------------------------
-
-lsp.ocamllsp.setup{
-  on_attach = custom_attach
-}
-
 lsp.clangd.setup{
-	capabilities = lsp_status.capabilities,
-	on_attach = lsp_status.on_attach,
+	on_attach = custom_attach,
 	init_options = {
 		clangdFileStatus = true
 	},
 }
 
+lsp.jdtls.setup{
+	on_attach = custom_attach
+}
+
 lsp.pyls.setup{
-	capabilities = lsp_status.capabilities,
-	on_attach = lsp_status.on_attach,
+	on_attach = custom_attach,
+	cmd = { 'pyls', '-v' }
 }
 
 lsp.vimls.setup{
-	capabilities = lsp_status.capabilities,
-	on_attach = lsp_status.on_attach,
+	on_attach = custom_attach
+}
+
+local lua_language_server_path = 'D:\\reps\\lua-language-server\\'
+lsp.sumneko_lua.setup{
+	cmd = { lua_language_server_path..'bin\\Windows\\lua-language-server.exe', '-E', lua_language_server_path..'main.lua' },
+	settings = {
+		Lua = {
+			diagnostics = {
+				globals = {'vim'},
+			},
+			workspace = {
+				library = {
+					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
+					[vim.fn.expand('$VIMRUNTIME/lua/nim/lsp')] = true,
+				}
+			}
+		}
+	},
+	on_attach = custom_attach
+}
+
+lsp.bashls.setup{
+	on_attach = custom_attach
+}
+
+lsp.groovyls.setup{
+	on_attach = custom_attach
+}
+
+lsp.omnisharp.setup{
+	on_attach = custom_attach
 }
 
 --------------------------------------------------------------------------
