@@ -33,7 +33,7 @@ set errorfile=$HOME/.tmp/error.err
 "
 " Vim Plug entries
 "
-call plug#begin('~/.vim/plugged')
+call plug#begin()
 
 
 	"
@@ -95,9 +95,13 @@ call plug#begin('~/.vim/plugged')
 	Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 	Plug 'junegunn/fzf.vim'
 	let g:fzf_command_prefix = 'Fzf'
+	" let $FZF_DEFAULT_COMMAND = 'ag -g ""'
+	let $FZF_DELUALT_COMMAND = 'rg --files '
 	nnoremap <C-t>  :FzfFiles<CR>
 	nnoremap <leader>tt :FzfFiles <UP><CR>
 	nnoremap <leader>tf :FzfFiles<Space>
+	nnoremap <leader>th :FzfHistory<CR>
+	nnoremap <leader>ts :FzfAg<CR>
 	nnoremap <leader>tm :FzfMarks<CR>
 	nnoremap <leader>tl :FzfBLines<CR>
 	nnoremap <leader>tL :FzfLines<CR>
@@ -105,7 +109,6 @@ call plug#begin('~/.vim/plugged')
 	nnoremap <leader>tw :FzfWindows<CR>
 	nnoremap <leader>tT :FzfTags<CR>
 	nnoremap <leader>tBT :FzfBTags<CR>
-	nnoremap <leader>th :FzfHistory<CR>
 
 
 	"
@@ -119,27 +122,25 @@ call plug#begin('~/.vim/plugged')
 	let g:grepper.quickfix = 0
 
 
-	if has('nvim')
+	if has('nvim-0.5')
 		"
 		" LSP Plugin 
 		Plug 'neovim/nvim-lsp'
-		Plug 'neovim/nvim-lspconfig'
-		Plug 'nvim-lua/diagnostic-nvim'
 		let g:diagnostic_enable_virtual_text = 0
 		let g:diagnostic_enable_underline = 1
+		Plug 'nvim-lua/diagnostic-nvim'
 		Plug 'nvim-lua/lsp-status.nvim'
+		Plug 'nvim-lua/completion-nvim'
+		set completeopt=menuone,noinsert
+		let g:completion_chain_complete_list = [
+			\{'complete_items': ['lsp', 'snippet', 'tags']},
+			\{'mode': '<c-p>'},
+			\{'mode': '<c-n>'}
+		\]
 	endif
 
+
 	"
-	" Multiple cursor
-	let g:multi_cursor_use_default_mapping = 0
-	Plug 'terryma/vim-multiple-cursors'
-	let g:multi_cursor_select_all_word_key	= '<A-a>'
-	let g:multi_cursos_select_all_key		= 'g<A-a>'
-	let g:multi_cursor_netx_key				= '<A-n>'
-	let g:multi_cursor_prev_key				= '<A-p>'
-
-
 	" Async run
 	Plug 'skywind3000/asyncrun.vim'
 	let g:asyncrun_open = 5
@@ -154,9 +155,12 @@ call plug#begin('~/.vim/plugged')
 	command! -complete=file              SvnBlame  Svn blame %
 	command! -complete=file              SvnRevert Svn revert %
 
+	command! -bang -nargs=* -complete=file Run AsyncRun -raw run.bat <args>
 	command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
 	command! -bang -nargs=* -complete=file Clean AsyncRun -raw clean.bat <args>
 	command! -bang -nargs=* -complete=file Genprj AsyncRun -raw genprj.bat <args>
+
+	nnoremap <F5> :Run<CR>
 
 	"
 	" Clang Format
@@ -171,6 +175,12 @@ call plug#begin('~/.vim/plugged')
 	" Vim mark bar 
 	Plug 'Yilin-Yang/vim-markbar'
 
+	"
+	" Vim airline 
+	Plug 'vim-airline/vim-airline'
+	let g:airline#extensions#grepper#enabled = 1
+	let g:airline#extension#term#enabled = 1
+	let g:airline#extensions#nvimlsp#enabled = 1
 
 	"
 	" Other whitout special settings
@@ -179,63 +189,17 @@ call plug#begin('~/.vim/plugged')
 	Plug 'tpope/vim-surround'
 	Plug 'xolox/vim-misc'
 	Plug 'kana/vim-operator-user'
-	Plug 'vim-airline/vim-airline'
 	Plug 'vim-scripts/vcscommand.vim'
 	Plug 'godlygeek/tabular'
 
 call plug#end()
 
 
-if has('nvim')
-
-lua << EOF
-
-local lsp = require 'nvim_lsp'
-local lsp_status = require 'lsp-status'
-lsp_status.register_progress()
-
-lsp.clangd.setup({
-	capabilities = lsp_status.capabilities,
-	on_attach = lsp_status.on_attach,
-	init_options = {
-		clangdFileStatus = true
-	},
-})
-lsp.pyls.setup({
-	capabilities = lsp_status.capabilities,
-	on_attach = lsp_status.on_attach,
-})
-
-
----[[ populate quickfix list with diagnostics 
-local method = "textDocument/publishDiagnostics" 
-local default_callback = vim.lsp.callbacks[method] 
-vim.lsp.callbacks[method] = function(err, method, result, client_id) 
-default_callback(err, method, result, client_id) 
-if result and result.diagnostics then 
-	local item_list = {} 
-	for _, v in ipairs(result.diagnostics) do 
-		local fname = result.uri table.insert(item_list, { 
-			filename = fname, lnum = v.range.start.line + 1, col = v.range.start.character + 1; 
-			text = v.message; 
-			}) 
-		end 
-		local old_items = vim.fn.getqflist() 
-		for _, old_item in ipairs(old_items) do 
-			local bufnr = vim.uri_to_bufnr(result.uri) 
-			if vim.uri_from_bufnr(old_item.bufnr) ~= result.uri then 
-				table.insert(item_list, old_item)
-			end 
-		end 
-		vim.fn.setqflist({}, ' ', { title = 'LSP'; items = item_list; }) 
-	end 
-end
-
-EOF
-
-
+if has('nvim-0.5')
+	lua require('lua_config')
+	lua vim.lsp.set_log_level("debug")
 	
-	setlocal omnifunc=v:lua.vim.lsp.omnifunc
+	set omnifunc=v:lua.vim.lsp.omnifunc
 	nnoremap <silent> <leader>i <cmd>lua vim.lsp.buf.hover()<CR>
 	nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
 	nnoremap <silent> gd        <cmd>lua vim.lsp.buf.declaration()<CR>
@@ -265,6 +229,7 @@ endif
 "
 " Basic movement and often used commands
 command Q :qa!
+command W :w!
 
 nnoremap <C-.> :<UP><CR>
 
@@ -284,12 +249,12 @@ nnoremap <C-W>M <C-W>25+<C-W>25>
 "
 " Copy/Paste (For windows copy buffer currently.
 " Have plans to adjust it for use with unix like aslo)
-nnoremap <S-Insert> "+p
-inoremap <S-Insert> "+p
-vnoremap <S-Insert> "+p
-nnoremap <C-Insert> "+y
-inoremap <C-Insert> "+y
-vnoremap <C-Insert> "+y
+nnoremap <A-p> "+p
+inoremap <A-p> "+p
+vnoremap <A-p> "+p
+nnoremap <A-y> "+y
+inoremap <A-y> "+y
+vnoremap <A-y> "+y
 
 
 "
@@ -327,20 +292,6 @@ map <leader>bl :ls<cr>
 map <leader>bd :bdelete<cr>
 
 
-"
-" OmniCppComplete
-let OmniCpp_NamespaceSearch = 1
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_ShowAccess = 1
-let OmniCpp_ShowPrototypeInAbbr = 1 " show function parameters
-let OmniCpp_MayCompleteDot = 1 " autocomplete after .
-let OmniCpp_MayCompleteArrow = 1 " autocomplete after ->
-let OmniCpp_MayCompleteScope = 1 " autocomplete after ::
-let OmniCpp_DefaultNamespaces = ["std", "_GLIBCXX_STD"]
-" automatically open and close the popup menu / preview window
-au CursorMovedI,InsertLeave * if pumvisible() == 0|silent! pclose|endif
-set completeopt=menuone,menu,longest,preview
-
 
 "
 " Ctags file generation
@@ -349,7 +300,7 @@ command! -complete=file -nargs=* GenerateCtags :!ctags -R --sort=yes --c++-kinds
 
 "
 " Tags file settings
-set tags=tags;
+set tags=./tags,tags;/
 set noautochdir
 
 
@@ -492,7 +443,7 @@ endfunction
 " Highlight all instances of word under cursor, when idle.
 " Useful when studying strange source code.
 " Type z/ to toggle highlighting on/off.
-hi AutoHighlightGroup guibg=green
+hi AutoHighlightGroup guibg=darkblue
 let AutoHighlight = matchadd("AutoHighlightGroup", "")
 nnoremap z/ :if AutoHighlightToggle()<Bar>set hls<Bar>endif<CR>
 
@@ -538,4 +489,3 @@ else
 	set mouse=a
 	set nocompatible
 endif
-
