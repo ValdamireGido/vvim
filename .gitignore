@@ -2,7 +2,7 @@
 *.netrwhist
 *.swp
 .vim
-plugged
 Session.vim
 vim/.undodir
 .undodir
+plugged
