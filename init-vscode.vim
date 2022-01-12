@@ -1,4 +1,5 @@
 
+language en_US
 set number relativenumber
 set incsearch
 set hlsearch
