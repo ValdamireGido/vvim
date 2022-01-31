@@ -168,9 +168,9 @@ call plug#begin()
 	command! -complete=file     -nargs=+ Git       Sh git <args>
 	command! -complete=file     -nargs=+ GitStatus Sh git status <args>
 	command! -complete=file     -nargs=+ Svn       Sh svn <args>
-	command! -complete=file              SvnInfo   Svn info %
-	command! -complete=file              SvnBlame  Svn blame %
-	command! -complete=file              SvnRevert Svn revert %
+	command! -complete=file     -nargs=+ SvnInfo   Svn info %
+	command! -complete=file     -nargs=+ SvnBlame  Svn blame %
+	command! -complete=file     -nargs=+ SvnRevert Svn revert %
 
 	command! -bang -nargs=* -complete=file Run AsyncRun -raw run.bat <args>
 	command! -bang -nargs=* -complete=file Make AsyncRun -program=make @ <args>
@@ -217,7 +217,7 @@ call plug#begin()
 call plug#end()
 
 
-if has('nvim-0.5')
+"if has('nvim-0.5')
 	lua require('lua_config')
 	lua vim.lsp.set_log_level("debug")
 	
@@ -245,7 +245,7 @@ if has('nvim-0.5')
 	endfunction
 
 	let g:airline_section_y = '%{LspStatus()}'
-endif
+"endif
 
 
 "

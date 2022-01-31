@@ -1,4 +1,5 @@
 
+--[[
 local lsp = require('lspconfig')
 local completion = require('completion')
 local status = require('ex.lsp_status')
@@ -88,4 +89,6 @@ if result and result.diagnostics then
 		vim.fn.setqflist({}, ' ', { title = 'LSP'; items = item_list; })
 	end
 end
+]]
+
 ]]
