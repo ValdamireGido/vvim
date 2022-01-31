@@ -6,6 +6,13 @@ imap jj <ESC>
 
 nmap <C-O> :vsc View.NavigateBackward<CR>
 nmap <C-I> :vsc View.NavigateForward<CR>
+nmap gh :vsc Edit.QuickInfo<CR>
+vmap gc :vsc Edit.CommentSelection<CR>
+nmap gc :vsc Edit.CommentSelection<CR>
+vmap gC :vsc Edit.UncommentSelection<CR>
+nmap gC :vsc Edit.UncommentSelection<CR>
 " nmap <C-]> :vsc Edit.GoToDefinition<CR>
+
+imap <C-s><C-c> <CR>{}<ESC>i<CR><ESC>O
 
 nmap ,c :tabe ~/_vsvimrc<CR>
