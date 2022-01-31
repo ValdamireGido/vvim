@@ -7,3 +7,5 @@ imap jj <ESC>
 nmap <C-O> :vsc View.NavigateBackward<CR>
 nmap <C-I> :vsc View.NavigateForward<CR>
 " nmap <C-]> :vsc Edit.GoToDefinition<CR>
+
+nmap ,c :tabe ~/_vsvimrc<CR>
