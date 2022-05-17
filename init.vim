@@ -19,7 +19,7 @@ set cursorline
 set title
 
 " Cursor line settings
-hi CursorLine cterm=NONE ctermbg=darkred ctermfg=NONE
+hi CursorLine cterm=NONE ctermbg=darkgray ctermfg=NONE
 
 
 "
@@ -45,8 +45,6 @@ call plug#begin()
 	let g:NERDTreeMapActivateNode    = 'l'    " vifm like open node on 'l'
 	let g:NERDTreeMapOpenRecursively = 'L' " open node recursively
 	let g:NERDTreeWinSize            = 50
-	let g:NERDTreeDirArrowExpandable = '▸'
-	let g:NERDTreeDirArrowCollapsible = '▾'
 
 	"
 	" DevIcons
