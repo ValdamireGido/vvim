@@ -1,4 +1,4 @@
-language en_US
+source ~/AppData/Local/nvim/init-common.vim
 colorscheme jellybeans
 noremap ,c :tabe $MYVIMRC<CR>
 
