@@ -4,17 +4,8 @@ set number relativenumber
 set incsearch
 set hlsearch
 set scrolloff=5
-let mapleader = "\<space>"
 
 map <c-.> :<UP><CR>
-map K i<CR><ESC>
-
-" curly brackets typing easieness
-imap <C-t>{ <CR>{}<ESC>i<CR>
-imap <C-t>} {}<ESC>i<CR>
-
-imap <C-t>cm /*<CR>*/<ESC>O
-imap <C-t>cc //
 
 nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
 nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
@@ -31,3 +22,22 @@ augroup filetype_python
     au FileType python nmap ) /^\s*def\s<CR>
 
 augroup END
+
+
+"
+" Some filespecific filetypes
+augroup wscript_filetype
+	au! 
+	autocmd BufNewFile,BufRead wscript 	set ft=python
+augroup END
+
+augroup entry_points_filetype
+	au!
+	autocmd BufNewFile,BufRead entry_points set ft=json
+augroup END
+
+augroup avalauncher_project_filetype
+	au!
+	autocmd BufNewFile,BufRead *.avalauncher-project set ft=json
+augroup END
+

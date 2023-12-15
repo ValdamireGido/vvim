@@ -3,6 +3,9 @@ nmap gc  <Plug>VSCodeCommentary
 omap gc  <Plug>VSCodeCommentary
 nmap gcc <Plug>VSCodeCommentaryLine
 
+nnoremap j gj
+nnoremap k gk
+
 " curly brackets typing easieness
 imap <C-t>{ <CR>{}<ESC>i<CR>
 imap <C-t>} {}<ESC>i<CR>
@@ -29,7 +32,7 @@ augroup filetype_python
     au FileType python nnoremap <buffer> [[ ?^class\\|^\s*def<CR>
     au FileType python nnoremap <buffer> ]] /^class\\|^\s*def<CR>
 
-    au FileType python nmap ( ?^\s*def\s<CR>
-    au FileType python nmap ) /^\s*def\s<CR>
+    au FileType python nnoremap ( ?^\s*def\s<CR>
+    au FileType python nnoremap ) /^\s*def\s<CR>
 
 augroup END
