@@ -1,3 +1,7 @@
+let g:pluginInstallPath = "~/.nvim/plugged"
+" vim plug to neovim lazy adapter
+source ~/AppData/Local/nvim/plug_lazy_adapter.vim
+" common settings
 source ~/AppData/Local/nvim/init-common.vim
 colorscheme jellybeans
 noremap ,c :tabe $MYVIMRC<CR>
@@ -16,6 +20,8 @@ set incsearch
 set hlsearch
 set cursorline
 set title
+set timeoutlen=160
+set ttimeoutlen=5
 
 
 " Cursor line settings
@@ -24,91 +30,59 @@ hi CursorLine cterm=NONE ctermbg=black ctermfg=NONE
 
 let mapleader="\<space>"
 
-"
-" Vim Plug entries
-"
-call plug#begin("~/.nvim/plugged")
 
 
-	Plug 'nvim-tree/nvim-web-devicons'
-	Plug 'nvim-tree/nvim-tree.lua'
+"
+" Vim Plugin entries
+"
+if !has('nvim')
+	call plug#begin(g:pluginInstallPath)
+endif
 
 	"
 	" Tagbar
-	Plug 'majutsushi/tagbar'
+	Plugin 'majutsushi/tagbar'
 	let g:tagbar_sort = 0
 	let g:tagbar_show_linenumbers = -1
 	let g:tagbar_autopreview = 0
 	let g:tagbar_left = 0
 	nnoremap <leader><leader>t :TagbarToggle<CR>
 
-	"
-	" LSP Plugin 
-	Plug 'neovim/nvim-lsp'
-	let g:diagnostic_enable_virtual_text = 0
-	let g:diagnostic_enable_underline = 1
-	Plug 'nvim-lua/diagnostic-nvim'
-	Plug 'nvim-lua/lsp-status.nvim'
-	Plug 'nvim-lua/completion-nvim'
-	set completeopt=menuone,noinsert
-	let g:completion_chain_complete_list = [
-		\{'complete_items': ['lsp', 'snippet', 'tags']},
-		\{'mode': '<c-p>'},
-		\{'mode': '<c-n>'}
-	\]
-
-	"
-	" Vim Spectre (search bar)
-	Plug 'nvim-lua/plenary.nvim'
-	Plug 'nvim-lua/popup.nvim'
-	Plug 'windwp/nvim-spectre'
-	nnoremap <leader>S :lua require('spectre').open()<CR>
+	"Plugin 'nvim-lua/diagnostic-nvim'
+	Plugin 'nvim-lua/lsp-status.nvim'
+	"Plugin 'nvim-lua/completion-nvim'
 
 	"
 	" Other whitout special settings
-	Plug 'tpope/vim-repeat'
-	Plug 'tpope/vim-surround'
-	Plug 'wellle/targets.vim'
-	Plug 'xolox/vim-misc'
-	Plug 'kana/vim-operator-user'
-	Plug 'vim-scripts/vcscommand.vim'
-	Plug 'godlygeek/tabular'
+	Plugin 'tpope/vim-repeat'
+	Plugin 'tpope/vim-surround'
+	Plugin 'wellle/targets.vim'
+	Plugin 'xolox/vim-misc'
+	Plugin 'kana/vim-operator-user'
+	Plugin 'vim-scripts/vcscommand.vim'
+	Plugin 'godlygeek/tabular'
 
-call plug#end()
+if !has('nvim')
+	call plug#end()
+else
+	" lua require("config.lazy")
+endif
 
 
 lua require('init')
 lua require('lua_config')
+lua require('lsp_config')
 lua vim.lsp.set_log_level("debug")
 
 map <F3> :NvimTreeToggle<cr>
 
 set omnifunc=v:lua.vim.lsp.omnifunc
-nnoremap <silent> <leader>i <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> <c-]>     <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gd        <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gD        <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> gr        <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gn        <cmd>lua vim.lsp.buf.workspace_symbol()<CR>
-nnoremap <silent> g0        <cmd>lua vim.lsp.buf.document_symbol()<CR>
-"nnoremap <silent> <leader>gs <cmd>lua vim.lsp.buf.signature_help()<CR>
-
-command! LSPRename :lua vim.lsp.buf.rename()
 
 let g:lsp_diagnostics_echo_cursor = 1
 
 "
-" Statusline
-function! LspStatus() abort
-  if luaeval('#vim.lsp.buf_get_clients() > 0')
-	return luaeval("require('lsp-status').status()")
-  endif
-  return ''
-endfunction
-
-"
 " Basic movement and often used commands
-" inoremap jk <ESC>
+inoremap jk <ESC>
 
 command Q :qa!
 command W :w!

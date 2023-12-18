@@ -7,25 +7,6 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
--- empty setup using defaults
-require("nvim-tree").setup()
-
--- OR setup with some options
-require("nvim-tree").setup({
-  sort = {
-    sorter = "case_sensitive",
-  },
-  view = {
-    width = 30,
-  },
-  renderer = {
-    group_empty = true,
-  },
-  filters = {
-    dotfiles = true,
-  },
-})
-
 -- lazy package manager bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -41,6 +22,28 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 plugins = { 
+	{ "neovim/nvim-lspconfig" },
+	{ "nvim-lua/lsp-status.nvim" },
+	{ 
+	  "nvim-tree/nvim-tree.lua", version = "*", lazy = false,
+	  dependencies = { "nvim-tree/nvim-web-devicons", },
+	  config = function()
+		require("nvim-tree").setup {
+		  sort = {
+			sorter = "case_sensitive",
+		  },
+		  view = {
+			width = 30,
+		  },
+		  renderer = {
+			group_empty = true,
+		  },
+		  filters = {
+			dotfiles = true,
+		  },
+		}
+	  end,
+	},
 	{ 'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { 'nvim-lua/plenary.nvim' } },
 	{ 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons', opt = true } },
 	{
@@ -53,11 +56,16 @@ plugins = {
 			})
 		end
 	},
-	{ 'smoka7/hop.nvim', version = "*", opts = {}, }
+	{ 'smoka7/hop.nvim', version = "*", opts = {}, },
 }
 
 -- lazy PM load
-require("lazy").setup(plugins, opts)
+require("lazy").setup(plugins, {
+	root = vim.g.pluginInstallPath,
+	spec = {
+		LasyPlugSpecs,
+	}
+})
 
 -- Telestope configuration
 local builtin = require('telescope.builtin')

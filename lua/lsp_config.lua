@@ -1,68 +1,27 @@
 
---[[
 local lsp = require('lspconfig')
-local completion = require('completion')
+-- local completion = require('completion')
 local status = require('ex.lsp_status')
 --local configs = require('lspconfig/configs')
 status.activate()
 
-local custom_attach = function(client)
-    completion.on_attach({
-        chain_completion_list=require('ex.completion').chain_completion_list,
-    })
-    --status.on_attach(client)
-end
+-- Global mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
-lsp.clangd.setup{
-	on_attach = custom_attach,
-	init_options = {
-		clangdFileStatus = true
-	},
-}
 
-lsp.jdtls.setup{
-	on_attach = custom_attach
-}
+lsp.clangd.setup { init_options = { clangdFileStatus = true } }
+lsp.jdtls.setup { }
+lsp.pyright.setup {}
+lsp.vimls.setup { }
 
-lsp.pyls.setup{
-	on_attach = custom_attach,
-	cmd = { 'pyls', '-v' }
-}
-
-lsp.vimls.setup{
-	on_attach = custom_attach
-}
-
-local lua_language_server_path = 'D:\\reps\\lua-language-server\\'
-lsp.sumneko_lua.setup{
-	cmd = { lua_language_server_path..'bin\\Windows\\lua-language-server.exe', '-E', lua_language_server_path..'main.lua' },
-	settings = {
-		Lua = {
-			diagnostics = {
-				globals = {'vim'},
-			},
-			workspace = {
-				library = {
-					[vim.fn.expand('$VIMRUNTIME/lua')] = true,
-					[vim.fn.expand('$VIMRUNTIME/lua/nim/lsp')] = true,
-				}
-			}
-		}
-	},
-	on_attach = custom_attach
-}
-
-lsp.bashls.setup{
-	on_attach = custom_attach
-}
-
-lsp.groovyls.setup{
-	on_attach = custom_attach
-}
-
-lsp.omnisharp.setup{
-	on_attach = custom_attach
-}
+lsp.lua_ls.setup {}
+lsp.bashls.setup { }
+lsp.groovyls.setup { }
+lsp.omnisharp.setup { }
 
 --------------------------------------------------------------------------
 
@@ -91,4 +50,34 @@ if result and result.diagnostics then
 end
 ]]
 
-]]
+--------------------------------------------------------------------------
+
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
+
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, opts)
+    vim.keymap.set('n', '<leader>wl', function()
+      print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+    end, opts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>f', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+
