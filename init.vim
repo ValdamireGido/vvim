@@ -20,8 +20,8 @@ set incsearch
 set hlsearch
 set cursorline
 set title
-set timeoutlen=160
-set ttimeoutlen=5
+set timeoutlen=100
+set ttimeoutlen=-1
 
 
 " Cursor line settings
@@ -71,14 +71,15 @@ endif
 
 lua require('init')
 lua require('lua_config')
-lua require('lsp_config')
-lua vim.lsp.set_log_level("debug")
+if !exists('g:vscode')
+	lua require('lsp_config')
+	lua vim.lsp.set_log_level("debug")
+	set omnifunc=v:lua.vim.lsp.omnifunc
+	let g:lsp_diagnostics_echo_cursor = 1
+endif
 
 map <F3> :NvimTreeToggle<cr>
 
-set omnifunc=v:lua.vim.lsp.omnifunc
-
-let g:lsp_diagnostics_echo_cursor = 1
 
 "
 " Basic movement and often used commands

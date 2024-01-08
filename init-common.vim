@@ -18,8 +18,8 @@ augroup filetype_python
     au FileType python nnoremap <buffer> [[ ?^class\\|^\s*def<CR>
     au FileType python nnoremap <buffer> ]] /^class\\|^\s*def<CR>
 
-    au FileType python nmap ( ?^\s*def\s<CR>
-    au FileType python nmap ) /^\s*def\s<CR>
+    au FileType python nmap (( ?^\s*def\s<CR>
+    au FileType python nmap )) /^\s*def\s<CR>
 
 augroup END
 
