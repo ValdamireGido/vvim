@@ -20,7 +20,7 @@ set incsearch
 set hlsearch
 set cursorline
 set title
-set timeoutlen=100
+set timeoutlen=200
 set ttimeoutlen=-1
 
 
@@ -48,14 +48,15 @@ endif
 	let g:tagbar_left = 0
 	nnoremap <leader><leader>t :TagbarToggle<CR>
 
-	"Plugin 'nvim-lua/diagnostic-nvim'
-	Plugin 'nvim-lua/lsp-status.nvim'
-	"Plugin 'nvim-lua/completion-nvim'
+	if !exists('g:vscode')
+		"Plugin 'nvim-lua/diagnostic-nvim'
+		Plugin 'nvim-lua/lsp-status.nvim'
+		"Plugin 'nvim-lua/completion-nvim'
+	endif
 
 	"
 	" Other whitout special settings
 	Plugin 'tpope/vim-repeat'
-	Plugin 'tpope/vim-surround'
 	Plugin 'wellle/targets.vim'
 	Plugin 'xolox/vim-misc'
 	Plugin 'kana/vim-operator-user'
