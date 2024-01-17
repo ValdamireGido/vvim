@@ -4,7 +4,8 @@ source ~/AppData/Local/nvim/plug_lazy_adapter.vim
 " common settings
 source ~/AppData/Local/nvim/init-common.vim
 colorscheme jellybeans
-noremap ,c :tabe $MYVIMRC<CR>
+noremap ,cv :tabe $MYVIMRC<CR>
+noremap ,cl :tabe ~/AppData/Local/nvim/lua/init.lua<cr>
 
 " syntax higlighing
 syntax on
@@ -77,6 +78,10 @@ if !exists('g:vscode')
 	lua vim.lsp.set_log_level("debug")
 	set omnifunc=v:lua.vim.lsp.omnifunc
 	let g:lsp_diagnostics_echo_cursor = 1
+
+	autocmd CursorHold  <buffer> lua vim.lsp.buf.document_highlight()
+	autocmd CursorHoldI <buffer> lua vim.lsp.buf.document_highlight()
+	autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
 endif
 
 map <F3> :NvimTreeToggle<cr>

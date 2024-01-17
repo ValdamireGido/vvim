@@ -59,6 +59,16 @@ plugins = {
 	{ 'smoka7/hop.nvim', version = "*", opts = {}, },
 }
 
+if not vim.g.vscode then
+	table.insert(plugins, { 'RRethy/vim-illuminate', config = function()
+		require'illuminate'.configure {
+			providers = { 'lsp', 'treesitter', 'regex' },
+			delay = 100,
+			under_cursor = true,
+		}
+	end })
+end
+
 -- lazy PM load
 require("lazy").setup(plugins, {
 	root = vim.g.pluginInstallPath,
