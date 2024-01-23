@@ -21,8 +21,6 @@ set incsearch
 set hlsearch
 set cursorline
 set title
-set timeoutlen=200
-set ttimeoutlen=-1
 
 
 " Cursor line settings
@@ -89,7 +87,6 @@ map <F3> :NvimTreeToggle<cr>
 
 "
 " Basic movement and often used commands
-inoremap jk <ESC>
 
 command Q :qa!
 command W :w!
@@ -140,10 +137,6 @@ vnoremap <M-/> <Esc>/\%V
 map <C-;><C-.> :FSHere<CR>
 map <A-o> :FSHere<cr>
 
-"
-" Custom mappings for editing
-imap <c-[><c-]> {}<ESC>i<CR>
-
 
 "
 " Ctags file generation
@@ -151,7 +144,7 @@ command! -complete=file -nargs=* GenerateCtags :!ctags -R --sort=yes --c++-kinds
 
 
 "
-" Tags file settings
+" Tags file settins
 set tags=./tags,tags;/
 set noautochdir
 
