@@ -22,8 +22,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 plugins = { 
-	{ "neovim/nvim-lspconfig" },
-	{ "nvim-lua/lsp-status.nvim" },
 	{ 
 	  "nvim-tree/nvim-tree.lua", version = "*", lazy = false,
 	  dependencies = { "nvim-tree/nvim-web-devicons", },
@@ -67,6 +65,9 @@ if not vim.g.vscode then
 			under_cursor = true,
 		}
 	end })
+	table.insert(plugins, { "neovim/nvim-lspconfig" })
+	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
+	table.insert(plugins, {})
 end
 
 -- lazy PM load
