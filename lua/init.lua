@@ -55,6 +55,11 @@ plugins = {
 		end
 	},
 	{ 'smoka7/hop.nvim', version = "*", opts = {}, },
+
+	{ 'wellle/targets.vim' },
+	{ 'godlygeek/tabular' },
+	{ 'tpope/vim-repeat' },
+	{ 'kana/vim-operator-user' },
 }
 
 if not vim.g.vscode then
@@ -67,7 +72,7 @@ if not vim.g.vscode then
 	end })
 	table.insert(plugins, { "neovim/nvim-lspconfig" })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
-	table.insert(plugins, {})
+	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
 end
 
 -- lazy PM load

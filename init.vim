@@ -48,19 +48,12 @@ endif
 	nnoremap <leader><leader>t :TagbarToggle<CR>
 
 	if !exists('g:vscode')
-		"Plugin 'nvim-lua/diagnostic-nvim'
-		Plugin 'nvim-lua/lsp-status.nvim'
-		"Plugin 'nvim-lua/completion-nvim'
 	endif
 
 	"
 	" Other whitout special settings
-	Plugin 'tpope/vim-repeat'
-	Plugin 'wellle/targets.vim'
 	Plugin 'xolox/vim-misc'
-	Plugin 'kana/vim-operator-user'
 	Plugin 'vim-scripts/vcscommand.vim'
-	Plugin 'godlygeek/tabular'
 
 if !has('nvim')
 	call plug#end()
