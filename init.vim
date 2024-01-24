@@ -1,4 +1,4 @@
-let g:pluginInstallPath = stdpath('cache')."/plugged"
+let g:pluginInstallPath = stdpath('data')."/plugged"
 " vim plug to neovim lazy adapter
 source ~/AppData/Local/nvim/plug_lazy_adapter.vim
 " common settings
