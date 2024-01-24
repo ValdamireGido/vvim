@@ -42,7 +42,6 @@ plugins = {
 		}
 	  end,
 	},
-	{ 'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { 'nvim-lua/plenary.nvim' } },
 	{ 'nvim-lualine/lualine.nvim', dependencies = { 'nvim-tree/nvim-web-devicons', opt = true } },
 	{
 		"kylechui/nvim-surround",
@@ -70,6 +69,7 @@ if not vim.g.vscode then
 			under_cursor = true,
 		}
 	end })
+	table.insert(plugins, { 'nvim-telescope/telescope.nvim', tag = '0.1.5', dependencies = { 'nvim-lua/plenary.nvim' } })
 	table.insert(plugins, { "neovim/nvim-lspconfig" })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
