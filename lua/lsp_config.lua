@@ -13,15 +13,15 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 
-lsp.clangd.setup { init_options = { clangdFileStatus = true } }
-lsp.jdtls.setup { }
-lsp.pyright.setup {}
-lsp.vimls.setup { }
+--lsp.clangd.setup { init_options = { clangdFileStatus = true } }
+--lsp.jdtls.setup { }
+--lsp.pyright.setup {}
+--lsp.vimls.setup { }
 
-lsp.lua_ls.setup {}
-lsp.bashls.setup { }
-lsp.groovyls.setup { }
-lsp.omnisharp.setup { }
+--lsp.lua_ls.setup {}
+--lsp.bashls.setup { }
+--lsp.groovyls.setup { }
+--lsp.omnisharp.setup { }
 
 --------------------------------------------------------------------------
 
@@ -52,6 +52,7 @@ end
 
 --------------------------------------------------------------------------
 
+--[[
 vim.api.nvim_create_autocmd('LspAttach', {
   group = vim.api.nvim_create_augroup('UserLspConfig', {}),
   callback = function(ev)
@@ -80,4 +81,4 @@ vim.api.nvim_create_autocmd('LspAttach', {
     end, opts)
   end,
 })
-
+--]]

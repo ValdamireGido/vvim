@@ -21,7 +21,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-plugins = {
+local plugins = {
 
 	{
 	  "nvim-tree/nvim-tree.lua", version = "*", lazy = false,
@@ -133,7 +133,7 @@ if not vim.g.vscode then
 		  }
 		end,
 	  })
-  
+
 	  table.insert(plugins, {
 		  'nvim-lualine/lualine.nvim',
 		  dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
@@ -180,7 +180,7 @@ if not vim.g.vscode then
 			  }
 		  end
 	  })
-	  
+
 	table.insert(plugins, {
 		"nvim-treesitter/nvim-treesitter-context",
 		dependencies = { "nvim-treesitter/nvim-treesitter" }
@@ -211,6 +211,122 @@ if not vim.g.vscode then
 	table.insert(plugins, { "neovim/nvim-lspconfig" })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
+
+	table.insert(plugins, {
+		"williamboman/mason.nvim",
+		config = function()
+			require("mason").setup()
+		end
+	})
+
+	table.insert(plugins, {
+		"williamboman/mason-lspconfig.nvim",
+		config = function()
+			local config = require("mason-lspconfig")
+			config.setup()
+			config.setup_handlers {
+				function (server_name)
+					require("lspconfig")[server_name].setup{}
+				end
+			}
+		end
+	})
+
+
+	table.insert(plugins, {
+		'echasnovski/mini.clue',
+		version = '*',
+		config = function()
+			local miniclue = require('mini.clue')
+			miniclue.setup({
+			  triggers = {
+				-- Leader triggers
+				{ mode = 'n', keys = '<Leader>' },
+				{ mode = 'x', keys = '<Leader>' },
+
+				-- Built-in completion
+				{ mode = 'i', keys = '<C-x>' },
+
+				-- `g` key
+				{ mode = 'n', keys = 'g' },
+				{ mode = 'x', keys = 'g' },
+
+				-- Marks
+				{ mode = 'n', keys = "'" },
+				{ mode = 'n', keys = '`' },
+				{ mode = 'x', keys = "'" },
+				{ mode = 'x', keys = '`' },
+
+				-- Registers
+				{ mode = 'n', keys = '"' },
+				{ mode = 'x', keys = '"' },
+				{ mode = 'i', keys = '<C-r>' },
+				{ mode = 'c', keys = '<C-r>' },
+
+				-- Window commands
+				{ mode = 'n', keys = '<C-w>' },
+
+				-- `z` key
+				{ mode = 'n', keys = 'z' },
+				{ mode = 'x', keys = 'z' },
+			  },
+
+			  clues = {
+				-- Enhance this by adding descriptions for <Leader> mapping groups
+				miniclue.gen_clues.builtin_completion(),
+				miniclue.gen_clues.g(),
+				miniclue.gen_clues.marks(),
+				miniclue.gen_clues.registers(),
+				miniclue.gen_clues.windows(),
+				miniclue.gen_clues.z(),
+			  },
+			})
+		end
+	})
+
+	table.insert(plugins, {
+	  'nvimdev/dashboard-nvim',
+	  event = 'VimEnter',
+	  config = function()
+		require('dashboard').setup {
+			theme = 'hyper',
+			config = {
+			  week_header = {
+			   enable = true,
+			  },
+			  shortcut = {
+				{
+					desc = '󰊳 Update',
+					group = '@property',
+					action = 'Lazy update',
+					key = 'u'
+				},
+				{
+				  icon = ' ',
+				  icon_hl = '@variable',
+				  desc = 'Files',
+				  group = 'Label',
+				  action = 'Telescope find_files',
+				  key = 'f',
+				},
+				{
+				  desc = ' Apps',
+				  group = 'DiagnosticHint',
+				  action = 'Telescope app',
+				  key = 'a',
+				},
+				{
+				  desc = ' dotfiles',
+				  group = 'Number',
+				  action = 'Telescope dotfiles',
+				  key = 'd',
+				},
+			  },
+			},
+		}
+	  end,
+	  dependencies = { {'nvim-tree/nvim-web-devicons'}}
+	})
 end
 
 
