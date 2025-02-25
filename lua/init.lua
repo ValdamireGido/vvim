@@ -10,10 +10,6 @@ vim.opt.shellxquote = ""
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
--- set termguicolors to enable highlight groups
-vim.opt.termguicolors = true
-
-
 -- lazy package manager bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -109,7 +105,21 @@ local plugins = {
 		end
 	},
 
-	{ 'smoka7/hop.nvim',       version = "*", opts = {}, },
+	{
+		'smoka7/hop.nvim',
+		version = "*",
+		opts = {},
+		config = function()
+			-- Hop configuration
+			require("hop").setup {}
+			vim.keymap.set('n', '<leader><leader>w', require 'hop'.hint_words, {})
+			vim.keymap.set('n', '<leader><leader>b', function()
+				require 'hop'.hint_words({ direction = require 'hop.hint'.HintDirection.BEFORE_CURSOR })
+			end)
+			vim.keymap.set('n', '<leader><leader>f', require 'hop'.hint_char1, {})
+			vim.keymap.set('n', '<leader><leader>p', require 'hop'.hint_patterns, {})
+		end
+	},
 
 	{ 'wellle/targets.vim' },
 	{ 'godlygeek/tabular' },
@@ -316,7 +326,7 @@ if not vim.g.vscode then
 				end
 			}
 
-			vim.keymap.set({ 'n', 'v' }, '<leader>fs', function()
+			vim.keymap.set({ 'n', 'v' }, '==', function()
 				vim.lsp.buf.format({
 					async = true,
 					range = {
@@ -461,15 +471,6 @@ require("lazy").setup(plugins, {
 	}
 })
 
--- Hop configuration
-require("hop").setup {}
-vim.keymap.set('n', '<leader><leader>w', require 'hop'.hint_words, {})
-vim.keymap.set('n', '<leader><leader>b', function()
-	require 'hop'.hint_words({ direction = require 'hop.hint'.HintDirection.BEFORE_CURSOR })
-end)
-vim.keymap.set('n', '<leader><leader>f', require 'hop'.hint_char1, {})
-vim.keymap.set('n', '<leader><leader>p', require 'hop'.hint_patterns, {})
-
 if vim.g.neovide then
 	-- transparency
 	vim.g.neovide_transparency = 0.9
@@ -480,6 +481,10 @@ if vim.g.neovide then
 	vim.g.neovide_cursor_trail_size = 0.0
 end
 
+-- set termguicolors to enable highlight groups
+vim.opt.termguicolors = true
+
+
 vim.cmd [[
 	colorscheme nordic
 	highlight Normal guibg=none ctermbg=none
@@ -487,3 +492,4 @@ vim.cmd [[
 	highlight SignColumn guibg=none ctermbg=none
 	highlight NonText guibg=none ctermbg=none
 ]]
+
