@@ -2,6 +2,9 @@ _G.__is_log = true
 
 -- default shell
 vim.opt.shell = "pwsh"
+vim.opt.shellcmdflag="-command"
+vim.opt.shellquote="\""
+vim.opt.shellxquote=""
 
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
@@ -121,10 +124,30 @@ local plugins = {
 }
 
 
+-- 
+-- 			Non VSCode configuration
+--
 if not vim.g.vscode then
 
 	table.insert(plugins, {
-		"nvim-tree/nvim-tree.lua", 
+		"akinsho/toggleterm.nvim",
+		config = function()
+			require("toggleterm").setup {
+				direction = "float",
+				open_mapping = [[<c-\>]],
+			}
+
+			local Terminal = require("toggleterm.terminal").Terminal
+			local lazygit = Terminal:new { cmd = "lazygit", hidden = true }
+
+			local lazygit_toggle = function() lazygit:toggle() end
+
+			vim.keymap.set("n", "<leader>g", lazygit_toggle, { desc = "Toggle Lazygit" })
+		end,
+	})
+
+	table.insert(plugins, {
+		"nvim-tree/nvim-tree.lua",
 		dependencies = { "nvim-tree/nvim-web-devicons", },
 		config = function()
 		  require("nvim-tree").setup {
@@ -372,7 +395,35 @@ if not vim.g.vscode then
 	  end,
 	  dependencies = { {'nvim-tree/nvim-web-devicons'}}
 	})
+
+	table.insert(plugins, {
+	    "kdheepak/lazygit.nvim",
+		lazy = true,
+		cmd = {
+			"LazyGit",
+			"LazyGitConfig",
+			"LazyGitCurrentFile",
+			"LazyGitFilter",
+			"LazyGitFilterCurrentFile",
+		},
+		-- optional for floating window border decoration
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		-- setting the keybinding for LazyGit with 'keys' is recommended in
+		-- order to load the plugin when the command is run for the first time
+		keys = {
+			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
+		},
+		config = function()
+			require("telescope").load_extension("lazygit")
+		end
+	})
+
 end
+--
+-- -----------------------------------------
+--
 
 
 -- lazy PM load

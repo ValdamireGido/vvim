@@ -86,8 +86,8 @@ command CDP cd -
 
 "
 " nohl hotkey and exit terminal mode
-tnoremap <C-\> <C-\><C-n>
-vnoremap <M-/> <Esc>/\%V
+"tnoremap <C-\> <C-\><C-n>
+"vnoremap <M-/> <Esc>/\%V
 
 
 "
