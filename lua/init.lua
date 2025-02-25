@@ -492,4 +492,3 @@ vim.cmd [[
 	highlight SignColumn guibg=none ctermbg=none
 	highlight NonText guibg=none ctermbg=none
 ]]
-
