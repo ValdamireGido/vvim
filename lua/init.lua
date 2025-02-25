@@ -1,5 +1,8 @@
 _G.__is_log = true
 
+-- default shell
+vim.opt.shell = "pwsh"
+
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
@@ -21,8 +24,8 @@ if not vim.loop.fs_stat(lazypath) then
     "git",
     "clone",
     "--filter=blob:none",
-    "https://github.com/folke/lazy.nvim.git",
     "--branch=stable", -- latest stable release
+    "https://github.com/folke/lazy.nvim.git",
     lazypath,
   })
 end
@@ -31,7 +34,7 @@ vim.opt.rtp:prepend(lazypath)
 local plugins = {
 
 	{
-	  "nvim-tree/nvim-tree.lua", version = "*", lazy = false,
+	  "nvim-tree/nvim-tree.lua", 
 	  dependencies = { "nvim-tree/nvim-web-devicons", },
 	  config = function()
 		require("nvim-tree").setup {
@@ -121,7 +124,7 @@ local plugins = {
 if not vim.g.vscode then
 
 	table.insert(plugins, {
-		"nvim-tree/nvim-tree.lua", version = "*", lazy = false,
+		"nvim-tree/nvim-tree.lua", 
 		dependencies = { "nvim-tree/nvim-web-devicons", },
 		config = function()
 		  require("nvim-tree").setup {
@@ -242,7 +245,6 @@ if not vim.g.vscode then
 
 	table.insert(plugins, { "neovim/nvim-lspconfig" })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
-	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
 
 	table.insert(plugins, {
 		"williamboman/mason.nvim",
@@ -259,6 +261,17 @@ if not vim.g.vscode then
 			config.setup_handlers {
 				function (server_name)
 					require("lspconfig")[server_name].setup{}
+				end,
+				["lua_ls"] = function ()
+					require("lspconfig")["lua_ls"].setup {
+						settings = {
+							Lua = {
+								diagnostics = {
+									globals = {'vim'}
+								}
+							}
+						}
+					}
 				end
 			}
 		end
@@ -366,7 +379,7 @@ end
 require("lazy").setup(plugins, {
 	root = vim.g.pluginInstallPath,
 	spec = {
-		LasyPlugSpecs,
+		LazyPlugSpecs,
 	}
 })
 

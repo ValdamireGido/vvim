@@ -22,44 +22,9 @@ set hlsearch
 set cursorline
 set title
 
-
 " Cursor line settings
 hi CursorLine cterm=NONE ctermbg=black ctermfg=NONE
-
-
 let mapleader="\<space>"
-
-
-
-"
-" Vim Plugin entries
-"
-if !has('nvim')
-	call plug#begin(g:pluginInstallPath)
-endif
-
-	"
-	" Tagbar
-	Plugin 'majutsushi/tagbar'
-	let g:tagbar_sort = 0
-	let g:tagbar_show_linenumbers = -1
-	let g:tagbar_autopreview = 0
-	let g:tagbar_left = 0
-	nnoremap <leader><leader>t :TagbarToggle<CR>
-
-	if !exists('g:vscode')
-	endif
-
-	"
-	" Other whitout special settings
-	Plugin 'xolox/vim-misc'
-	Plugin 'vim-scripts/vcscommand.vim'
-
-if !has('nvim')
-	call plug#end()
-else
-	" lua require("config.lazy")
-endif
 
 
 lua require('init')
