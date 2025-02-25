@@ -167,7 +167,7 @@ if not vim.g.vscode then
 
 			local lazygit_toggle = function() lazygit:toggle() end
 
-			vim.keymap.set("n", "<leader>g", lazygit_toggle, { desc = "Toggle Lazygit" })
+			vim.keymap.set("n", "<leader>gg", lazygit_toggle, { desc = "Toggle Lazygit" })
 		end,
 	})
 
@@ -457,6 +457,20 @@ if not vim.g.vscode then
 			require("telescope").load_extension("lazygit")
 		end
 	})
+
+	table.insert(plugins, {
+		"lewis6991/gitsigns.nvim",
+		config = function()
+			local gitsigns = require('gitsigns')
+			gitsigns.setup{}
+			vim.keymap.set('n', '<leader>gbl', function()
+				gitsigns.blame_line({ full = true })
+			end)
+			vim.keymap.set('n', '<leader>gbf', gitsigns.blame)
+			vim.keymap.set('n', '<leader>gh', gitsigns.preview_hunk)
+		end
+	})
+
 end
 --
 -- -----------------------------------------
@@ -467,7 +481,6 @@ end
 require("lazy").setup(plugins, {
 	root = vim.g.pluginInstallPath,
 	spec = {
-		LazyPlugSpecs,
 	}
 })
 
@@ -484,6 +497,7 @@ end
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
+vim.opt.colorcolumn = "100"
 
 vim.cmd [[
 	colorscheme nordic
