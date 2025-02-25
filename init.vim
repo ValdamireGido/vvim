@@ -3,7 +3,6 @@ let g:pluginInstallPath = stdpath('data')."/plugged"
 source ~/AppData/Local/nvim/plug_lazy_adapter.vim
 " common settings
 source ~/AppData/Local/nvim/init-common.vim
-colorscheme jellybeans
 noremap ,cv :tabe $MYVIMRC<CR>
 noremap ,cl :tabe ~/AppData/Local/nvim/lua/init.lua<cr>
 

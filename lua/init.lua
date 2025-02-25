@@ -13,12 +13,6 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
-vim.cmd [[
-  highlight Normal guibg=none
-  highlight NonText guibg=none
-  highlight Normal ctermbg=none
-  highlight NonText ctermbg=none
-]]
 
 -- lazy package manager bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
@@ -128,6 +122,16 @@ local plugins = {
 -- 			Non VSCode configuration
 --
 if not vim.g.vscode then
+
+	table.insert(plugins, {
+		"catppuccin/nvim",
+		name = "catppuccin",
+		priority = 1000,
+	})
+	table.insert(plugins, {
+		"rebelot/kanagawa.nvim"
+	})
+
 	table.insert(plugins, {
 		"akinsho/toggleterm.nvim",
 		config = function()
@@ -463,3 +467,11 @@ if vim.g.neovide then
 	vim.g.neovide_cursor_animation_length = 0.05
 	vim.g.neovide_cursor_trail_size = 0.0
 end
+
+vim.cmd [[
+	colorscheme catppuccin
+	highlight Normal guibg=none
+	highlight NonText guibg=none
+	highlight Normal ctermbg=none
+	highlight NonText ctermbg=none
+]]
