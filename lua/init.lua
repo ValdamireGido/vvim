@@ -123,6 +123,8 @@ local plugins = {
 --
 if not vim.g.vscode then
 
+	-- color schemes
+	--
 	table.insert(plugins, {
 		"catppuccin/nvim",
 		name = "catppuccin",
@@ -131,6 +133,16 @@ if not vim.g.vscode then
 	table.insert(plugins, {
 		"rebelot/kanagawa.nvim"
 	})
+	table.insert(plugins, {
+		'AlexvZyl/nordic.nvim',
+		lazy = false,
+		priority = 1000,
+		config = function()
+			require('nordic').load()
+		end
+	})
+	--
+	--
 
 	table.insert(plugins, {
 		"akinsho/toggleterm.nvim",
@@ -469,8 +481,9 @@ if vim.g.neovide then
 end
 
 vim.cmd [[
-	colorscheme catppuccin
+	colorscheme nordic
 	highlight Normal guibg=none
+	highlight NormalNC guibg=none
 	highlight NonText guibg=none
 	highlight Normal ctermbg=none
 	highlight NonText ctermbg=none
