@@ -7,6 +7,13 @@ vim.g.loaded_netrwPlugin = 1
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
 
+vim.cmd [[
+  highlight Normal guibg=none
+  highlight NonText guibg=none
+  highlight Normal ctermbg=none
+  highlight NonText ctermbg=none
+]]
+
 -- lazy package manager bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -372,3 +379,12 @@ end)
 vim.keymap.set('n', '<leader><leader>f', require'hop'.hint_char1, {})
 vim.keymap.set('n', '<leader><leader>p', require'hop'.hint_patterns, {})
 
+if vim.g.neovide then
+	-- transparency
+	vim.g.neovide_transparency = 0.9
+	-- corner radius
+	vim.g.neovide_floating_corner_radius = 1.0
+	-- cursor transition animation 
+	vim.g.neovide_cursor_animation_length = 0.05
+	vim.g.neovide_cursor_trail_size = 0.0
+end
