@@ -482,9 +482,8 @@ end
 
 vim.cmd [[
 	colorscheme nordic
-	highlight Normal guibg=none
-	highlight NormalNC guibg=none
-	highlight NonText guibg=none
-	highlight Normal ctermbg=none
-	highlight NonText ctermbg=none
+	highlight Normal guibg=none ctermbg=none
+	highlight NormalNC guibg=none ctermbg=none
+	highlight SignColumn guibg=none ctermbg=none
+	highlight NonText guibg=none ctermbg=none
 ]]
