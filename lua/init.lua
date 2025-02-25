@@ -2,9 +2,9 @@ _G.__is_log = true
 
 -- default shell
 vim.opt.shell = "pwsh"
-vim.opt.shellcmdflag="-command"
-vim.opt.shellquote="\""
-vim.opt.shellxquote=""
+vim.opt.shellcmdflag = "-command"
+vim.opt.shellquote = "\""
+vim.opt.shellxquote = ""
 
 -- disable netrw at the very start of your init.lua
 vim.g.loaded_netrw = 1
@@ -23,38 +23,38 @@ vim.cmd [[
 -- lazy package manager bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
-  vim.fn.system({
-    "git",
-    "clone",
-    "--filter=blob:none",
-    "--branch=stable", -- latest stable release
-    "https://github.com/folke/lazy.nvim.git",
-    lazypath,
-  })
+	vim.fn.system({
+		"git",
+		"clone",
+		"--filter=blob:none",
+		"--branch=stable", -- latest stable release
+		"https://github.com/folke/lazy.nvim.git",
+		lazypath,
+	})
 end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 
 	{
-	  "nvim-tree/nvim-tree.lua", 
-	  dependencies = { "nvim-tree/nvim-web-devicons", },
-	  config = function()
-		require("nvim-tree").setup {
-		  sort = {
-			sorter = "case_sensitive",
-		  },
-		  view = {
-			width = 30,
-		  },
-		  renderer = {
-			group_empty = true,
-		  },
-		  filters = {
-			dotfiles = true,
-		  },
-		}
-	  end,
+		"nvim-tree/nvim-tree.lua",
+		dependencies = { "nvim-tree/nvim-web-devicons", },
+		config = function()
+			require("nvim-tree").setup {
+				sort = {
+					sorter = "case_sensitive",
+				},
+				view = {
+					width = 30,
+				},
+				renderer = {
+					group_empty = true,
+				},
+				filters = {
+					dotfiles = true,
+				},
+			}
+		end,
 	},
 
 	{
@@ -65,8 +65,8 @@ local plugins = {
 				options = {
 					icons_enabled = true,
 					theme = 'auto',
-					component_separators = { left = '', right = ''},
-					section_separators = { left = '', right = ''},
+					component_separators = { left = '', right = '' },
+					section_separators = { left = '', right = '' },
 					disabled_filetypes = {
 						statusline = {},
 						winbar = {},
@@ -81,18 +81,18 @@ local plugins = {
 					}
 				},
 				sections = {
-					lualine_a = {'mode'},
-					lualine_b = {'branch', 'diff', 'diagnostics'},
-					lualine_c = {'filename'},
-					lualine_x = {'encoding', 'fileformat', 'filetype'},
-					lualine_y = {'progress'},
-					lualine_z = {'location'}
+					lualine_a = { 'mode' },
+					lualine_b = { 'branch', 'diff', 'diagnostics' },
+					lualine_c = { 'filename' },
+					lualine_x = { 'encoding', 'fileformat', 'filetype' },
+					lualine_y = { 'progress' },
+					lualine_z = { 'location' }
 				},
 				inactive_sections = {
 					lualine_a = {},
 					lualine_b = {},
-					lualine_c = {'filename'},
-					lualine_x = {'location'},
+					lualine_c = { 'filename' },
+					lualine_x = { 'location' },
 					lualine_y = {},
 					lualine_z = {}
 				},
@@ -115,7 +115,7 @@ local plugins = {
 		end
 	},
 
-	{ 'smoka7/hop.nvim', version = "*", opts = {}, },
+	{ 'smoka7/hop.nvim',       version = "*", opts = {}, },
 
 	{ 'wellle/targets.vim' },
 	{ 'godlygeek/tabular' },
@@ -124,11 +124,10 @@ local plugins = {
 }
 
 
--- 
+--
 -- 			Non VSCode configuration
 --
 if not vim.g.vscode then
-
 	table.insert(plugins, {
 		"akinsho/toggleterm.nvim",
 		config = function()
@@ -150,82 +149,85 @@ if not vim.g.vscode then
 		"nvim-tree/nvim-tree.lua",
 		dependencies = { "nvim-tree/nvim-web-devicons", },
 		config = function()
-		  require("nvim-tree").setup {
-			sort = {
-			  sorter = "case_sensitive",
-			},
-			view = {
-			  width = 30,
-			},
-			renderer = {
-			  group_empty = true,
-			},
-			filters = {
-			  dotfiles = true,
-			},
-		  }
+			require("nvim-tree").setup {
+				sort = {
+					sorter = "case_sensitive",
+				},
+				view = {
+					width = 30,
+				},
+				renderer = {
+					group_empty = true,
+				},
+				filters = {
+					dotfiles = true,
+				},
+			}
 		end,
-	  })
+	})
 
-	  table.insert(plugins, {
-		  'nvim-lualine/lualine.nvim',
-		  dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
-		  config = function()
-			  require('lualine').setup {
-				  options = {
-					  icons_enabled = true,
-					  theme = 'auto',
-					  component_separators = { left = '', right = ''},
-					  section_separators = { left = '', right = ''},
-					  disabled_filetypes = {
-						  statusline = {},
-						  winbar = {},
-					  },
-					  ignore_focus = {},
-					  always_divide_middle = true,
-					  globalstatus = false,
-					  refresh = {
-						  statusline = 1000,
-						  tabline = 1000,
-						  winbar = 1000,
-					  }
-				  },
-				  sections = {
-					  lualine_a = {'mode'},
-					  lualine_b = {'branch', 'diff', 'diagnostics'},
-					  lualine_c = {'filename'},
-					  lualine_x = {'encoding', 'fileformat', 'filetype'},
-					  lualine_y = {'progress'},
-					  lualine_z = {'location'}
-				  },
-				  inactive_sections = {
-					  lualine_a = {},
-					  lualine_b = {},
-					  lualine_c = {'filename'},
-					  lualine_x = {'location'},
-					  lualine_y = {},
-					  lualine_z = {}
-				  },
-				  tabline = {},
-				  winbar = {},
-				  inactive_winbar = {},
-				  extensions = {}
-			  }
-		  end
-	  })
+	table.insert(plugins, {
+		'nvim-lualine/lualine.nvim',
+		dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
+		config = function()
+			require('lualine').setup {
+				options = {
+					icons_enabled = true,
+					theme = 'auto',
+					component_separators = { left = '', right = '' },
+					section_separators = { left = '', right = '' },
+					disabled_filetypes = {
+						statusline = {},
+						winbar = {},
+					},
+					ignore_focus = {},
+					always_divide_middle = true,
+					globalstatus = false,
+					refresh = {
+						statusline = 1000,
+						tabline = 1000,
+						winbar = 1000,
+					}
+				},
+				sections = {
+					lualine_a = { 'mode' },
+					lualine_b = { 'branch', 'diff', 'diagnostics' },
+					lualine_c = { 'filename' },
+					lualine_x = { 'encoding', 'fileformat', 'filetype' },
+					lualine_y = { 'progress' },
+					lualine_z = { 'location' }
+				},
+				inactive_sections = {
+					lualine_a = {},
+					lualine_b = {},
+					lualine_c = { 'filename' },
+					lualine_x = { 'location' },
+					lualine_y = {},
+					lualine_z = {}
+				},
+				tabline = {},
+				winbar = {},
+				inactive_winbar = {},
+				extensions = {}
+			}
+		end
+	})
 
 	table.insert(plugins, {
 		"nvim-treesitter/nvim-treesitter-context",
 		dependencies = { "nvim-treesitter/nvim-treesitter" }
 	})
 
-	table.insert(plugins, { 'RRethy/vim-illuminate', config = function()
-		require'illuminate'.configure {
-			providers = { 'lsp', 'treesitter', 'regex' },
-			delay = 100,
-			under_cursor = true,
-		}
-	end })
+	table.insert(plugins, {
+		'RRethy/vim-illuminate',
+		config = function()
+			require 'illuminate'.configure {
+				providers = { 'lsp', 'treesitter', 'regex' },
+				delay = 100,
+				under_cursor = true,
+			}
+		end
+	})
 
 	table.insert(plugins, {
 		'nvim-telescope/telescope.nvim',
@@ -266,7 +268,7 @@ if not vim.g.vscode then
 		end,
 	})
 
-	table.insert(plugins, { "neovim/nvim-lspconfig" })
+	table.insert(plugins, { "neovim/nvim-lspconfig", })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
 
 	table.insert(plugins, {
@@ -282,24 +284,34 @@ if not vim.g.vscode then
 			local config = require("mason-lspconfig")
 			config.setup()
 			config.setup_handlers {
-				function (server_name)
-					require("lspconfig")[server_name].setup{}
+				function(server_name)
+					require("lspconfig")[server_name].setup {}
 				end,
-				["lua_ls"] = function ()
+				["lua_ls"] = function()
 					require("lspconfig")["lua_ls"].setup {
 						settings = {
 							Lua = {
 								diagnostics = {
-									globals = {'vim'}
+									globals = { 'vim' }
 								}
 							}
 						}
 					}
 				end
 			}
+
+			vim.keymap.set({ 'n', 'v' }, '<leader>fs', function()
+				vim.lsp.buf.format({
+					async = true,
+					range = {
+						["start"] = vim.api.nvim_buf_get_mark(0, "<"),
+						["end"] = vim.api.nvim_buf_get_mark(0, ">"),
+					}
+				})
+			end
+			)
 		end
 	})
-
 
 	table.insert(plugins, {
 		'echasnovski/mini.clue',
@@ -307,97 +319,97 @@ if not vim.g.vscode then
 		config = function()
 			local miniclue = require('mini.clue')
 			miniclue.setup({
-			  triggers = {
-				-- Leader triggers
-				{ mode = 'n', keys = '<Leader>' },
-				{ mode = 'x', keys = '<Leader>' },
+				triggers = {
+					-- Leader triggers
+					{ mode = 'n', keys = '<Leader>' },
+					{ mode = 'x', keys = '<Leader>' },
 
-				-- Built-in completion
-				{ mode = 'i', keys = '<C-x>' },
+					-- Built-in completion
+					{ mode = 'i', keys = '<C-x>' },
 
-				-- `g` key
-				{ mode = 'n', keys = 'g' },
-				{ mode = 'x', keys = 'g' },
+					-- `g` key
+					{ mode = 'n', keys = 'g' },
+					{ mode = 'x', keys = 'g' },
 
-				-- Marks
-				{ mode = 'n', keys = "'" },
-				{ mode = 'n', keys = '`' },
-				{ mode = 'x', keys = "'" },
-				{ mode = 'x', keys = '`' },
+					-- Marks
+					{ mode = 'n', keys = "'" },
+					{ mode = 'n', keys = '`' },
+					{ mode = 'x', keys = "'" },
+					{ mode = 'x', keys = '`' },
 
-				-- Registers
-				{ mode = 'n', keys = '"' },
-				{ mode = 'x', keys = '"' },
-				{ mode = 'i', keys = '<C-r>' },
-				{ mode = 'c', keys = '<C-r>' },
+					-- Registers
+					{ mode = 'n', keys = '"' },
+					{ mode = 'x', keys = '"' },
+					{ mode = 'i', keys = '<C-r>' },
+					{ mode = 'c', keys = '<C-r>' },
 
-				-- Window commands
-				{ mode = 'n', keys = '<C-w>' },
+					-- Window commands
+					{ mode = 'n', keys = '<C-w>' },
 
-				-- `z` key
-				{ mode = 'n', keys = 'z' },
-				{ mode = 'x', keys = 'z' },
-			  },
+					-- `z` key
+					{ mode = 'n', keys = 'z' },
+					{ mode = 'x', keys = 'z' },
+				},
 
-			  clues = {
-				-- Enhance this by adding descriptions for <Leader> mapping groups
-				miniclue.gen_clues.builtin_completion(),
-				miniclue.gen_clues.g(),
-				miniclue.gen_clues.marks(),
-				miniclue.gen_clues.registers(),
-				miniclue.gen_clues.windows(),
-				miniclue.gen_clues.z(),
-			  },
+				clues = {
+					-- Enhance this by adding descriptions for <Leader> mapping groups
+					miniclue.gen_clues.builtin_completion(),
+					miniclue.gen_clues.g(),
+					miniclue.gen_clues.marks(),
+					miniclue.gen_clues.registers(),
+					miniclue.gen_clues.windows(),
+					miniclue.gen_clues.z(),
+				},
 			})
 		end
 	})
 
 	table.insert(plugins, {
-	  'nvimdev/dashboard-nvim',
-	  event = 'VimEnter',
-	  config = function()
-		require('dashboard').setup {
-			theme = 'hyper',
-			config = {
-			  week_header = {
-			   enable = true,
-			  },
-			  shortcut = {
-				{
-					desc = '󰊳 Update',
-					group = '@property',
-					action = 'Lazy update',
-					key = 'u'
+		'nvimdev/dashboard-nvim',
+		event = 'VimEnter',
+		config = function()
+			require('dashboard').setup {
+				theme = 'hyper',
+				config = {
+					week_header = {
+						enable = true,
+					},
+					shortcut = {
+						{
+							desc = '󰊳 Update',
+							group = '@property',
+							action = 'Lazy update',
+							key = 'u'
+						},
+						{
+							icon = ' ',
+							icon_hl = '@variable',
+							desc = 'Files',
+							group = 'Label',
+							action = 'Telescope find_files',
+							key = 'f',
+						},
+						{
+							desc = ' Apps',
+							group = 'DiagnosticHint',
+							action = 'Telescope app',
+							key = 'a',
+						},
+						{
+							desc = ' dotfiles',
+							group = 'Number',
+							action = 'Telescope dotfiles',
+							key = 'd',
+						},
+					},
 				},
-				{
-				  icon = ' ',
-				  icon_hl = '@variable',
-				  desc = 'Files',
-				  group = 'Label',
-				  action = 'Telescope find_files',
-				  key = 'f',
-				},
-				{
-				  desc = ' Apps',
-				  group = 'DiagnosticHint',
-				  action = 'Telescope app',
-				  key = 'a',
-				},
-				{
-				  desc = ' dotfiles',
-				  group = 'Number',
-				  action = 'Telescope dotfiles',
-				  key = 'd',
-				},
-			  },
-			},
-		}
-	  end,
-	  dependencies = { {'nvim-tree/nvim-web-devicons'}}
+			}
+		end,
+		dependencies = { { 'nvim-tree/nvim-web-devicons' } }
 	})
 
 	table.insert(plugins, {
-	    "kdheepak/lazygit.nvim",
+		"kdheepak/lazygit.nvim",
 		lazy = true,
 		cmd = {
 			"LazyGit",
@@ -419,7 +431,6 @@ if not vim.g.vscode then
 			require("telescope").load_extension("lazygit")
 		end
 	})
-
 end
 --
 -- -----------------------------------------
@@ -435,20 +446,20 @@ require("lazy").setup(plugins, {
 })
 
 -- Hop configuration
-require("hop").setup { }
-vim.keymap.set('n', '<leader><leader>w', require'hop'.hint_words, {})
-vim.keymap.set('n', '<leader><leader>b', function ()
-	require'hop'.hint_words({ direction=require'hop.hint'.HintDirection.BEFORE_CURSOR })
+require("hop").setup {}
+vim.keymap.set('n', '<leader><leader>w', require 'hop'.hint_words, {})
+vim.keymap.set('n', '<leader><leader>b', function()
+	require 'hop'.hint_words({ direction = require 'hop.hint'.HintDirection.BEFORE_CURSOR })
 end)
-vim.keymap.set('n', '<leader><leader>f', require'hop'.hint_char1, {})
-vim.keymap.set('n', '<leader><leader>p', require'hop'.hint_patterns, {})
+vim.keymap.set('n', '<leader><leader>f', require 'hop'.hint_char1, {})
+vim.keymap.set('n', '<leader><leader>p', require 'hop'.hint_patterns, {})
 
 if vim.g.neovide then
 	-- transparency
 	vim.g.neovide_transparency = 0.9
 	-- corner radius
 	vim.g.neovide_floating_corner_radius = 1.0
-	-- cursor transition animation 
+	-- cursor transition animation
 	vim.g.neovide_cursor_animation_length = 0.05
 	vim.g.neovide_cursor_trail_size = 0.0
 end
