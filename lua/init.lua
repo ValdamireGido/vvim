@@ -30,12 +30,13 @@ local plugins = {
 		"nvim-tree/nvim-tree.lua",
 		dependencies = { "nvim-tree/nvim-web-devicons", },
 		config = function()
-			require("nvim-tree").setup {
+			require("nvim-tree").setup({
 				sort = {
 					sorter = "case_sensitive",
 				},
 				view = {
 					width = 30,
+					relativenumber = true,
 				},
 				renderer = {
 					group_empty = true,
@@ -43,7 +44,7 @@ local plugins = {
 				filters = {
 					dotfiles = true,
 				},
-			}
+			})
 		end,
 	},
 
@@ -159,7 +160,7 @@ if not vim.g.vscode then
 		config = function()
 			require("toggleterm").setup {
 				direction = "float",
-				open_mapping = [[<c-\>]],
+				open_mapping = [[<m-\>]],
 			}
 
 			local Terminal = require("toggleterm.terminal").Terminal
@@ -248,7 +249,7 @@ if not vim.g.vscode then
 		'RRethy/vim-illuminate',
 		config = function()
 			require 'illuminate'.configure {
-				providers = { 'lsp', 'treesitter', 'regex' },
+				providers = { 'lsp', 'regex' },
 				delay = 100,
 				under_cursor = true,
 			}
@@ -495,19 +496,24 @@ end
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
-
 vim.opt.colorcolumn = "100"
-
-vim.cmd [[
-	highlight Normal guibg=none ctermbg=none
-	highlight NormalNC guibg=none ctermbg=none
-	highlight SignColumn guibg=none ctermbg=none
-	highlight NonText guibg=none ctermbg=none
-]]
 
 if not vim.g.vscode then
 	vim.cmd [[
 		colorscheme nordic
 	]]
 end
+
+vim.cmd [[
+	highlight Normal guibg=none ctermbg=none
+	highlight NormalNC guibg=none ctermbg=none
+	highlight NonText guibg=none ctermbg=none
+
+	highlight SignColumn guibg=none ctermbg=none
+	highlight GitSignsAdd guibg=none ctermbg=none
+	highlight GitSignsChange guibg=none ctermbg=none
+	highlight GitSignsDelete guibg=none ctermbg=none
+]]
+
+
 
