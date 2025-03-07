@@ -480,8 +480,7 @@ end
 -- lazy PM load
 require("lazy").setup(plugins, {
 	root = vim.g.pluginInstallPath,
-	spec = {
-	}
+	spec = {}
 })
 
 if vim.g.neovide then
@@ -500,9 +499,15 @@ vim.opt.termguicolors = true
 vim.opt.colorcolumn = "100"
 
 vim.cmd [[
-	colorscheme nordic
 	highlight Normal guibg=none ctermbg=none
 	highlight NormalNC guibg=none ctermbg=none
 	highlight SignColumn guibg=none ctermbg=none
 	highlight NonText guibg=none ctermbg=none
 ]]
+
+if not vim.g.vscode then
+	vim.cmd [[
+		colorscheme nordic
+	]]
+end
+
