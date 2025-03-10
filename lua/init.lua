@@ -284,6 +284,8 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 			vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 			vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+			-- commands in Telescope
+			vim.keymap.set('n', '<leader>:', builtin.commands, {})
 		end
 	})
 	table.insert(plugins, {
@@ -469,6 +471,13 @@ if not vim.g.vscode then
 			end)
 			vim.keymap.set('n', '<leader>gbf', gitsigns.blame)
 			vim.keymap.set('n', '<leader>gh', gitsigns.preview_hunk)
+		end
+	})
+
+	table.insert(plugins, {
+		"guillemaru/perfnvim",
+		config = function()
+			require("perfnvim").setup{}
 		end
 	})
 
