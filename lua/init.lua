@@ -508,6 +508,7 @@ vim.cmd [[
 	highlight Normal guibg=none ctermbg=none
 	highlight NormalNC guibg=none ctermbg=none
 	highlight NonText guibg=none ctermbg=none
+	highlight LineNr guifg=#606060
 
 	highlight SignColumn guibg=none ctermbg=none
 	highlight GitSignsAdd guibg=none ctermbg=none
