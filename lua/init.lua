@@ -481,6 +481,14 @@ if not vim.g.vscode then
 		end
 	})
 
+	table.insert(plugins, {
+		"karb94/neoscroll.nvim",
+		opts = {
+			duration_multiplier = 0.1,
+			easing = "quintic",
+		},
+	})
+
 end
 --
 -- -----------------------------------------
