@@ -267,9 +267,11 @@ if not vim.g.vscode then
 					layout_config = {
 						vertical = {
 							mirror = true,
+							width = 0.8,
 						},
 						center = {
 							mirror = true,
+							width = 0.8,
 						}
 					},
 					sorting_strategy = "ascending",
@@ -286,6 +288,10 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
 			-- commands in Telescope
 			vim.keymap.set('n', '<leader>:', builtin.commands, {})
+			-- lsp symbols and references
+			vim.keymap.set('n', '<leader>td', builtin.lsp_document_symbols, {})
+			vim.keymap.set('n', '<leader>tw', builtin.lsp_workspace_symbols, {})
+			vim.keymap.set('n', '<leader>tr', builtin.lsp_references, {})
 		end
 	})
 	table.insert(plugins, {
