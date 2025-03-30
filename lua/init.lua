@@ -487,6 +487,10 @@ if not vim.g.vscode then
 		end
 	})
 
+	table.insert(plugins, {
+		"sindrets/diffview.nvim"
+	})
+
 end
 --
 -- -----------------------------------------
