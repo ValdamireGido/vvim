@@ -156,6 +156,25 @@ if not vim.g.vscode then
 	--
 
 	table.insert(plugins, {
+		"dimfred/resize-mode.nvim",
+		config = function()
+			require("resize-mode").setup {
+				enable_mapping = true,
+			}
+
+			vim.keymap.set(
+				'n',
+				'<leader>r',
+				function()
+					require'resize-mode'.start()
+					vim.print("Entered Resize Mode")
+				end,
+				{}
+			)
+		end
+	})
+
+	table.insert(plugins, {
 		"akinsho/toggleterm.nvim",
 		config = function()
 			require("toggleterm").setup {
