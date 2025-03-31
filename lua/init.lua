@@ -400,6 +400,12 @@ if not vim.g.vscode then
 	})
 
 	table.insert(plugins, {
+		"ray-x/lsp_signature.nvim",
+		event = "InsertEnter",
+		opts = {}
+	})
+
+	table.insert(plugins, {
 		'nvimdev/dashboard-nvim',
 		event = 'VimEnter',
 		config = function()
