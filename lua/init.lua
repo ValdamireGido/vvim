@@ -155,8 +155,20 @@ if not vim.g.vscode then
 	--
 	--
 
+
+	table.insert(plugins, {
+		"rcarriga/nvim-notify",
+		config = function()
+			vim.notify = require('notify')
+		end
+	})
+
+
 	table.insert(plugins, {
 		"dimfred/resize-mode.nvim",
+		dependencies = {
+			"rcarriga/nvim-notify"
+		},
 		config = function()
 			require("resize-mode").setup {
 				enable_mapping = true,
@@ -167,7 +179,7 @@ if not vim.g.vscode then
 				'<leader>r',
 				function()
 					require'resize-mode'.start()
-					vim.print("Entered Resize Mode")
+					vim.notify("Entered Resize Mode")
 				end,
 				{}
 			)
