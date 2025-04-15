@@ -512,8 +512,12 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<leader>gbl', function()
 				gitsigns.blame_line({ full = true })
 			end)
-			vim.keymap.set('n', '<leader>gbf', gitsigns.blame)
-			vim.keymap.set('n', '<leader>gh', gitsigns.preview_hunk)
+			vim.keymap.set('n', '<leader>gbf', gitsigns.blame, {
+				desc = "GitSigns Blame"
+			})
+			vim.keymap.set('n', '<leader>gh', gitsigns.preview_hunk, {
+				desc = "GitSigns Preview Hunk"
+			})
 		end
 	})
 
@@ -526,6 +530,132 @@ if not vim.g.vscode then
 
 	table.insert(plugins, {
 		"sindrets/diffview.nvim"
+	})
+
+	table.insert(plugins, {
+		"Joakker/lua-json5",
+		lazy = true,
+		build = vim.fn.has("win32") == 1 and "powershell ./install.ps1" or "./install.sh",
+	})
+
+	table.insert(plugins, {
+		"mfussenegger/nvim-dap",
+		config = function()
+			local dap = require('dap')
+			vim.keymap.set('n', '<f5>', dap.continue, {
+				desc = "DAP Continue"
+			})
+			vim.keymap.set('n', '<S-F5>', function() 
+					dap.disconnect({ terminateDebuggee = true })
+					dap.close()
+				end,
+				{
+					desc = "DAP Stop Debug Session",
+				}
+			)
+			vim.keymap.set('n', '<f8>', dap.step_over, {
+				desc = "DAP Step Over"
+			})
+			vim.keymap.set('n', '<f9>', dap.step_into, {
+				desc = "DAP Step Into"
+			})
+			vim.keymap.set('n', '<f7>', dap.step_out, {
+				desc = "DAP Step Out"
+			})
+			vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, {
+				desc = "DAP Toggle Breakpoint"
+			})
+			vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+					local ui_widgets = require('dap.ui.widgets')
+					ui_widgets.hover()
+				end, 
+				{
+					desc = "DAP Hover"
+				}
+			)
+			--vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+			  --require('dap.ui.widgets').preview()
+			--end)
+			--vim.keymap.set('n', '<Leader>df', function()
+			  --local widgets = require('dap.ui.widgets')
+			  --widgets.centered_float(widgets.frames)
+			--end)
+			--vim.keymap.set('n', '<Leader>ds', function()
+			  --local widgets = require('dap.ui.widgets')
+			  --widgets.centered_float(widgets.scopes)
+			--end)
+			--
+
+			--dap.configurations = require("dap_configs")
+
+			local dap_ui = require('dapui')
+			dap_ui.setup()
+			vim.keymap.set('n', '<leader>du', dap_ui.toggle, {
+				desc = 'Toggle DAP UI'
+			})
+
+			local mason_dap = require('mason-nvim-dap')
+			mason_dap.setup({
+				ensure_installed = { "python" },
+				automatic_installation = true,
+				handlers = {
+					function(config)
+						require('mason-nvim-dap').default_setup(config)
+					end
+				}
+			})
+		end,
+		dependencies = {
+			"rcarriga/nvim-dap-ui",
+			"nvim-neotest/nvim-nio",
+			"jay-babu/mason-nvim-dap.nvim",
+			"theHamsta/nvim-dap-virtual-text",
+			"Joakker/lua-json5",
+		}
+	})
+
+	table.insert(plugins, { "rcarriga/nvim-dap-ui" })
+
+	table.insert(plugins, {
+		"mfussenegger/nvim-dap-python",
+		lazy = true,
+		config = function()
+            local cwd = vim.fn.getcwd()
+			local path
+			if vim.fn.executable(cwd .. "/venv/Scripts/pythonw.exe") == 1 then
+				path = cwd .. "/venv/Scripts/pythonw.exe"
+            elseif vim.fn.executable(cwd .. "/.venv/Scripts/pythonw.exe") == 1 then
+            	path = cwd .. "/.venv/Scripts/pythonw.exe"
+            else
+				path = "pythonw.exe"
+            end
+			local python = vim.fn.expand(path)
+			vim.notify("DAP :: PYTHONPATH = " .. path)
+			require('dap-python').setup(python)
+		end
+	})
+
+	table.insert(plugins, {
+		"linux-cultist/venv-selector.nvim",
+		dependencies = {
+			"neovim/nvim-lspconfig",
+			"mfussenegger/nvim-dap", 
+			"mfussenegger/nvim-dap-python", --optional
+			{ 
+				"nvim-telescope/telescope.nvim", 
+				branch = "0.1.x", 
+				dependencies = { "nvim-lua/plenary.nvim" } 
+			},
+		},
+		lazy = false,
+		branch = "regexp", -- This is the regexp branch, use this for the new version
+		keys = {
+			{ ",v", "<cmd>VenvSelect<cr>" },
+		},
+		---@type venv-selector.Config
+		opts = {
+			-- Your settings go here
+		},
 	})
 
 end
@@ -570,6 +700,9 @@ vim.cmd [[
 	highlight GitSignsAdd guibg=none ctermbg=none
 	highlight GitSignsChange guibg=none ctermbg=none
 	highlight GitSignsDelete guibg=none ctermbg=none
+	highlight GitSignsStagedAdd guibg=none ctermbg=none
+	highlight GitSignsStagedChange guibg=none ctermbg=none
+	highlight GitSignsStagedDelete guibg=none ctermbg=none
 ]]
 
 
