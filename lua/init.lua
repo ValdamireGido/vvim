@@ -566,27 +566,35 @@ if not vim.g.vscode then
 				desc = "DAP Toggle Breakpoint"
 			})
 			vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
-					local ui_widgets = require('dap.ui.widgets')
-					ui_widgets.hover()
+					require('dap.ui.widgets').hover()
 				end, 
 				{
 					desc = "DAP Hover"
 				}
 			)
-			--vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
-			  --require('dap.ui.widgets').preview()
-			--end)
-			--vim.keymap.set('n', '<Leader>df', function()
-			  --local widgets = require('dap.ui.widgets')
-			  --widgets.centered_float(widgets.frames)
-			--end)
-			--vim.keymap.set('n', '<Leader>ds', function()
-			  --local widgets = require('dap.ui.widgets')
-			  --widgets.centered_float(widgets.scopes)
-			--end)
-			--
-
-			--dap.configurations = require("dap_configs")
+			vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+					require('dap.ui.widgets').preview()
+				end, 
+				{
+					desc = "DAP Preview",
+				}
+			)
+			vim.keymap.set('n', '<Leader>df', function()
+					local widgets = require('dap.ui.widgets')
+					widgets.centered_float(widgets.frames)
+				end,
+				{
+					desc = "DAP Frames"
+				}
+			)
+			vim.keymap.set('n', '<Leader>ds', function()
+					local widgets = require('dap.ui.widgets')
+					widgets.centered_float(widgets.scopes)
+				end,
+				{
+					desc = "DAP Scopes"
+				}
+			)
 
 			local dap_ui = require('dapui')
 			dap_ui.setup()
