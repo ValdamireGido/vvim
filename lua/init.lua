@@ -645,7 +645,6 @@ if not vim.g.vscode then
 				path = "pythonw.exe"
             end
 			local python = vim.fn.expand(path)
-			vim.notify("DAP :: PYTHONPATH = " .. path)
 			require('dap-python').setup(python)
 		end
 	})
