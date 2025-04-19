@@ -639,12 +639,21 @@ if not vim.g.vscode then
 				path = cwd .. "/venv/Scripts/pythonw.exe"
             elseif vim.fn.executable(cwd .. "/.venv/Scripts/pythonw.exe") == 1 then
             	path = cwd .. "/.venv/Scripts/pythonw.exe"
+			elseif vim.fn.executable(cwd .. "/.python_venv/Scripts/pythonw.exe") == 1 then
+            	path = cwd .. "/.python_venv/Scripts/pythonw.exe"
             else
 				path = "pythonw.exe"
             end
 			local python = vim.fn.expand(path)
 			vim.notify("DAP :: PYTHONPATH = " .. path)
 			require('dap-python').setup(python)
+		end
+	})
+
+	table.insert(plugins, {
+		'leoluz/nvim-dap-go',
+		config = function()
+			require('dap-go').setup()
 		end
 	})
 
