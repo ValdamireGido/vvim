@@ -6,10 +6,6 @@ vim.opt.shellcmdflag = "-command"
 vim.opt.shellquote = "\""
 vim.opt.shellxquote = ""
 
--- disable netrw at the very start of your init.lua
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 -- lazy package manager bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -25,28 +21,6 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
-
-	{
-		"nvim-tree/nvim-tree.lua",
-		dependencies = { "nvim-tree/nvim-web-devicons", },
-		config = function()
-			require("nvim-tree").setup({
-				sort = {
-					sorter = "case_sensitive",
-				},
-				view = {
-					width = 30,
-					relativenumber = true,
-				},
-				renderer = {
-					group_empty = true,
-				},
-				filters = {
-					dotfiles = true,
-				},
-			})
-		end,
-	},
 
 	{
 		'nvim-lualine/lualine.nvim',
@@ -155,6 +129,37 @@ if not vim.g.vscode then
 	--
 	--
 
+	table.insert(plugins, {
+		"nvim-tree/nvim-tree.lua",
+		dependencies = { "nvim-tree/nvim-web-devicons", },
+		init = function()
+
+			-- disable netrw at the very start of your init.lua
+			vim.g.loaded_netrw = 1
+			vim.g.loaded_netrwPlugin = 1
+
+			require("nvim-tree").setup({
+				respect_buf_cwd = true,
+				select_prompts = true,
+				view = {
+					number = true,
+					relativenumber = true,
+					float = {
+						enable = true,
+						quit_on_focus_loss = true,
+						open_win_config = {
+							relative = "editor",
+							border = "rounded",
+							width = 40,
+							height = 40,
+							row = 15,
+							col = 15,
+						},
+					}
+				},
+			})
+		end,
+	})
 
 	table.insert(plugins, {
 		"rcarriga/nvim-notify",
@@ -647,12 +652,12 @@ if not vim.g.vscode then
 		"linux-cultist/venv-selector.nvim",
 		dependencies = {
 			"neovim/nvim-lspconfig",
-			"mfussenegger/nvim-dap", 
-			"mfussenegger/nvim-dap-python", --optional
-			{ 
-				"nvim-telescope/telescope.nvim", 
-				branch = "0.1.x", 
-				dependencies = { "nvim-lua/plenary.nvim" } 
+			"mfussenegger/nvim-dap",
+			"mfussenegger/nvim-dap-python",
+			{
+				"nvim-telescope/telescope.nvim",
+				branch = "0.1.x",
+				dependencies = { "nvim-lua/plenary.nvim" }
 			},
 		},
 		lazy = false,
@@ -664,6 +669,20 @@ if not vim.g.vscode then
 		opts = {
 			-- Your settings go here
 		},
+	})
+
+	table.insert(plugins, {
+		"leoluz/nvim-dap-go",
+		ft = "go",
+		opts = {
+			delve = {
+				detatched = false,
+			}
+		},
+		config = function(_, opts)
+			require('dap-go').setup(opts)
+			require('dap').set_log_level("TRACE")
+		end,
 	})
 
 end
