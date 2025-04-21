@@ -209,27 +209,6 @@ if not vim.g.vscode then
 	})
 
 	table.insert(plugins, {
-		"nvim-tree/nvim-tree.lua",
-		dependencies = { "nvim-tree/nvim-web-devicons", },
-		config = function()
-			require("nvim-tree").setup {
-				sort = {
-					sorter = "case_sensitive",
-				},
-				view = {
-					width = 30,
-				},
-				renderer = {
-					group_empty = true,
-				},
-				filters = {
-					dotfiles = true,
-				},
-			}
-		end,
-	})
-
-	table.insert(plugins, {
 		'nvim-lualine/lualine.nvim',
 		dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
 		config = function()
@@ -536,6 +515,8 @@ if not vim.g.vscode then
 	table.insert(plugins, {
 		"sindrets/diffview.nvim"
 	})
+
+	table.insert(plugins, {'akinsho/git-conflict.nvim', version = "*", config = true})
 
 	table.insert(plugins, {
 		"Joakker/lua-json5",
