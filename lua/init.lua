@@ -143,8 +143,8 @@ if not vim.g.vscode then
 		'AlexvZyl/nordic.nvim',
 		lazy = false,
 		priority = 1000,
-		config = function()
-			require('nordic').load()
+		config = function(opts)
+			require('nordic').load(opts)
 		end
 	})
 	--
@@ -188,7 +188,8 @@ if not vim.g.vscode then
 			vim.notify = require('notify')
 			vim.notify.setup {
 				fps = 15,
-				stages = "slide"
+				stages = "slide",
+				merge_duplicates = true,
 			}
 		end
 	})
@@ -285,7 +286,7 @@ if not vim.g.vscode then
 	table.insert(plugins, {
 		"nvim-treesitter/nvim-treesitter",
 		config = function()
-			require('nvim-treesitter').setup {
+			require('nvim-treesitter').config = {
 				ensure_installed = {
 					"c",
 					"cpp",
@@ -303,6 +304,7 @@ if not vim.g.vscode then
 					"yaml",
 				}
 			}
+			require('nvim-treesitter').setup()
 		end
 	})
 
@@ -387,7 +389,7 @@ if not vim.g.vscode then
 				ensure_installed = {
 					"pyright",
 				},
-				automatic_enabled = true,
+				automatic_enable = true,
 			}
 
 			vim.keymap.set({ 'n', 'v' }, '==', function()
@@ -546,6 +548,14 @@ if not vim.g.vscode then
 	})
 
 	table.insert(plugins, {
+		"folke/lazydev.nvim",
+		ft = "lua",
+		config = function()
+			require("lazydev").setup {}
+		end
+	})
+
+	table.insert(plugins, {
 		"guillemaru/perfnvim",
 		config = function()
 			require("perfnvim").setup{}
@@ -571,7 +581,7 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<f5>', dap.continue, {
 				desc = "DAP Continue"
 			})
-			vim.keymap.set('n', '<S-F5>', function() 
+			vim.keymap.set('n', '<S-F5>', function()
 					dap.disconnect({ terminateDebuggee = true })
 					dap.close()
 				end,
@@ -600,14 +610,14 @@ if not vim.g.vscode then
 			})
 			vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
 					require('dap.ui.widgets').hover()
-				end, 
+				end,
 				{
 					desc = "DAP Hover"
 				}
 			)
 			vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
 					require('dap.ui.widgets').preview()
-				end, 
+				end,
 				{
 					desc = "DAP Preview",
 				}
