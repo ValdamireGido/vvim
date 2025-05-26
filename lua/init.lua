@@ -100,6 +100,27 @@ local plugins = {
 	{ 'godlygeek/tabular' },
 	{ 'tpope/vim-repeat' },
 	{ 'kana/vim-operator-user' },
+
+	{
+		"mistweaverco/kulala.nvim",
+		ft = { "http", "rest" },
+		config = function()
+			require("kulala").setup {
+				global_keymaps = true,
+				global_keymaps_prefix = "<leader>R",
+				kulala_keymaps_prefix = "",
+				ui = {
+					formatter = true,
+				},
+			}
+			vim.filetype.add({
+				extension = {
+					['http'] = 'http',
+				},
+			})
+		end,
+	},
+
 }
 
 
@@ -165,6 +186,10 @@ if not vim.g.vscode then
 		"rcarriga/nvim-notify",
 		config = function()
 			vim.notify = require('notify')
+			vim.notify.setup {
+				fps = 15,
+				stages = "slide"
+			}
 		end
 	})
 
@@ -201,10 +226,12 @@ if not vim.g.vscode then
 
 			local Terminal = require("toggleterm.terminal").Terminal
 			local lazygit = Terminal:new { cmd = "lazygit", hidden = true }
-
 			local lazygit_toggle = function() lazygit:toggle() end
-
 			vim.keymap.set("n", "<leader>gg", lazygit_toggle, { desc = "Toggle Lazygit" })
+
+			local lazyp4 = Terminal:new { cmd = "lazyp4", hidden = true }
+			local lazyp4_toggle = function() lazyp4:toggle() end
+			vim.keymap.set("n", "<leader>lp", lazyp4_toggle, { desc = "Toggle LazyP4" })
 		end,
 	})
 
@@ -251,6 +278,30 @@ if not vim.g.vscode then
 				winbar = {},
 				inactive_winbar = {},
 				extensions = {}
+			}
+		end
+	})
+
+	table.insert(plugins, {
+		"nvim-treesitter/nvim-treesitter",
+		config = function()
+			require('nvim-treesitter').setup {
+				ensure_installed = {
+					"c",
+					"cpp",
+					"c_sharp",
+					"diff",
+					"lua",
+					"vim",
+					"vimdoc",
+					"markdown",
+					"json",
+					"go",
+					"python",
+					"rust",
+					"typescript",
+					"yaml",
+				}
 			}
 		end
 	})
@@ -332,22 +383,11 @@ if not vim.g.vscode then
 		"williamboman/mason-lspconfig.nvim",
 		config = function()
 			local config = require("mason-lspconfig")
-			config.setup()
-			config.setup_handlers {
-				function(server_name)
-					require("lspconfig")[server_name].setup {}
-				end,
-				["lua_ls"] = function()
-					require("lspconfig")["lua_ls"].setup {
-						settings = {
-							Lua = {
-								diagnostics = {
-									globals = { 'vim' }
-								}
-							}
-						}
-					}
-				end
+			config.setup {
+				ensure_installed = {
+					"pyright",
+				},
+				automatic_enabled = true,
 			}
 
 			vim.keymap.set({ 'n', 'v' }, '==', function()
@@ -539,6 +579,13 @@ if not vim.g.vscode then
 					desc = "DAP Stop Debug Session",
 				}
 			)
+			vim.keymap.set('n', '<C-F5>', function()
+					dap.run_last()
+				end,
+				{
+					desc = "DAP Run last selected configuration",
+				}
+			)
 			vim.keymap.set('n', '<f8>', dap.step_over, {
 				desc = "DAP Step Over"
 			})
@@ -581,6 +628,16 @@ if not vim.g.vscode then
 					desc = "DAP Scopes"
 				}
 			)
+
+			vim.cmd('hi DapBreakpoint ctermbg=0 guifg=#993939 guibg=#31353f')
+			vim.cmd('hi DapLogPoint ctermbg=0 guifg=#61afef guibg=#31353f')
+			vim.cmd('hi DapStopped ctermbg=0 guifg=#98c379 guibg=#31353f')
+
+			vim.fn.sign_define('DapBreakpoint', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
+			vim.fn.sign_define('DapBreakpointCondition', { text='ﳁ', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
+			vim.fn.sign_define('DapBreakpointRejected', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl= 'DapBreakpoint' })
+			vim.fn.sign_define('DapLogPoint', { text='', texthl='DapLogPoint', linehl='DapLogPoint', numhl= 'DapLogPoint' })
+			vim.fn.sign_define('DapStopped', { text='', texthl='DapStopped', linehl='DapStopped', numhl= 'DapStopped' })
 
 			local dap_ui = require('dapui')
 			dap_ui.setup()
@@ -631,13 +688,6 @@ if not vim.g.vscode then
 	})
 
 	table.insert(plugins, {
-		'leoluz/nvim-dap-go',
-		config = function()
-			require('dap-go').setup()
-		end
-	})
-
-	table.insert(plugins, {
 		"linux-cultist/venv-selector.nvim",
 		dependencies = {
 			"neovim/nvim-lspconfig",
@@ -665,6 +715,7 @@ if not vim.g.vscode then
 		ft = "go",
 		opts = {
 			delve = {
+				path = "dlv.cmd",
 				detatched = false,
 			}
 		},
