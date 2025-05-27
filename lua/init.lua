@@ -387,7 +387,6 @@ if not vim.g.vscode then
 			local config = require("mason-lspconfig")
 			config.setup {
 				ensure_installed = {
-					"pyright",
 				},
 				automatic_enable = true,
 			}
@@ -458,8 +457,14 @@ if not vim.g.vscode then
 
 	table.insert(plugins, {
 		"ray-x/lsp_signature.nvim",
-		event = "InsertEnter",
-		opts = {}
+		opts = {
+			toggle_key = "<C-k>"
+		},
+		init = function()
+			vim.keymap.set({ 'n' }, '<C-k>', function()
+				require('lsp_signature').toggle_float_win()
+			end, { silent = true, noremap = true, desc = 'Toggle Function Signature popup' })
+		end
 	})
 
 	table.insert(plugins, {
@@ -731,7 +736,7 @@ if not vim.g.vscode then
 		},
 		config = function(_, opts)
 			require('dap-go').setup(opts)
-			require('dap').set_log_level("TRACE")
+			-- require('dap').set_log_level("TRACE")
 		end,
 	})
 
