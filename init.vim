@@ -30,7 +30,7 @@ lua require('init')
 lua require('lua_config')
 if !exists('g:vscode')
 	lua require('lsp_config')
-	lua vim.lsp.set_log_level("debug")
+	"lua vim.lsp.set_log_level("debug")
 	set omnifunc=v:lua.vim.lsp.omnifunc
 	let g:lsp_diagnostics_echo_cursor = 1
 
