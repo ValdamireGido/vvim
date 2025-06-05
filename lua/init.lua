@@ -204,6 +204,7 @@ if not vim.g.vscode then
 			require('onedark').load()
 		end
 	})
+	table.insert(plugins, { "Koalhack/darcubox-nvim" })
 	--
 	--
 
@@ -244,7 +245,7 @@ if not vim.g.vscode then
 		config = function()
 			vim.notify = require('notify')
 			vim.notify.setup {
-				fps = 15,
+				fps = 60,
 				stages = "slide",
 				merge_duplicates = true,
 			}
@@ -701,10 +702,6 @@ if not vim.g.vscode then
 				}
 			)
 
-			vim.cmd('hi DapBreakpoint ctermbg=0 guifg=#993939 guibg=#31353f')
-			vim.cmd('hi DapLogPoint ctermbg=0 guifg=#61afef guibg=#31353f')
-			vim.cmd('hi DapStopped ctermbg=0 guifg=#98c379 guibg=#31353f')
-
 			vim.fn.sign_define('DapBreakpoint', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
 			vim.fn.sign_define('DapBreakpointCondition', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
 			vim.fn.sign_define('DapBreakpointRejected', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl= 'DapBreakpoint' })
@@ -825,7 +822,7 @@ vim.opt.colorcolumn = "100"
 
 if not vim.g.vscode then
 	vim.cmd [[
-		colorscheme onedark
+		colorscheme darcubox
 	]]
 end
 
@@ -842,6 +839,10 @@ vim.cmd [[
 	highlight GitSignsStagedAdd guibg=none ctermbg=none
 	highlight GitSignsStagedChange guibg=none ctermbg=none
 	highlight GitSignsStagedDelete guibg=none ctermbg=none
+
+	highlight DapBreakpoint ctermbg=0 guibg=darkred
+	highlight DapLogPoint ctermbg=0 guibg=#31353f
+	highlight DapStopped ctermbg=0 guibg=#31358f
 ]]
 
 
