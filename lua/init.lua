@@ -204,7 +204,22 @@ if not vim.g.vscode then
 			require('onedark').load()
 		end
 	})
-	table.insert(plugins, { "Koalhack/darcubox-nvim" })
+	table.insert(plugins, {
+		"Koalhack/darcubox-nvim",
+		config = function()
+			require('darcubox').setup({
+				options = {
+					transparent = true,
+					styles = {
+						comments = {},
+						functions = {},
+						keywords = {},
+						types = {},
+					}
+				}
+			})
+		end
+	})
 	--
 	--
 
@@ -828,8 +843,8 @@ end
 
 vim.cmd [[
 	highlight Normal guibg=none ctermbg=none
-	highlight NormalNC guibg=none ctermbg=none
-	highlight NonText guibg=none ctermbg=none
+	highlight NormalNC guifg=gray guibg=none ctermbg=none
+	"highlight NonText guibg=none ctermbg=none
 	highlight LineNr guifg=#606060
 
 	highlight SignColumn guibg=none ctermbg=none
