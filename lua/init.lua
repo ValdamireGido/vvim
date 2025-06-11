@@ -7,7 +7,7 @@ if is_windows then
 	vim.opt.shellcmdflag = "-command"
 	vim.opt.shellquote = "\""
 	vim.opt.shellxquote = ""
-else 
+else
 	vim.opt.shell = "bash"
 end
 
