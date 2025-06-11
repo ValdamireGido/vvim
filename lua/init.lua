@@ -802,6 +802,7 @@ end
 vim.cmd [[
 	highlight Normal guibg=none ctermbg=none
 	highlight NormalNC guifg=gray guibg=none ctermbg=none
+	highlight NormalFloat guibg=black
 	"highlight NonText guibg=none ctermbg=none
 	highlight LineNr guifg=#606060
 
