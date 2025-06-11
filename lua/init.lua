@@ -1,10 +1,15 @@
 _G.__is_log = true
 
+local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
 -- default shell
-vim.opt.shell = "pwsh"
-vim.opt.shellcmdflag = "-command"
-vim.opt.shellquote = "\""
-vim.opt.shellxquote = ""
+if is_windows then
+	vim.opt.shell = "pwsh"
+	vim.opt.shellcmdflag = "-command"
+	vim.opt.shellquote = "\""
+	vim.opt.shellxquote = ""
+else 
+	vim.opt.shell = "bash"
+end
 
 -- lazy package manager bootstrap
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"

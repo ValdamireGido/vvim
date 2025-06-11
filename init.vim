@@ -1,8 +1,13 @@
+"language en_US
 let g:pluginInstallPath = stdpath('data')."/plugged"
-" vim plug to neovim lazy adapter
-source ~/AppData/Local/nvim/plug_lazy_adapter.vim
-" common settings
-source ~/AppData/Local/nvim/init-common.vim
+
+if has("unix")
+	source $HOME/.config/nvim/plug_lazy_adapter.vim
+elseif has("windows")
+	source ~/AppData/Local/nvim/plug_lazy_adapter.vim
+	source ~/AppData/Local/nvim/init-common.vim
+endif
+
 noremap ,cv :tabe $MYVIMRC<CR>
 noremap ,cl :tabe ~/AppData/Local/nvim/lua/init.lua<cr>
 
@@ -21,13 +26,18 @@ set hlsearch
 set cursorline
 set title
 
+set mouse=a
+set nocompatible
+
+map <c-.> :<UP><CR>
+
+nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
+nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
+
 " Cursor line settings
-hi CursorLine cterm=NONE ctermbg=black ctermfg=NONE
 let mapleader="\<space>"
 
-
 lua require('init')
-lua require('lua_config')
 if !exists('g:vscode')
 	lua require('lsp_config')
 	"lua vim.lsp.set_log_level("debug")
@@ -213,14 +223,4 @@ function ToggleHex()
   let &readonly=l:oldreadonly
   let &modifiable=l:oldmodifiable
 endfunction
-
-"
-" Some special optional settings
-if has("gui_running")
-	"set guioptions -=T
-else
-	"set term=xterm
-	set mouse=a
-	set nocompatible
-endif
 

@@ -1,14 +1,4 @@
 
-language en_US
-set number relativenumber
-set incsearch
-set hlsearch
-set scrolloff=5
-
-map <c-.> :<UP><CR>
-
-nnoremap <expr> k v:count == 0 ? 'gk' : 'k'
-nnoremap <expr> j v:count == 0 ? 'gj' : 'j'
 
 """ Launguage specific definitions
 augroup filetype_python
