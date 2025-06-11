@@ -9,7 +9,11 @@ elseif has("windows")
 endif
 
 noremap ,cv :tabe $MYVIMRC<CR>
-noremap ,cl :tabe ~/AppData/Local/nvim/lua/init.lua<cr>
+if has("unix")
+	noremap ,cl :tabe ~/.config/nvim/lua/init.lua<cr>
+elseif has("windows")
+	noremap ,cl :tabe ~/AppData/Local/nvim/lua/init.lua<cr>
+endif
 
 " syntax higlighing
 syntax on
@@ -25,9 +29,7 @@ set incsearch
 set hlsearch
 set cursorline
 set title
-
 set mouse=a
-set nocompatible
 
 map <c-.> :<UP><CR>
 
