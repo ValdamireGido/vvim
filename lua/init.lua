@@ -122,7 +122,8 @@ local plugins = {
 			-- vim.g.loaded_netrw = 1
 			vim.g.loaded_netrwPlugin = 1
 		end,
-	}
+	},
+
 
 }
 
@@ -134,34 +135,34 @@ if not vim.g.vscode then
 
 	-- color schemes
 	--
-	table.insert(plugins, {
-		"catppuccin/nvim",
-		name = "catppuccin",
-		priority = 1000,
-	})
-	table.insert(plugins, {
-		"rebelot/kanagawa.nvim"
-	})
-	table.insert(plugins, {
-		'AlexvZyl/nordic.nvim',
-		lazy = false,
-		priority = 1000,
-		config = function(opts)
-			require('nordic').load(opts)
-		end
-	})
-	table.insert(plugins, {
-		"navarasu/onedark.nvim",
-		priority = 1000,
-		config = function()
-			require('onedark').setup {
-				style = 'warmer',
-				transparent = true
-			}
-			-- Enable theme
-			require('onedark').load()
-		end
-	})
+	-- table.insert(plugins, {
+	-- 	"catppuccin/nvim",
+	-- 	name = "catppuccin",
+	-- 	priority = 1000,
+	-- })
+	-- table.insert(plugins, {
+	-- 	"rebelot/kanagawa.nvim"
+	-- })
+	-- table.insert(plugins, {
+	-- 	'AlexvZyl/nordic.nvim',
+	-- 	lazy = false,
+	-- 	priority = 1000,
+	-- 	config = function(opts)
+	-- 		require('nordic').load(opts)
+	-- 	end
+	-- })
+	-- table.insert(plugins, {
+	-- 	"navarasu/onedark.nvim",
+	-- 	priority = 1000,
+	-- 	config = function()
+	-- 		require('onedark').setup {
+	-- 			style = 'warmer',
+	-- 			transparent = true
+	-- 		}
+	-- 		-- Enable theme
+	-- 		require('onedark').load()
+	-- 	end
+	-- })
 	table.insert(plugins, {
 		"Koalhack/darcubox-nvim",
 		config = function()
@@ -181,37 +182,37 @@ if not vim.g.vscode then
 	--
 	--
 
-	table.insert(plugins, {
-		"nvim-tree/nvim-tree.lua",
-		dependencies = { "nvim-tree/nvim-web-devicons", },
-		init = function()
-
-			-- disable netrw at the very start of your init.lua
-			vim.g.loaded_netrw = 1
-			vim.g.loaded_netrwPlugin = 1
-
-			require("nvim-tree").setup({
-				respect_buf_cwd = true,
-				select_prompts = true,
-				view = {
-					number = true,
-					relativenumber = true,
-					float = {
-						enable = true,
-						quit_on_focus_loss = true,
-						open_win_config = {
-							relative = "editor",
-							border = "rounded",
-							width = 40,
-							height = 40,
-							row = 15,
-							col = 15,
-						},
-					}
-				},
-			})
-		end,
-	})
+	-- table.insert(plugins, {
+	-- 	"nvim-tree/nvim-tree.lua",
+	-- 	dependencies = { "nvim-tree/nvim-web-devicons", },
+	-- 	init = function()
+	--
+	-- 		-- disable netrw at the very start of your init.lua
+	-- 		vim.g.loaded_netrw = 1
+	-- 		vim.g.loaded_netrwPlugin = 1
+	--
+	-- 		require("nvim-tree").setup({
+	-- 			respect_buf_cwd = true,
+	-- 			select_prompts = true,
+	-- 			view = {
+	-- 				number = true,
+	-- 				relativenumber = true,
+	-- 				float = {
+	-- 					enable = true,
+	-- 					quit_on_focus_loss = true,
+	-- 					open_win_config = {
+	-- 						relative = "editor",
+	-- 						border = "rounded",
+	-- 						width = 40,
+	-- 						height = 40,
+	-- 						row = 15,
+	-- 						col = 15,
+	-- 					},
+	-- 				}
+	-- 			},
+	-- 		})
+	-- 	end,
+	-- })
 
 	table.insert(plugins, {
 		"rcarriga/nvim-notify",
@@ -246,6 +247,13 @@ if not vim.g.vscode then
 				{}
 			)
 		end
+	})
+
+	table.insert(plugins, {
+		"nvzone/floaterm",
+		dependencies = "nvzone/volt",
+		opts = {},
+		cmd = "FloatermToggle",
 	})
 
 	table.insert(plugins, {
