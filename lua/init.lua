@@ -38,22 +38,6 @@ local plugins = {
 		end
 	},
 
-	{
-		'smoka7/hop.nvim',
-		version = "*",
-		opts = {},
-		config = function()
-			-- Hop configuration
-			require("hop").setup {}
-			vim.keymap.set('n', '<leader><leader>w', require 'hop'.hint_words, {})
-			vim.keymap.set('n', '<leader><leader>b', function()
-				require 'hop'.hint_words({ direction = require 'hop.hint'.HintDirection.BEFORE_CURSOR })
-			end)
-			vim.keymap.set('n', '<leader><leader>f', require 'hop'.hint_char1, {})
-			vim.keymap.set('n', '<leader><leader>p', require 'hop'.hint_patterns, {})
-		end
-	},
-
 	{ 'wellle/targets.vim' },
 	{ 'godlygeek/tabular' },
 	{ 'tpope/vim-repeat' },
