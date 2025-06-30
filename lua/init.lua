@@ -609,9 +609,10 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<f5>', dap.continue, {
 				desc = "DAP Continue"
 			})
-			vim.keymap.set('n', '<S-F5>', function()
-					dap.disconnect({ terminateDebuggee = true })
-					dap.close()
+			vim.keymap.set('n', '<S-f5>', function()
+					dap.terminate({})
+					-- dap.disconnect({ terminateDebuggee = true })
+					-- dap.close()
 				end,
 				{
 					desc = "DAP Stop Debug Session",
@@ -706,15 +707,19 @@ if not vim.g.vscode then
 		lazy = true,
 		config = function()
             local cwd = vim.fn.getcwd()
+			local python_ext = ""
+			if is_windows then
+				python_ext = "w.exe"
+			end
 			local path
-			if vim.fn.executable(cwd .. "/venv/Scripts/pythonw.exe") == 1 then
-				path = cwd .. "/venv/Scripts/pythonw.exe"
-            elseif vim.fn.executable(cwd .. "/.venv/Scripts/pythonw.exe") == 1 then
-            	path = cwd .. "/.venv/Scripts/pythonw.exe"
-			elseif vim.fn.executable(cwd .. "/.python_venv/Scripts/pythonw.exe") == 1 then
-            	path = cwd .. "/.python_venv/Scripts/pythonw.exe"
+			if vim.fn.executable(cwd .. "/venv/Scripts/python" .. python_ext) == 1 then
+				path = cwd .. "/venv/Scripts/python" .. python_ext
+            elseif vim.fn.executable(cwd .. "/.venv/Scripts/python" .. python_ext) == 1 then
+            	path = cwd .. "/.venv/Scripts/pythonw" .. python_ext
+			elseif vim.fn.executable(cwd .. "/.python_venv/Scripts/pythonw" .. python_ext) == 1 then
+            	path = cwd .. "/.python_venv/Scripts/python" .. python_ext
             else
-				path = "pythonw.exe"
+				path = "python" .. python_ext
             end
 			local python = vim.fn.expand(path)
 			require('dap-python').setup(python)
@@ -783,7 +788,7 @@ end
 
 -- set termguicolors to enable highlight groups
 vim.opt.termguicolors = true
-vim.opt.colorcolumn = "100"
+vim.opt.colorcolumn = "80"
 
 if not vim.g.vscode then
 	vim.cmd [[
@@ -799,8 +804,8 @@ vim.cmd [[
 	highlight LineNr guifg=#606060
 
 	highlight ColorColumn guibg=#16181c
-
 	highlight SignColumn guibg=none ctermbg=none
+
 	highlight GitSignsAdd guibg=none ctermbg=none
 	highlight GitSignsChange guibg=none ctermbg=none
 	highlight GitSignsDelete guibg=none ctermbg=none
