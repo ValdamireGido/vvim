@@ -75,7 +75,7 @@ local plugins = {
 		keys = {
 			-- 👇 in this section, choose your own keymappings!
 			{
-				"<leader>-",
+				"<leader>y",
 				mode = { "n", "v" },
 				"<cmd>Yazi<cr>",
 				desc = "Open yazi at the current file",
@@ -481,7 +481,8 @@ if not vim.g.vscode then
 	table.insert(plugins, {
 		"ray-x/lsp_signature.nvim",
 		opts = {
-			toggle_key = "<C-k>"
+			toggle_key = "<C-k>",
+			floating_window = false,
 		},
 		init = function()
 			vim.keymap.set({ 'n' }, '<C-k>', function()
@@ -609,22 +610,12 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<f5>', dap.continue, {
 				desc = "DAP Continue"
 			})
-			vim.keymap.set('n', '<S-f5>', function()
-					dap.terminate({})
-					-- dap.disconnect({ terminateDebuggee = true })
-					-- dap.close()
-				end,
-				{
-					desc = "DAP Stop Debug Session",
-				}
-			)
-			vim.keymap.set('n', '<C-F5>', function()
-					dap.run_last()
-				end,
-				{
-					desc = "DAP Run last selected configuration",
-				}
-			)
+			vim.keymap.set('n', '<S-f5>', ':DapTerminate<CR>', {
+				desc = "DAP Terminate Debug Session",
+			})
+			vim.keymap.set('n', '<C-F5>', function() dap.run_last() end, {
+				desc = "DAP Run last selected configuration",
+			})
 			vim.keymap.set('n', '<f8>', dap.step_over, {
 				desc = "DAP Step Over"
 			})
