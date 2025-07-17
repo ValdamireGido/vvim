@@ -373,7 +373,7 @@ if not vim.g.vscode then
 				},
 			})
 			local builtin = require('telescope.builtin')
-			vim.keymap.set('n', '<leader>ff', builtin.find_files, {})
+			vim.keymap.set('n', '<leader>ff', builtin.grep_string, {})
 			vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
 			vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
 			vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
@@ -383,6 +383,9 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<leader>td', builtin.lsp_document_symbols, {})
 			vim.keymap.set('n', '<leader>tw', builtin.lsp_workspace_symbols, {})
 			vim.keymap.set('n', '<leader>tr', builtin.lsp_references, {})
+			vim.keymap.set('n', '<C-A-p>', ':Telescope resume<cr>', {
+				desc = "Telescope: resume last activated session"
+			})
 		end
 	})
 	table.insert(plugins, {
@@ -413,6 +416,13 @@ if not vim.g.vscode then
 				},
 				automatic_enable = true,
 			}
+
+			vim.keymap.set({ 'i' }, '<C-C>', function()
+				vim.lsp.completion.get()
+			end, {
+				desc = "LSP Completion popup",
+				remap = true,
+			})
 
 			vim.keymap.set({ 'n', 'v' }, '==', function()
 				vim.lsp.buf.format({
@@ -584,11 +594,15 @@ if not vim.g.vscode then
 		end
 	})
 
+	-- table.insert(plugins, {
+	-- 	"guillemaru/perfnvim",
+	-- 	config = function()
+	-- 		require("perfnvim").setup{}
+	-- 	end
+	-- })
+
 	table.insert(plugins, {
-		"guillemaru/perfnvim",
-		config = function()
-			require("perfnvim").setup{}
-		end
+		"motiongorilla/p4nvim",
 	})
 
 	table.insert(plugins, {
