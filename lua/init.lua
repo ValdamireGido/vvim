@@ -1,4 +1,6 @@
 _G.__is_log = true
+vim.opt.signcolumn = "yes"
+vim.opt.winborder = "rounded"
 
 local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
 -- default shell
@@ -206,6 +208,9 @@ if not vim.g.vscode then
 				fps = 60,
 				stages = "slide",
 				merge_duplicates = true,
+				render = "wrapped-compact",
+				max_width = 40,
+				top_down = false,
 			}
 		end
 	})
@@ -366,10 +371,7 @@ if not vim.g.vscode then
 						}
 					},
 					sorting_strategy = "ascending",
-					path_display = {
-						shorten = true,
-						truncate = true,
-					},
+					path_display = {"relative"},
 				},
 			})
 			local builtin = require('telescope.builtin')
@@ -447,34 +449,27 @@ if not vim.g.vscode then
 					-- Leader triggers
 					{ mode = 'n', keys = '<Leader>' },
 					{ mode = 'x', keys = '<Leader>' },
-
 					-- Built-in completion
 					{ mode = 'i', keys = '<C-x>' },
-
 					-- `g` key
 					{ mode = 'n', keys = 'g' },
 					{ mode = 'x', keys = 'g' },
-
 					-- Marks
 					{ mode = 'n', keys = "'" },
 					{ mode = 'n', keys = '`' },
 					{ mode = 'x', keys = "'" },
 					{ mode = 'x', keys = '`' },
-
 					-- Registers
 					{ mode = 'n', keys = '"' },
 					{ mode = 'x', keys = '"' },
 					{ mode = 'i', keys = '<C-r>' },
 					{ mode = 'c', keys = '<C-r>' },
-
 					-- Window commands
 					{ mode = 'n', keys = '<C-w>' },
-
 					-- `z` key
 					{ mode = 'n', keys = 'z' },
 					{ mode = 'x', keys = 'z' },
 				},
-
 				clues = {
 					-- Enhance this by adding descriptions for <Leader> mapping groups
 					miniclue.gen_clues.builtin_completion(),
