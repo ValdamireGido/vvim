@@ -119,36 +119,7 @@ local plugins = {
 --
 if not vim.g.vscode then
 
-	-- color schemes
-	--
-	-- table.insert(plugins, {
-	-- 	"catppuccin/nvim",
-	-- 	name = "catppuccin",
-	-- 	priority = 1000,
-	-- })
-	-- table.insert(plugins, {
-	-- 	"rebelot/kanagawa.nvim"
-	-- })
-	-- table.insert(plugins, {
-	-- 	'AlexvZyl/nordic.nvim',
-	-- 	lazy = false,
-	-- 	priority = 1000,
-	-- 	config = function(opts)
-	-- 		require('nordic').load(opts)
-	-- 	end
-	-- })
-	-- table.insert(plugins, {
-	-- 	"navarasu/onedark.nvim",
-	-- 	priority = 1000,
-	-- 	config = function()
-	-- 		require('onedark').setup {
-	-- 			style = 'warmer',
-	-- 			transparent = true
-	-- 		}
-	-- 		-- Enable theme
-	-- 		require('onedark').load()
-	-- 	end
-	-- })
+
 	table.insert(plugins, {
 		"Koalhack/darcubox-nvim",
 		config = function()
@@ -165,40 +136,7 @@ if not vim.g.vscode then
 			})
 		end
 	})
-	--
-	--
 
-	-- table.insert(plugins, {
-	-- 	"nvim-tree/nvim-tree.lua",
-	-- 	dependencies = { "nvim-tree/nvim-web-devicons", },
-	-- 	init = function()
-	--
-	-- 		-- disable netrw at the very start of your init.lua
-	-- 		vim.g.loaded_netrw = 1
-	-- 		vim.g.loaded_netrwPlugin = 1
-	--
-	-- 		require("nvim-tree").setup({
-	-- 			respect_buf_cwd = true,
-	-- 			select_prompts = true,
-	-- 			view = {
-	-- 				number = true,
-	-- 				relativenumber = true,
-	-- 				float = {
-	-- 					enable = true,
-	-- 					quit_on_focus_loss = true,
-	-- 					open_win_config = {
-	-- 						relative = "editor",
-	-- 						border = "rounded",
-	-- 						width = 40,
-	-- 						height = 40,
-	-- 						row = 15,
-	-- 						col = 15,
-	-- 					},
-	-- 				}
-	-- 			},
-	-- 		})
-	-- 	end,
-	-- })
 
 	table.insert(plugins, {
 		"rcarriga/nvim-notify",
@@ -291,7 +229,7 @@ if not vim.g.vscode then
 					lualine_a = { 'mode' },
 					lualine_b = { 'branch', 'diff', 'diagnostics' },
 					lualine_c = { { 'filename', file_status = true, path = 1 } },
-					lualine_x = { 'encoding', 'fileformat', 'filetype' },
+					lualine_x = { 'overseer', 'encoding', 'fileformat', 'filetype' },
 					lualine_y = { 'progress' },
 					lualine_z = { 'location' }
 				},
@@ -761,6 +699,23 @@ if not vim.g.vscode then
 		config = function(_, opts)
 			require('dap-go').setup(opts)
 			-- require('dap').set_log_level("TRACE")
+		end,
+	})
+
+
+	table.insert(plugins, {
+		'stevearc/overseer.nvim',
+		opts = {
+			strategy = "toggleterm",
+		},
+		config = function(_, opts)
+			require('overseer').setup(opts)
+			vim.keymap.set("n", "<C-S-R>", "<CMD>OverseerRun<CR>", {
+				desc = "Run available tasks"
+			})
+			vim.keymap.set("n", "<C-S-L>", "<CMD>OverseerToggle<CR>", {
+				desc = "Toggle Overseer"
+			})
 		end,
 	})
 
