@@ -313,16 +313,38 @@ if not vim.g.vscode then
 				},
 			})
 			local builtin = require('telescope.builtin')
-			vim.keymap.set('n', '<leader>ff', builtin.grep_string, {})
-			vim.keymap.set('n', '<leader>fg', builtin.live_grep, {})
-			vim.keymap.set('n', '<leader>fb', builtin.buffers, {})
-			vim.keymap.set('n', '<leader>fh', builtin.help_tags, {})
+			vim.keymap.set('n', '<leader>ff', builtin.grep_string, {
+				desc = "Telescope Grep string under cursor"
+			})
+			vim.keymap.set('n', '<leader>fg', builtin.live_grep, {
+				desc = "Telescope Live Grep"
+			})
+			vim.keymap.set('n', '<leader>fb', builtin.buffers, {
+				desc = "Telescope Buffers"
+			})
+			vim.keymap.set('n', '<leader>fh', builtin.help_tags, {
+				desc = "Telescope Help Tags"
+			})
 			-- commands in Telescope
-			vim.keymap.set('n', '<leader>:', builtin.commands, {})
+			vim.keymap.set('n', '<leader>:', builtin.commands, {
+				desc = "Telescope Commands"
+			})
 			-- lsp symbols and references
-			vim.keymap.set('n', '<leader>td', builtin.lsp_document_symbols, {})
-			vim.keymap.set('n', '<leader>tw', builtin.lsp_workspace_symbols, {})
-			vim.keymap.set('n', '<leader>tr', builtin.lsp_references, {})
+			vim.keymap.set('n', '<leader>td', builtin.lsp_document_symbols, {
+				desc = "Telescope LSP Symbols in buffer"
+			})
+			vim.keymap.set('n', '<leader>tw', builtin.lsp_workspace_symbols, {
+				desc = "Telescope LSP Workspace Symbols"
+			})
+			vim.keymap.set('n', '<leader>tr', builtin.lsp_references, {
+				desc = "Telescope LSP References"
+			})
+			vim.keymap.set('n', '<leader>ti', builtin.lsp_implementations, {
+				desc = "Telescope LSP Implementations"
+			})
+			vim.keymap.set('n', '<leader>ld', builtin.diagnostics, {
+				desc = "Telescope Diagnstics"
+			})
 			vim.keymap.set('n', '<C-A-p>', ':Telescope resume<cr>', {
 				desc = "Telescope: resume last activated session"
 			})
@@ -435,50 +457,6 @@ if not vim.g.vscode then
 	})
 
 	table.insert(plugins, {
-		'nvimdev/dashboard-nvim',
-		event = 'VimEnter',
-		config = function()
-			require('dashboard').setup {
-				theme = 'hyper',
-				config = {
-					week_header = {
-						enable = true,
-					},
-					shortcut = {
-						{
-							desc = '󰊳 Update',
-							group = '@property',
-							action = 'Lazy update',
-							key = 'u'
-						},
-						{
-							icon = ' ',
-							icon_hl = '@variable',
-							desc = 'Files',
-							group = 'Label',
-							action = 'Telescope find_files',
-							key = 'f',
-						},
-						{
-							desc = ' Apps',
-							group = 'DiagnosticHint',
-							action = 'Telescope app',
-							key = 'a',
-						},
-						{
-							desc = ' dotfiles',
-							group = 'Number',
-							action = 'Telescope dotfiles',
-							key = 'd',
-						},
-					},
-				},
-			}
-		end,
-		dependencies = { { 'nvim-tree/nvim-web-devicons' } }
-	})
-
-	table.insert(plugins, {
 		"kdheepak/lazygit.nvim",
 		lazy = true,
 		cmd = {
@@ -527,13 +505,6 @@ if not vim.g.vscode then
 		end
 	})
 
-	-- table.insert(plugins, {
-	-- 	"guillemaru/perfnvim",
-	-- 	config = function()
-	-- 		require("perfnvim").setup{}
-	-- 	end
-	-- })
-
 	table.insert(plugins, {
 		"motiongorilla/p4nvim",
 	})
@@ -563,13 +534,13 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<C-F5>', function() dap.run_last() end, {
 				desc = "DAP Run last selected configuration",
 			})
-			vim.keymap.set('n', '<f8>', dap.step_over, {
+			vim.keymap.set('n', '<f3>', dap.step_over, {
 				desc = "DAP Step Over"
 			})
-			vim.keymap.set('n', '<f9>', dap.step_into, {
+			vim.keymap.set('n', '<f4>', dap.step_into, {
 				desc = "DAP Step Into"
 			})
-			vim.keymap.set('n', '<f7>', dap.step_out, {
+			vim.keymap.set('n', '<f2>', dap.step_out, {
 				desc = "DAP Step Out"
 			})
 			vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, {
