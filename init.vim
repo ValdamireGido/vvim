@@ -102,12 +102,6 @@ command CDP cd -
 
 
 "
-" FSwitch mappings
-map <C-;><C-.> :FSHere<CR>
-map <A-o> :FSHere<cr>
-
-
-"
 " Ctags file generation
 command! -complete=file -nargs=* GenerateCtags :!ctags -R --sort=yes --c++-kinds=+p --fields=+iaS --extra=+q .<CR>
 

@@ -290,6 +290,10 @@ if not vim.g.vscode then
 		end
 	})
 
+	table.insert(plugins, { "neovim/nvim-lspconfig", })
+	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
+	vim.keymap.set("n", "<A-o>", "<cmd>LspClangdSwitchSourceHeader<CR>")
+
 	table.insert(plugins, {
 		'nvim-telescope/telescope.nvim',
 		tag = '0.1.8',
@@ -358,9 +362,6 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<C-p>', ':Telescope frecency workspace=CWD<CR>')
 		end,
 	})
-
-	table.insert(plugins, { "neovim/nvim-lspconfig", })
-	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
 
 	table.insert(plugins, {
 		"williamboman/mason.nvim",
@@ -681,10 +682,10 @@ if not vim.g.vscode then
 		},
 		config = function(_, opts)
 			require('overseer').setup(opts)
-			vim.keymap.set("n", "<C-S-R>", "<CMD>OverseerRun<CR>", {
+			vim.keymap.set("n", "<leader>Or", "<CMD>OverseerRun<CR>", {
 				desc = "Run available tasks"
 			})
-			vim.keymap.set("n", "<C-S-L>", "<CMD>OverseerToggle<CR>", {
+			vim.keymap.set("n", "<leader>Ot", "<CMD>OverseerToggle<CR>", {
 				desc = "Toggle Overseer"
 			})
 		end,
