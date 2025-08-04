@@ -51,8 +51,6 @@ if !exists('g:vscode')
 	autocmd CursorMoved <buffer> lua vim.lsp.buf.clear_references()
 endif
 
-map <F3> :NvimTreeToggle<cr>
-
 
 "
 " Basic movement and often used commands
