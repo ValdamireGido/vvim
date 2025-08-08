@@ -626,8 +626,8 @@ if not vim.g.vscode then
 			if vim.fn.executable(cwd .. "/venv/Scripts/python" .. python_ext) == 1 then
 				path = cwd .. "/venv/Scripts/python" .. python_ext
             elseif vim.fn.executable(cwd .. "/.venv/Scripts/python" .. python_ext) == 1 then
-            	path = cwd .. "/.venv/Scripts/pythonw" .. python_ext
-			elseif vim.fn.executable(cwd .. "/.python_venv/Scripts/pythonw" .. python_ext) == 1 then
+            	path = cwd .. "/.venv/Scripts/python" .. python_ext
+			elseif vim.fn.executable(cwd .. "/.python_venv/Scripts/python" .. python_ext) == 1 then
             	path = cwd .. "/.python_venv/Scripts/python" .. python_ext
             else
 				path = "python" .. python_ext
