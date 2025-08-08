@@ -1,6 +1,7 @@
 _G.__is_log = true
 vim.opt.signcolumn = "yes"
 vim.opt.winborder = "rounded"
+vim.opt.completeopt:append('menu', 'menuone', 'noselect', 'popup', 'fuzzy')
 
 local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
 -- default shell
