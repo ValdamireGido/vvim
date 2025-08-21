@@ -341,6 +341,9 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<leader>tw', builtin.lsp_workspace_symbols, {
 				desc = "Telescope LSP Workspace Symbols"
 			})
+			vim.keymap.set('n', '<leader>tW', builtin.lsp_dynamic_workspace_symbols, {
+				desc = "Telescope LSP Dynamic Workspace Symbols"
+			})
 			vim.keymap.set('n', '<leader>tr', builtin.lsp_references, {
 				desc = "Telescope LSP References"
 			})
@@ -350,7 +353,7 @@ if not vim.g.vscode then
 			vim.keymap.set('n', '<leader>ld', builtin.diagnostics, {
 				desc = "Telescope Diagnstics"
 			})
-			vim.keymap.set('n', '<C-A-p>', ':Telescope resume<cr>', {
+			vim.keymap.set('n', '<leader><C-p>', ':Telescope resume<cr>', {
 				desc = "Telescope: resume last activated session"
 			})
 		end
