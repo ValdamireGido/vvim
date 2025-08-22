@@ -1,6 +1,6 @@
 _G.__is_log = true
 vim.opt.signcolumn = "yes"
-vim.opt.winborder = "rounded"
+-- vim.opt.winborder = "rounded"
 vim.opt.completeopt:append('menu', 'menuone', 'noselect', 'popup', 'fuzzy')
 
 local is_windows = vim.fn.has("win64") == 1 or vim.fn.has("win32") == 1 or vim.fn.has("win16") == 1
@@ -294,6 +294,9 @@ if not vim.g.vscode then
 	table.insert(plugins, { "neovim/nvim-lspconfig", })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
 	vim.keymap.set("n", "<A-o>", "<cmd>LspClangdSwitchSourceHeader<CR>")
+	vim.keymap.set("n", "K", function()
+		vim.lsp.buf.hover({border = "rounded"})
+	end)
 
 	table.insert(plugins, {
 		'nvim-telescope/telescope.nvim',
