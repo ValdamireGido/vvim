@@ -83,17 +83,6 @@ local plugins = {
 				"<cmd>Yazi<cr>",
 				desc = "Open yazi at the current file",
 			},
-			{
-				-- Open in the current working directory
-				"<leader>cw",
-				"<cmd>Yazi cwd<cr>",
-				desc = "Open the file manager in nvim's working directory",
-			},
-			{
-				"<c-up>",
-				"<cmd>Yazi toggle<cr>",
-				desc = "Resume the last yazi session",
-			},
 		},
 		---@type YaziConfig | {}
 		opts = {
@@ -207,6 +196,14 @@ if not vim.g.vscode then
 		'nvim-lualine/lualine.nvim',
 		dependencies = { 'nvim-tree/nvim-web-devicons', opt = true },
 		config = function()
+			-- debug mode flag from debugmaster plugin
+			local dmode_enabled = false
+			vim.api.nvim_create_autocmd("User", {
+				pattern = "DebugModeChanged",
+				callback = function(args)
+					dmode_enabled = args.data.enabled
+				end
+			})
 			require('lualine').setup {
 				options = {
 					icons_enabled = true,
@@ -227,7 +224,13 @@ if not vim.g.vscode then
 					}
 				},
 				sections = {
-					lualine_a = { 'mode' },
+					lualine_a = {
+						{
+							'mode',
+							fmt = function(str) return dmode_enabled and "DEBUG" or str end,
+							color = function(tb) return dmode_enabled and "dCursor" or tb end,
+						}
+					},
 					lualine_b = { 'branch', 'diff', 'diagnostics' },
 					lualine_c = { { 'filename', file_status = true, path = 1 } },
 					lualine_x = { 'overseer', 'encoding', 'fileformat', 'filetype' },
@@ -532,70 +535,64 @@ if not vim.g.vscode then
 	table.insert(plugins, {
 		"mfussenegger/nvim-dap",
 		config = function()
-			local dap = require('dap')
-			vim.keymap.set('n', '<f5>', dap.continue, {
-				desc = "DAP Continue"
-			})
-			vim.keymap.set('n', '<S-f5>', ':DapTerminate<CR>', {
-				desc = "DAP Terminate Debug Session",
-			})
-			vim.keymap.set('n', '<C-F5>', function() dap.run_last() end, {
-				desc = "DAP Run last selected configuration",
-			})
-			vim.keymap.set('n', '<f3>', dap.step_over, {
-				desc = "DAP Step Over"
-			})
-			vim.keymap.set('n', '<f4>', dap.step_into, {
-				desc = "DAP Step Into"
-			})
-			vim.keymap.set('n', '<f2>', dap.step_out, {
-				desc = "DAP Step Out"
-			})
-			vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, {
-				desc = "DAP Toggle Breakpoint"
-			})
-			vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
-					require('dap.ui.widgets').hover()
-				end,
-				{
-					desc = "DAP Hover"
-				}
-			)
-			vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
-					require('dap.ui.widgets').preview()
-				end,
-				{
-					desc = "DAP Preview",
-				}
-			)
-			vim.keymap.set('n', '<Leader>df', function()
-					local widgets = require('dap.ui.widgets')
-					widgets.centered_float(widgets.frames)
-				end,
-				{
-					desc = "DAP Frames"
-				}
-			)
-			vim.keymap.set('n', '<Leader>ds', function()
-					local widgets = require('dap.ui.widgets')
-					widgets.centered_float(widgets.scopes)
-				end,
-				{
-					desc = "DAP Scopes"
-				}
-			)
+			-- local dap = require('dap')
+			-- vim.keymap.set('n', '<f5>', dap.continue, {
+			-- 	desc = "DAP Continue"
+			-- })
+			-- vim.keymap.set('n', '<S-f5>', ':DapTerminate<CR>', {
+			-- 	desc = "DAP Terminate Debug Session",
+			-- })
+			-- vim.keymap.set('n', '<C-F5>', function() dap.run_last() end, {
+			-- 	desc = "DAP Run last selected configuration",
+			-- })
+			-- vim.keymap.set('n', '<f3>', dap.step_over, {
+			-- 	desc = "DAP Step Over"
+			-- })
+			-- vim.keymap.set('n', '<f4>', dap.step_into, {
+			-- 	desc = "DAP Step Into"
+			-- })
+			-- vim.keymap.set('n', '<f2>', dap.step_out, {
+			-- 	desc = "DAP Step Out"
+			-- })
+			-- vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, {
+			-- 	desc = "DAP Toggle Breakpoint"
+			-- })
+			-- vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
+			-- 		require('dap.ui.widgets').hover()
+			-- 	end,
+			-- 	{
+			-- 		desc = "DAP Hover"
+			-- 	}
+			-- )
+			-- vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
+			-- 		require('dap.ui.widgets').preview()
+			-- 	end,
+			-- 	{
+			-- 		desc = "DAP Preview",
+			-- 	}
+			-- )
+			-- vim.keymap.set('n', '<Leader>df', function()
+			-- 		local widgets = require('dap.ui.widgets')
+			-- 		widgets.centered_float(widgets.frames)
+			-- 	end,
+			-- 	{
+			-- 		desc = "DAP Frames"
+			-- 	}
+			-- )
+			-- vim.keymap.set('n', '<Leader>ds', function()
+			-- 		local widgets = require('dap.ui.widgets')
+			-- 		widgets.centered_float(widgets.scopes)
+			-- 	end,
+			-- 	{
+			-- 		desc = "DAP Scopes"
+			-- 	}
+			-- )
 
 			vim.fn.sign_define('DapBreakpoint', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
 			vim.fn.sign_define('DapBreakpointCondition', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
 			vim.fn.sign_define('DapBreakpointRejected', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl= 'DapBreakpoint' })
 			vim.fn.sign_define('DapLogPoint', { text='', texthl='DapLogPoint', linehl='DapLogPoint', numhl= 'DapLogPoint' })
 			vim.fn.sign_define('DapStopped', { text='', texthl='DapStopped', linehl='DapStopped', numhl= 'DapStopped' })
-
-			local dap_ui = require('dapui')
-			dap_ui.setup()
-			vim.keymap.set('n', '<leader>du', dap_ui.toggle, {
-				desc = 'Toggle DAP UI'
-			})
 
 			local mason_dap = require('mason-nvim-dap')
 			mason_dap.setup({
@@ -617,7 +614,39 @@ if not vim.g.vscode then
 		}
 	})
 
-	table.insert(plugins, { "rcarriga/nvim-dap-ui" })
+	table.insert(plugins, {
+		"rcarriga/nvim-dap-ui",
+		enabled = false,
+		config = function()
+			local dap_ui = require('dapui')
+			dap_ui.setup()
+			vim.keymap.set('n', '<leader>du', dap_ui.toggle, {
+				desc = 'Toggle DAP UI'
+			})
+		end
+	})
+
+	table.insert(plugins, {
+		"miroshQa/debugmaster.nvim",
+		-- osv is needed if you want to debug neovim lua code. Also can be used
+		-- as a way to quickly test-drive the plugin without configuring debug adapters
+		dependencies = { "mfussenegger/nvim-dap", "jbyuki/one-small-step-for-vimkind", },
+		config = function()
+			local dm = require("debugmaster")
+			-- make sure you don't have any other keymaps that starts with "<leader>d" to avoid delay
+			-- Alternative keybindings to "<leader>d" could be: "<leader>m", "<leader>;"
+			vim.keymap.set({ "n", "v" }, "<leader>d", dm.mode.toggle, { nowait = true })
+			-- If you want to disable debug mode in addition to leader+d using the Escape key:
+			-- vim.keymap.set("n", "<Esc>", dm.mode.disable)
+			-- This might be unwanted if you already use Esc for ":noh"
+			vim.keymap.set("t", "<C-\\>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+
+			dm.plugins.osv_integration.enabled = true -- needed if you want to debug neovim lua code
+			-- local dap = require("dap")
+			-- Configure your debug adapters here
+			-- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+		end
+	})
 
 	table.insert(plugins, {
 		"mfussenegger/nvim-dap-python",
