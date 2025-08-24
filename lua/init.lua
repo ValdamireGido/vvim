@@ -129,19 +129,47 @@ if not vim.g.vscode then
 
 
 	table.insert(plugins, {
-		"rcarriga/nvim-notify",
-		config = function()
-			vim.notify = require('notify')
-			vim.notify.setup {
-				fps = 60,
-				stages = "slide",
-				merge_duplicates = true,
-				render = "wrapped-compact",
-				max_width = 40,
+		"folke/snacks.nvim",
+		priority = 1000,
+		lazy = false,
+		---@type snacks.Config
+		opts = {
+			picker = {
+				enabled = true,
+				matcher = {
+					frecency = true,
+					history_bonus = true,
+				}
+			},
+			notifier = {
+				enabled = true,
 				top_down = false,
-			}
-		end
+			},
+			indent = { enabled = true, },
+			scope = { enabled = true, },
+			animate = {
+				enabled = true,
+				duration = { step = 0.001, total = 5 },
+				fps = 60,
+			},
+			scroll = { enabled = false, }
+		},
 	})
+
+	vim.keymap.set('n', '<C-p>', function() Snacks.picker.smart() end)
+	vim.keymap.set('n', '<leader><C-p>', function() Snacks.picker.resume() end)
+	vim.keymap.set('n', '<leader>pp', function() Snacks.picker() end)
+	vim.keymap.set('n', '<leader>pg', function() Snacks.picker.grep() end)
+	vim.keymap.set('n', '<leader>pw', function() Snacks.picker.grep_word() end)
+	vim.keymap.set('n', '<leader>pld', function() Snacks.picker.lsp_definitions() end)
+	vim.keymap.set('n', '<leader>plt', function() Snacks.picker.lsp_type_definitions() end)
+	vim.keymap.set('n', '<leader>plr', function() Snacks.picker.lsp_references() end)
+	vim.keymap.set('n', '<leader>pli', function() Snacks.picker.lsp_implementations() end)
+	vim.keymap.set('n', '<leader>pls', function() Snacks.picker.lsp_symbols() end)
+	vim.keymap.set('n', '<leader>plS', function() Snacks.picker.lsp_workspace_symbols() end)
+	-- help
+	vim.keymap.set('n', '<leader>ph', function() Snacks.picker.help() end)
+	vim.keymap.set('n', '<leader>pm', function() Snacks.picker.man() end)
 
 
 	table.insert(plugins, {
@@ -294,6 +322,7 @@ if not vim.g.vscode then
 		end
 	})
 
+
 	table.insert(plugins, { "neovim/nvim-lspconfig", })
 	table.insert(plugins, { "nvim-lua/lsp-status.nvim" })
 	vim.keymap.set("n", "<A-o>", "<cmd>LspClangdSwitchSourceHeader<CR>")
@@ -301,77 +330,6 @@ if not vim.g.vscode then
 		vim.lsp.buf.hover({border = "rounded"})
 	end)
 
-	table.insert(plugins, {
-		'nvim-telescope/telescope.nvim',
-		tag = '0.1.8',
-		dependencies = { 'nvim-lua/plenary.nvim' },
-		config = function()
-			require('telescope').setup({
-				defaults = {
-					layout_strategy = "center",
-					layout_config = {
-						vertical = {
-							mirror = true,
-							width = 0.8,
-						},
-						center = {
-							mirror = true,
-							width = 0.8,
-						}
-					},
-					sorting_strategy = "ascending",
-					path_display = {"relative"},
-				},
-			})
-			local builtin = require('telescope.builtin')
-			vim.keymap.set('n', '<leader>ff', builtin.grep_string, {
-				desc = "Telescope Grep string under cursor"
-			})
-			vim.keymap.set('n', '<leader>fg', builtin.live_grep, {
-				desc = "Telescope Live Grep"
-			})
-			vim.keymap.set('n', '<leader>fb', builtin.buffers, {
-				desc = "Telescope Buffers"
-			})
-			vim.keymap.set('n', '<leader>fh', builtin.help_tags, {
-				desc = "Telescope Help Tags"
-			})
-			-- commands in Telescope
-			vim.keymap.set('n', '<leader>:', builtin.commands, {
-				desc = "Telescope Commands"
-			})
-			-- lsp symbols and references
-			vim.keymap.set('n', '<leader>td', builtin.lsp_document_symbols, {
-				desc = "Telescope LSP Symbols in buffer"
-			})
-			vim.keymap.set('n', '<leader>tw', builtin.lsp_workspace_symbols, {
-				desc = "Telescope LSP Workspace Symbols"
-			})
-			vim.keymap.set('n', '<leader>tW', builtin.lsp_dynamic_workspace_symbols, {
-				desc = "Telescope LSP Dynamic Workspace Symbols"
-			})
-			vim.keymap.set('n', '<leader>tr', builtin.lsp_references, {
-				desc = "Telescope LSP References"
-			})
-			vim.keymap.set('n', '<leader>ti', builtin.lsp_implementations, {
-				desc = "Telescope LSP Implementations"
-			})
-			vim.keymap.set('n', '<leader>ld', builtin.diagnostics, {
-				desc = "Telescope Diagnstics"
-			})
-			vim.keymap.set('n', '<leader><C-p>', ':Telescope resume<cr>', {
-				desc = "Telescope: resume last activated session"
-			})
-		end
-	})
-	table.insert(plugins, {
-		'nvim-telescope/telescope-frecency.nvim',
-		version = "*",
-		config = function()
-			require("telescope").load_extension("frecency")
-			vim.keymap.set('n', '<C-p>', ':Telescope frecency workspace=CWD<CR>')
-		end,
-	})
 
 	table.insert(plugins, {
 		"williamboman/mason.nvim",
@@ -379,6 +337,7 @@ if not vim.g.vscode then
 			require("mason").setup()
 		end
 	})
+
 
 	table.insert(plugins, {
 		"williamboman/mason-lspconfig.nvim",
@@ -389,14 +348,12 @@ if not vim.g.vscode then
 				},
 				automatic_enable = true,
 			}
-
 			vim.keymap.set({ 'i' }, '<C-C>', function()
 				vim.lsp.completion.get()
 			end, {
 				desc = "LSP Completion popup",
 				remap = true,
 			})
-
 			vim.keymap.set({ 'n', 'v' }, '==', function()
 				vim.lsp.buf.format({
 					async = true,
@@ -454,6 +411,7 @@ if not vim.g.vscode then
 		end
 	})
 
+
 	table.insert(plugins, {
 		"ray-x/lsp_signature.nvim",
 		opts = {
@@ -466,6 +424,7 @@ if not vim.g.vscode then
 			end, { silent = true, noremap = true, desc = 'Toggle Function Signature popup' })
 		end
 	})
+
 
 	table.insert(plugins, {
 		"kdheepak/lazygit.nvim",
@@ -486,10 +445,8 @@ if not vim.g.vscode then
 		keys = {
 			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
 		},
-		config = function()
-			require("telescope").load_extension("lazygit")
-		end
 	})
+
 
 	table.insert(plugins, {
 		"lewis6991/gitsigns.nvim",
@@ -507,6 +464,7 @@ if not vim.g.vscode then
 			})
 		end
 	})
+
 
 	table.insert(plugins, {
 		"folke/lazydev.nvim",
@@ -678,11 +636,6 @@ if not vim.g.vscode then
 			"neovim/nvim-lspconfig",
 			"mfussenegger/nvim-dap",
 			"mfussenegger/nvim-dap-python",
-			{
-				"nvim-telescope/telescope.nvim",
-				branch = "0.1.x",
-				dependencies = { "nvim-lua/plenary.nvim" }
-			},
 		},
 		lazy = false,
 		branch = "regexp", -- This is the regexp branch, use this for the new version
@@ -760,26 +713,24 @@ if not vim.g.vscode then
 end
 
 vim.cmd [[
-	highlight Normal guibg=none ctermbg=none
-	highlight NormalNC guifg=gray guibg=none ctermbg=none
-	highlight NormalFloat guibg=black
-	"highlight NonText guibg=none ctermbg=none
-	highlight LineNr guifg=#606060
-
+	"highlight Normal guibg=none ctermbg=none
+	"highlight NormalNC guifg=gray guibg=none ctermbg=none
+	"highlight NormalFloat guibg=black
+	""highlight NonText guibg=none ctermbg=none
+	"highlight LineNr guifg=#606060
+	"
 	highlight ColorColumn guibg=#16181c
-	highlight SignColumn guibg=none ctermbg=none
+	"highlight SignColumn guibg=none ctermbg=none
 
-	highlight GitSignsAdd guibg=none ctermbg=none
-	highlight GitSignsChange guibg=none ctermbg=none
-	highlight GitSignsDelete guibg=none ctermbg=none
-	highlight GitSignsStagedAdd guibg=none ctermbg=none
-	highlight GitSignsStagedChange guibg=none ctermbg=none
-	highlight GitSignsStagedDelete guibg=none ctermbg=none
+	"highlight GitSignsAdd guibg=none ctermbg=none
+	"highlight GitSignsChange guibg=none ctermbg=none
+	"highlight GitSignsDelete guibg=none ctermbg=none
+	"highlight GitSignsStagedAdd guibg=none ctermbg=none
+	"highlight GitSignsStagedChange guibg=none ctermbg=none
+	"highlight GitSignsStagedDelete guibg=none ctermbg=none
 
 	highlight DapBreakpoint ctermbg=0 guibg=darkred
 	highlight DapLogPoint ctermbg=0 guibg=#31353f
 	highlight DapStopped ctermbg=0 guibg=#31358f
 ]]
-
-
 
