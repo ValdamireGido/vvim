@@ -134,6 +134,9 @@ if not vim.g.vscode then
 		lazy = false,
 		---@type snacks.Config
 		opts = {
+			input = {
+				enabled = true,
+			},
 			picker = {
 				enabled = true,
 				matcher = {
@@ -152,7 +155,8 @@ if not vim.g.vscode then
 				duration = { step = 0.001, total = 5 },
 				fps = 60,
 			},
-			scroll = { enabled = false, }
+			scroll = { enabled = false },
+			lazygit = { enabled = true },
 		},
 	})
 
@@ -170,6 +174,8 @@ if not vim.g.vscode then
 	-- help
 	vim.keymap.set('n', '<leader>ph', function() Snacks.picker.help() end)
 	vim.keymap.set('n', '<leader>pm', function() Snacks.picker.man() end)
+	-- lazygit
+	vim.keymap.set('n', '<leader>lg', function() Snacks.lazygit() end)
 
 
 	table.insert(plugins, {
@@ -423,28 +429,6 @@ if not vim.g.vscode then
 				require('lsp_signature').toggle_float_win()
 			end, { silent = true, noremap = true, desc = 'Toggle Function Signature popup' })
 		end
-	})
-
-
-	table.insert(plugins, {
-		"kdheepak/lazygit.nvim",
-		lazy = true,
-		cmd = {
-			"LazyGit",
-			"LazyGitConfig",
-			"LazyGitCurrentFile",
-			"LazyGitFilter",
-			"LazyGitFilterCurrentFile",
-		},
-		-- optional for floating window border decoration
-		dependencies = {
-			"nvim-lua/plenary.nvim",
-		},
-		-- setting the keybinding for LazyGit with 'keys' is recommended in
-		-- order to load the plugin when the command is run for the first time
-		keys = {
-			{ "<leader>lg", "<cmd>LazyGit<cr>", desc = "LazyGit" }
-		},
 	})
 
 
