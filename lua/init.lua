@@ -128,6 +128,9 @@ if not vim.g.vscode then
 						functions = {},
 						keywords = {},
 						types = {},
+					},
+					overrides = {
+						["NormalNC"] = { fg = "#D0C6A5" }
 					}
 				}
 			})
@@ -172,6 +175,7 @@ if not vim.g.vscode then
 	vim.keymap.set('n', '<leader>pp', function() Snacks.picker() end)
 	vim.keymap.set('n', '<leader>pg', function() Snacks.picker.grep() end)
 	vim.keymap.set('n', '<leader>pw', function() Snacks.picker.grep_word() end)
+	vim.keymap.set('n', '<leader>pb', function() Snacks.picker.buffers() end)
 	vim.keymap.set('n', '<leader>pld', function() Snacks.picker.lsp_definitions() end)
 	vim.keymap.set('n', '<leader>plt', function() Snacks.picker.lsp_type_definitions() end)
 	vim.keymap.set('n', '<leader>plr', function() Snacks.picker.lsp_references() end)
@@ -658,7 +662,7 @@ if not vim.g.vscode then
 	table.insert(plugins, {
 		'stevearc/overseer.nvim',
 		opts = {
-			strategy = "toggleterm",
+			-- strategy = "toggleterm",
 		},
 		config = function(_, opts)
 			require('overseer').setup(opts)
@@ -705,12 +709,12 @@ end
 
 vim.cmd [[
 	"highlight Normal guibg=none ctermbg=none
-	"highlight NormalNC guifg=gray guibg=none ctermbg=none
+	highlight NormalNC guifg=#908665
 	"highlight NormalFloat guibg=black
 	""highlight NonText guibg=none ctermbg=none
 	"highlight LineNr guifg=#606060
 	"
-	highlight ColorColumn guibg=#16181c
+	highlight ColorColumn guibg=#1a1c20
 	"highlight SignColumn guibg=none ctermbg=none
 
 	"highlight GitSignsAdd guibg=none ctermbg=none
