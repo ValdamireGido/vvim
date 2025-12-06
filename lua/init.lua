@@ -148,11 +148,12 @@ if not vim.g.vscode then
 				enabled = true,
 			},
 			picker = {
-				enabled = true,
+				enabled = false,
 				matcher = {
 					frecency = true,
 					history_bonus = true,
-				}
+				},
+				ui_select = true,
 			},
 			notifier = {
 				enabled = true,
@@ -170,22 +171,62 @@ if not vim.g.vscode then
 		},
 	})
 
-	vim.keymap.set('n', '<C-p>', function() Snacks.picker.smart() end)
-	vim.keymap.set('n', '<leader><C-p>', function() Snacks.picker.resume() end)
-	vim.keymap.set('n', '<leader>pp', function() Snacks.picker() end)
-	vim.keymap.set('n', '<leader>pg', function() Snacks.picker.grep() end)
-	vim.keymap.set('n', '<leader>pw', function() Snacks.picker.grep_word() end)
-	vim.keymap.set('n', '<leader>pb', function() Snacks.picker.buffers() end)
-	vim.keymap.set('n', '<leader>pld', function() Snacks.picker.lsp_definitions() end)
-	vim.keymap.set('n', '<leader>plt', function() Snacks.picker.lsp_type_definitions() end)
-	vim.keymap.set('n', '<leader>plr', function() Snacks.picker.lsp_references() end)
-	vim.keymap.set('n', '<leader>pli', function() Snacks.picker.lsp_implementations() end)
-	vim.keymap.set('n', '<leader>pls', function() Snacks.picker.lsp_symbols() end)
-	vim.keymap.set('n', '<leader>plS', function() Snacks.picker.lsp_workspace_symbols() end)
-	-- help
-	vim.keymap.set('n', '<leader>ph', function() Snacks.picker.help() end)
-	vim.keymap.set('n', '<leader>pm', function() Snacks.picker.man() end)
-	-- lazygit
+	table.insert(plugins, {
+		"ibhagwan/fzf-lua",
+		dependencies = { "nvim-tree/nvim-web-devicons" },
+		---@module "fzf-lua"
+		---@type fzf-lua.Config|{}
+		---@diagnostics disable: missing-fields
+		---@diagnostics enable: missing-fields
+		config = function()
+			fzf = require('fzf-lua')
+			fzf.setup()
+			vim.keymap.set(
+				'n', '<C-p>',
+				function()
+					fzf.combine({ pickers = "oldfiles;files" })
+				end,
+				{ desc = 'FzfFiles' }
+			)
+			vim.keymap.set(
+				'n', '<leader><C-p>', fzf.resume, {
+					desc = 'FzfResume'
+				}
+			)
+			vim.keymap.set('n', '<leader>pg', fzf.live_grep, {
+				desc = 'FzfGrep'
+			})
+			vim.keymap.set('n', '<leader>pw', fzf.grep_cword, {
+				desc = 'FzfCword'
+			})
+			vim.keymap.set('n', '<leader>plr', fzf.lsp_references, {
+				desc = 'FzfReferences'
+			})
+			vim.keymap.set('n', '<leader>pli', fzf.lsp_implementations, {
+				desc = 'FzfImplementations'
+			})
+			vim.keymap.set('n', '<leader>pls', fzf.lsp_document_symbols, {
+				desc = 'FzfLspSymbols'
+			})
+			vim.keymap.set('n', '<leader>plS', fzf.lsp_live_workspace_symbols, {
+				desc = 'FzfLiveWorkspaceSymbols'
+			})
+			vim.keymap.set('n', '<leader>pd', fzf.diagnostics_document)
+			vim.keymap.set('n', '<leader>ph', fzf.helptags, {
+				desc = 'FzfHelp',
+			})
+			vim.keymap.set('n', '<leader>pm', fzf.manpages, {
+				desc = 'FzfMan',
+			})
+
+			vim.keymap.set('n', '<leader>pn', function()
+				require('notify.integrations').pick()
+			end)
+		end
+	})
+
+
+	-- -- lazygit
 	vim.keymap.set('n', '<leader>lg', function() Snacks.lazygit() end)
 
 
