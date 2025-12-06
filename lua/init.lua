@@ -751,7 +751,7 @@ vim.opt.colorcolumn = "80"
 
 if not vim.g.vscode then
 	vim.cmd [[
-		colorscheme darcubox
+		colorscheme gruvbox
 	]]
 end
 
