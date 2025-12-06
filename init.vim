@@ -1,18 +1,18 @@
 "language en_US
-let g:pluginInstallPath = stdpath('data')."/plugged"
+let g:pluginInstallPath = stdpath('data') . "/plugged"
 
 if has("unix")
 	source $HOME/.config/nvim/plug_lazy_adapter.vim
 elseif has("windows")
-	source ~/AppData/Local/nvim/plug_lazy_adapter.vim
-	source ~/AppData/Local/nvim/init-common.vim
+	source $XDG_CONFIG_HOME\nvim\plug_lazy_adapter.vim
+	source $XDG_CONFIG_HOME\nvim\init-common.vim
 endif
 
 noremap ,cv :tabe $MYVIMRC<CR>
 if has("unix")
 	noremap ,cl :tabe ~/.config/nvim/lua/init.lua<cr>
 elseif has("windows")
-	noremap ,cl :tabe ~/AppData/Local/nvim/lua/init.lua<cr>
+	noremap ,cl :tabe $XDG_CONFIG_HOME/nvim/lua/init.lua<cr>
 endif
 
 " syntax higlighing
