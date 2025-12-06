@@ -35,6 +35,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+---@type LazySpec
 local plugins = {
 
 	{
@@ -142,6 +143,19 @@ if not vim.g.vscode then
 				}
 			})
 		end
+	})
+	table.insert(plugins, {
+		"NLKNguyen/papercolor-theme"
+	})
+	table.insert(plugins, {
+		"ellisonleao/gruvbox.nvim",
+		priority = 1000 ,
+		config = function()
+			require('gruvbox').setup({
+				transparent_mode = true,
+				-- dim_inactive = true,
+			})
+		end,
 	})
 
 
@@ -536,59 +550,6 @@ if not vim.g.vscode then
 	table.insert(plugins, {
 		"mfussenegger/nvim-dap",
 		config = function()
-			-- local dap = require('dap')
-			-- vim.keymap.set('n', '<f5>', dap.continue, {
-			-- 	desc = "DAP Continue"
-			-- })
-			-- vim.keymap.set('n', '<S-f5>', ':DapTerminate<CR>', {
-			-- 	desc = "DAP Terminate Debug Session",
-			-- })
-			-- vim.keymap.set('n', '<C-F5>', function() dap.run_last() end, {
-			-- 	desc = "DAP Run last selected configuration",
-			-- })
-			-- vim.keymap.set('n', '<f3>', dap.step_over, {
-			-- 	desc = "DAP Step Over"
-			-- })
-			-- vim.keymap.set('n', '<f4>', dap.step_into, {
-			-- 	desc = "DAP Step Into"
-			-- })
-			-- vim.keymap.set('n', '<f2>', dap.step_out, {
-			-- 	desc = "DAP Step Out"
-			-- })
-			-- vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, {
-			-- 	desc = "DAP Toggle Breakpoint"
-			-- })
-			-- vim.keymap.set({'n', 'v'}, '<Leader>dh', function()
-			-- 		require('dap.ui.widgets').hover()
-			-- 	end,
-			-- 	{
-			-- 		desc = "DAP Hover"
-			-- 	}
-			-- )
-			-- vim.keymap.set({'n', 'v'}, '<Leader>dp', function()
-			-- 		require('dap.ui.widgets').preview()
-			-- 	end,
-			-- 	{
-			-- 		desc = "DAP Preview",
-			-- 	}
-			-- )
-			-- vim.keymap.set('n', '<Leader>df', function()
-			-- 		local widgets = require('dap.ui.widgets')
-			-- 		widgets.centered_float(widgets.frames)
-			-- 	end,
-			-- 	{
-			-- 		desc = "DAP Frames"
-			-- 	}
-			-- )
-			-- vim.keymap.set('n', '<Leader>ds', function()
-			-- 		local widgets = require('dap.ui.widgets')
-			-- 		widgets.centered_float(widgets.scopes)
-			-- 	end,
-			-- 	{
-			-- 		desc = "DAP Scopes"
-			-- 	}
-			-- )
-
 			vim.fn.sign_define('DapBreakpoint', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
 			vim.fn.sign_define('DapBreakpointCondition', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl='DapBreakpoint' })
 			vim.fn.sign_define('DapBreakpointRejected', { text='', texthl='DapBreakpoint', linehl='DapBreakpoint', numhl= 'DapBreakpoint' })
@@ -763,15 +724,6 @@ vim.cmd [[
 	"highlight LineNr guifg=#606060
 	"
 	highlight ColorColumn guibg=#1a1c20
-	"highlight SignColumn guibg=none ctermbg=none
-
-	"highlight GitSignsAdd guibg=none ctermbg=none
-	"highlight GitSignsChange guibg=none ctermbg=none
-	"highlight GitSignsDelete guibg=none ctermbg=none
-	"highlight GitSignsStagedAdd guibg=none ctermbg=none
-	"highlight GitSignsStagedChange guibg=none ctermbg=none
-	"highlight GitSignsStagedDelete guibg=none ctermbg=none
-
 	highlight DapBreakpoint ctermbg=0 guibg=darkred
 	highlight DapLogPoint ctermbg=0 guibg=#31353f
 	highlight DapStopped ctermbg=0 guibg=#31358f
