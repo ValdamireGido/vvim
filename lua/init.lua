@@ -64,6 +64,13 @@ local plugins = {
 				ui = {
 					formatter = true,
 				},
+				contenttypes = {
+					["text/plain"] = {
+						formatter = function(body)
+							return body
+						end,
+					}
+				}
 			}
 			vim.filetype.add({
 				extension = {
