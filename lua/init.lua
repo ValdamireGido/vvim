@@ -205,7 +205,7 @@ if not vim.g.vscode then
 			vim.keymap.set(
 				'n', '<C-p>',
 				function()
-					fzf.combine({ pickers = "oldfiles;files" })
+					fzf.combine({ pickers = "files;oldfiles" })
 				end,
 				{ desc = 'FzfFiles' }
 			)
