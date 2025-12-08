@@ -602,7 +602,14 @@ if not vim.g.vscode then
 			-- vim.keymap.set("n", "<Esc>", dm.mode.disable)
 			-- This might be unwanted if you already use Esc for ":noh"
 			vim.keymap.set("t", "<C-\\>", "<C-\\><C-n>", { desc = "Exit terminal mode" })
+			-- rerun last configuration
+			local dap = require('dap')
+			vim.keymap.set("n", "<C-F5>", dap.run_last, {
+				desc = "Debug Run Last configuration again"
+			})
 
+			dm.plugins.ui_auto_toggle.enabled = false
+			dm.plugins.dap_float_close_on_q.enabled = false
 			dm.plugins.osv_integration.enabled = true -- needed if you want to debug neovim lua code
 			-- local dap = require("dap")
 			-- Configure your debug adapters here
