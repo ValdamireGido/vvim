@@ -202,6 +202,7 @@ if not vim.g.vscode then
 		config = function()
 			fzf = require('fzf-lua')
 			fzf.setup()
+			fzf.register_ui_select()
 			vim.keymap.set(
 				'n', '<C-p>',
 				function()
